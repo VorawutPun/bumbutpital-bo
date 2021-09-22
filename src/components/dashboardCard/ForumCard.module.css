@@ -1,0 +1,82 @@
+.forumCard {
+  flex: 1;
+  background-color: #ecf2ff;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  margin-right: 20px;
+  border-radius: 15px;
+}
+
+.forumCardTitle {
+  background-color: #b9cfff;
+  padding: 16px;
+  border-radius: 15px 15px 0px 0px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.forumCardList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.forumCardListItem {
+  display: flex;
+  margin: 20px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.avatarAdmin {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.forumCardQA {
+  display: flex;
+  flex-direction: column;
+}
+
+.forumQuestion {
+  font-size: 16px;
+  font-weight: 400;
+  padding: 2px;
+  margin: 5px;
+}
+
+.replyInput {
+  height: 20px;
+  width: 650px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.replyButton {
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 5px;
+  background-color: white;
+  color: #555;
+  cursor: pointer;
+  justify-content: right;
+}
+
+.replyIcon {
+  font-size: 16px !important;
+  margin-right: 5px;
+}

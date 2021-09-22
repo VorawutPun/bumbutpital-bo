@@ -1,0 +1,14 @@
+.home {
+    flex: auto;
+    padding: 32px;
+}
+
+.dashboardTitle {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.cards{
+    display: flex;
+    margin-top: 30px;
+}

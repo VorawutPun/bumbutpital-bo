@@ -1,0 +1,30 @@
+.authen {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  padding-bottom: 112px;
+  padding-top: 72px;
+}
+
+.logoContainer {
+  flex: 1;
+  padding: 240px;
+  display: flex;
+  align-items: center;
+}
+
+.logoContainer > img {
+  height: 240px;
+  padding: 24px;
+}
+
+.logoContainer > h1 {
+  font-size: 56px;
+  font-weight: 500;
+}
+
+.authenCard {
+  flex: 1px;
+  align-items: center;
+}

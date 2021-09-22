@@ -1,0 +1,35 @@
+.landing {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.imgContainer {
+  flex: 1;
+  padding: 240px;
+}
+
+.img {
+  height: 480px;
+  align-items: center;
+  display: block;
+  margin: auto;
+}
+
+.quote {
+  flex: 1;
+  align-items: center;
+  margin: 10%;
+}
+
+.quote > h1 {
+  font-size: 64px;
+  font-weight: 700;
+  padding: 8px;
+}
+
+.quote > h2 {
+  font-size: 40px;
+  font-weight: 700;
+  padding: 8px 8px 24px 8px;
+}

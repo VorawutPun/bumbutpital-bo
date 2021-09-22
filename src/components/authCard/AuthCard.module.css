@@ -1,0 +1,51 @@
+.authCard {
+  width: min-content;
+  flex: 1;
+  padding: 64px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  background-color: #ecf2ff;
+  border-radius: 25px;
+}
+
+.authCardTitle {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.authCardForm {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.authCardItem {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.authCardItem > label {
+  font-size: 24px;
+  font-weight: 500;
+  padding-bottom: 8px;
+}
+
+.authCardInput {
+  border: none;
+  width: 400px;
+  height: 48px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.authCheckbox {
+  flex-direction: column;
+}
+
+.authLink {
+  text-align: center;
+  padding: 16px;
+}
