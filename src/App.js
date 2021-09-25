@@ -1,5 +1,10 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
 
 import "./App.css";
 import Navbar from "./components/navbar/Navbar";
@@ -20,40 +25,59 @@ import ManageCategory from "./app/management/Category";
 import ManageContent from "./app/management/Content";
 import ListOfUsers from "./app/management/ListOfUser";
 
+import { setContext } from "@apollo/client/link/context";
+
 function App() {
-  const client = new ApolloClient({
+  const httpLink = createHttpLink({
     uri: "http://localhost:3001/graphql",
+  });
+
+  const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
+
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTYzMjU1OTMyOX0.zQMaTM30cTiUP5bO85cV1l1zDN52VhX8QelITMLGsp0",
+      },
+    };
+  });
+
+  const client = new ApolloClient({
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
 
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <div className="container">
-          <Switch>
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/auth" component={Authen} />
-            <Router>
-              <Sidebar />
-              <Route exact path="/home" component={Home} />
-              <Route path="/forum" component={Forum} />
-              <Route path="/postCategories" component={ManageCategory} />
-              <Route path="/videos" component={ManageVideo} />
-              <ApolloProvider client={client}>
+    <ApolloProvider client={client}>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/auth" component={Authen} />
+              <Router>
+                <Sidebar />
+                <Route exact path="/home" component={Home} />
+                <Route path="/forum" component={Forum} />
+                <Route path="/postCategories" component={ManageCategory} />
+                <Route path="/videos" component={ManageVideo} />
                 <Route path="/contents" component={ManageContent} />
-                <Route path="/content/createContent" component={AddContent} />
+                <Route path="/createContent" component={AddContent} />
                 <Route path="/users" component={ListOfUsers} />
                 <Route path="/createUser" component={AddUser} />
                 <Route path="/user/:id" component={EditUser} />
-              </ApolloProvider>
-              <Route path="/promotions" component={ManagePromotion} />
-              <Route path="/promotion/add" component={AddPromotion} />
-            </Router>
-          </Switch>
+                <Route path="/promotions" component={ManagePromotion} />
+                <Route path="/promotion/add" component={AddPromotion} />
+              </Router>
+            </Switch>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </ApolloProvider>
   );
 }
 
