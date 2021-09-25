@@ -12,7 +12,7 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    root: {
+    backdropRoot: {
       borderRadius: "14px",
       width: "760px",
     },
