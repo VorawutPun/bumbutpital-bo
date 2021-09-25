@@ -6,14 +6,19 @@ import AddVideoCard from "../../components/addVideoCard/AddVideoCard";
 import {
   Backdrop,
   Button,
-  createStyles,
-  makeStyles,
   Card,
   CardActions,
   CardContent,
   CardHeader,
+  Dialog,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
+  createStyles,
+  makeStyles,
 } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -55,18 +60,21 @@ const useStyles = makeStyles((theme) =>
       fontWeight: 500,
     },
     action: {
-      float: "right",
       padding: "16px",
+      justifyContent: "space-between",
     },
     field: {
       marginBottom: "10px",
     },
+    tableCell: {
+      width: "50px",
+      overflow: "hidden",
+    },
   })
 );
 
-const ManageVideo = () => {
+const ManageVideo = (props) => {
   const style = useStyles();
-  const [open, setOpen] = useState(false);
   const [createVideo] = useMutation(CREATE_VIDEO);
   const { data } = useQuery(GET_ALL_VIDEO);
 
@@ -77,6 +85,7 @@ const ManageVideo = () => {
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
   const [staffID, setStaffID] = useState("");
 
+  const [open, setOpen] = useState(false);
   // const handleDelete = (id) => {
   //   setData(data.filter((item) => item.id !== id));
   // };
@@ -100,6 +109,32 @@ const ManageVideo = () => {
     setOpen(!open);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const depressionSeverity = [
+    {
+      severity: "Minimal Depression",
+    },
+    {
+      severity: "Mild Depression",
+    },
+    {
+      severity: "Moderate Depression",
+    },
+    {
+      severity: "Moderately severe Depression",
+    },
+    {
+      severity: "Severe Depression",
+    },
+  ];
+  // const [value, setValue] = useState("Depression");
+  const handleChangeSeverity = (event) => {
+    setAppropiatePHQSeverity(event.target.value);
+  };
+
   return (
     <div className={classes.manageList}>
       <div className={classes.manageTitle}>
@@ -113,9 +148,9 @@ const ManageVideo = () => {
         >
           Add Video
         </Button>
-        <Backdrop className={style.backdrop} open={open}>
+        <Dialog onClose={handleClose} open={open}>
           {/* <AddVideoCard onClick={handleSubmit} /> */}
-          <Card className={style.backdropRoot}>
+          <Card>
             <CardHeader
               title={
                 <Typography className={style.title}>
@@ -125,18 +160,6 @@ const ManageVideo = () => {
               className={style.header}
             />
             <CardContent>
-              <TextField
-                label="Link"
-                variant="outlined"
-                color="primary"
-                fullWidth
-                required
-                id="link"
-                className={style.field}
-                onChange={(e) => {
-                  setVideoUrl(e.target.value);
-                }}
-              />
               <TextField
                 label="Title"
                 variant="outlined"
@@ -150,6 +173,18 @@ const ManageVideo = () => {
                 }}
               />
               <TextField
+                label="Link"
+                variant="outlined"
+                color="primary"
+                fullWidth
+                required
+                id="link"
+                className={style.field}
+                onChange={(e) => {
+                  setVideoUrl(e.target.value);
+                }}
+              />
+              {/* <TextField
                 label="PHQ Severity"
                 variant="outlined"
                 color="primary"
@@ -160,9 +195,36 @@ const ManageVideo = () => {
                 onChange={(e) => {
                   setAppropiatePHQSeverity(e.target.value);
                 }}
-              />
+              /> */}
+              <Typography className={style.title}>
+                Depression Severity
+              </Typography>
+              <FormControl component="fieldset">
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value={appropiatePHQSeverity}
+                  onChange={handleChangeSeverity}
+                >
+                  {depressionSeverity.map((item) => (
+                    <FormControlLabel
+                      value={item.severity}
+                      control={<Radio color="primary" />}
+                      label={item.severity}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
             </CardContent>
             <CardActions className={style.action}>
+              <Button
+                // variant="contained"
+                size="small"
+                color="secondary"
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
               <Button
                 variant="contained"
                 size="small"
@@ -173,7 +235,7 @@ const ManageVideo = () => {
               </Button>
             </CardActions>
           </Card>
-        </Backdrop>
+        </Dialog>
       </div>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
@@ -196,7 +258,11 @@ const ManageVideo = () => {
                     {video.videoID}
                   </TableCell>
                   <TableCell align="left">{video.title}</TableCell>
-                  <TableCell align="left">{video.videoUrl}</TableCell>
+                  <TableCell align="left" className={style.tableCell}>
+                    <Typography variant="body2" noWrap>
+                      {video.videoUrl}
+                    </Typography>
+                  </TableCell>
                   <TableCell align="left">{video.pictureUrl}</TableCell>
                   <TableCell align="left">{video.createAt}</TableCell>
                   <TableCell align="left">
