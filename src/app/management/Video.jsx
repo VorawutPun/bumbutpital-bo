@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import classes from "./Management.module.css";
-import { Link } from "react-router-dom";
 import AddVideoCard from "../../components/addVideoCard/AddVideoCard";
 
 import {
@@ -19,6 +18,8 @@ import {
   Typography,
   createStyles,
   makeStyles,
+  Link,
+  Box,
 } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -67,8 +68,9 @@ const useStyles = makeStyles((theme) =>
       marginBottom: "10px",
     },
     tableCell: {
-      width: "50px",
+      width: "300px",
       overflow: "hidden",
+      textOverflow: "ellipsis",
     },
   })
 );
@@ -258,10 +260,12 @@ const ManageVideo = (props) => {
                     {video.videoID}
                   </TableCell>
                   <TableCell align="left">{video.title}</TableCell>
-                  <TableCell align="left" className={style.tableCell}>
-                    <Typography variant="body2" noWrap>
-                      {video.videoUrl}
-                    </Typography>
+                  <TableCell align="left">
+                    <div className={style.tableCell}>
+                      <Typography variant="body2" nowrap>
+                        <Link href={video.videoUrl}>{video.videoUrl}</Link>
+                      </Typography>
+                    </div>
                   </TableCell>
                   <TableCell align="left">{video.pictureUrl}</TableCell>
                   <TableCell align="left">{video.createAt}</TableCell>
