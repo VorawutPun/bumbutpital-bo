@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const PublishCard = () => {
+const PublishCard = ({ onClick }) => {
   const classes = useStyles();
   const [status, setStatus] = useState("");
   const [visibility, setVisibility] = useState("");
@@ -60,16 +60,12 @@ const PublishCard = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleStatusChange = (event) => {
-    setStatus(event.target.value );
+    setStatus(event.target.value);
   };
-  const handleVisibilityChange = (
-    event
-  ) => {
+  const handleVisibilityChange = (event) => {
     setVisibility(event.target.value);
   };
-  const handlePublishChange = (
-    event
-  ) => {
+  const handlePublishChange = (event) => {
     setPublish(event.target.value);
   };
 
@@ -177,18 +173,24 @@ const PublishCard = () => {
             </Select>
           </FormControl>
         </Grid>
-        <Button size="medium" color="primary"           onClick={handleToggle}>
+        <Button size="medium" color="primary" onClick={handleToggle}>
           Preview Changes
         </Button>
-        <Backdrop className={classes.backdrop} open={open} >
-          <PreviewChange onClick={handleClose}/>
+        <Backdrop className={classes.backdrop} open={open}>
+          <PreviewChange onClick={handleClose} />
         </Backdrop>
       </CardContent>
       <CardActions className={classes.action}>
         <Button size="small" color="secondary">
           Move to Trash
         </Button>
-        <Button variant="contained" size="small" color="primary">
+        <Button
+          variant="contained"
+          size="small"
+          color="primary"
+          type="submit"
+          onClick={onClick}
+        >
           Post
         </Button>
       </CardActions>

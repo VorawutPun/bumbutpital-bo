@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
-// import { GET_ALL_CONTENT } from "../../Graphql/Queries";
-// import { useMutation, useQuery } from "@apollo/client";
+import { GET_ALL_CONTENT } from "../../Graphql/User/Queries";
+import { useMutation, useQuery } from "@apollo/client";
 // import { DELETE_CONTENT } from "../../Graphql/Mutation";
 
 import { createStyles, makeStyles } from "@material-ui/core/styles";
@@ -70,11 +70,11 @@ const useStyles = makeStyles((theme) =>
 const ManageContent = () => {
   const classes = useStyles();
   const history = useHistory();
-//   const { data } = useQuery(GET_ALL_CONTENTS);
+  const { data } = useQuery(GET_ALL_CONTENT);
 //   const [deleteContent] = useMutation(DELETE_CONTENT);
 
   const submitHandler = () => {
-    history.push("/content/createContent");
+    history.push("/createContent");
   };
 
   return (
@@ -101,26 +101,28 @@ const ManageContent = () => {
           <TableHead>
             <TableRow>
               <TableCell>No.</TableCell>
-              <TableCell align="left">Username</TableCell>
-              <TableCell align="left">Name</TableCell>
-              <TableCell align="left">Surname</TableCell>
-              <TableCell align="left">Email</TableCell>
-              <TableCell align="left">Phone Number</TableCell>
+              <TableCell align="left">Title</TableCell>
+              <TableCell align="left">Description</TableCell>
+              <TableCell align="left">UpdateTime</TableCell>
+              <TableCell align="left">PictureUrl</TableCell>
+              <TableCell align="left">CreateAt</TableCell>
+              <TableCell align="left">AppropiatePHQSeverity</TableCell>
               <TableCell align="left">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {data &&
+            {data &&
               data.getAllContent.map((content) => (
                 <TableRow key={content.contentID}>
                   <TableCell component="th" scope="row">
-                    {content.id}
+                    {content.contentID}
                   </TableCell>
-                  <TableCell align="left">{content.username}</TableCell>
-                  <TableCell align="left">{content.name}</TableCell>
-                  <TableCell align="left">{content.surname}</TableCell>
-                  <TableCell align="left">{content.email}</TableCell>
-                  <TableCell align="left">{content.phoneNumber}</TableCell>
+                  <TableCell align="left">{content.title}</TableCell>
+                  <TableCell align="left" nowrap>{content.description}</TableCell>
+                  <TableCell align="left">{content.updateTime}</TableCell>
+                  <TableCell align="left">{content.pictureUrl}</TableCell>
+                  <TableCell align="left">{content.createAt}</TableCell>
+                  <TableCell align="left">{content.appropiatePHQSeverity}</TableCell>
                   <TableCell align="left">
                     <Link
                       to={"/user/" + content.id}
@@ -130,15 +132,15 @@ const ManageContent = () => {
                     </Link>
                     <Button
                       className={classes.manageListDelete}
-                      onClick={() => {
-                        deleteContent({ variables: { id: content.id } });
-                      }}
+                      // onClick={() => {
+                      //   deleteContent({ variables: { id: content.id } });
+                      // }}
                     >
                       Delete
                     </Button>
                   </TableCell>
                 </TableRow>
-              ))} */}
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

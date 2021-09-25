@@ -8,6 +8,7 @@ import {
   TextField,
   CardHeader,
   Grid,
+  Button,
 } from "@material-ui/core";
 
 
@@ -43,7 +44,7 @@ const useStyles = makeStyles({
   }
 );
 
-const UploadCard = () => {
+const UploadCard = ({uploadCard, onClick}) => {
   const classes = useStyles();
   const [file, setFile] = useState("");
 
@@ -54,7 +55,7 @@ const UploadCard = () => {
   };
 
   return (
-    <Grid item xs={6}>
+    // <Grid item xs={6}>
       <Card className={classes.root}>
         <CardHeader
           title={<Typography className={classes.title}>Photo</Typography>}
@@ -85,8 +86,9 @@ const UploadCard = () => {
             </CardActionArea>
           </Card>
         )}
+        <Button onClick={onClick}>Upload</Button>
       </Card>
-    </Grid>
+    // </Grid>
   );
 };
 
