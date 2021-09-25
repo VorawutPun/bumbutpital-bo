@@ -13,3 +13,18 @@ export const GET_ALL_USERS = gql`
     }
   }
 `;
+
+export const GET_ALL_CONTENT = gql`
+  query getAllContent {
+    getAllContent {
+      contentID
+      title
+      description
+      updateTime
+      pictureUrl
+      createAt
+      appropiatePHQSeverity
+    }
+  }
+`;
+
