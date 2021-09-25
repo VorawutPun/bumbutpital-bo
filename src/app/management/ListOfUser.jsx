@@ -10,8 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import { Button } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
-import { DELETE_USER } from "../../Graphql/Mutation";
-import { GET_ALL_USERS } from "../../Graphql/Queries";
+import { DELETE_USER } from "../../Graphql/User/Mutation";
+import { GET_ALL_USERS } from "../../Graphql/User/Queries";
 import { useMutation, useQuery } from "@apollo/client";
 
 const useStyles = makeStyles((theme) =>

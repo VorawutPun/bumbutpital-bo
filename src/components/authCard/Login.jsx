@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import classes from "./AuthCard.module.css";
 import { Button, Checkbox, Link, makeStyles } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { USER_LOGIN } from "../../Graphql/User/Mutation";
 
 const useStyles = makeStyles({
   root: {
@@ -15,19 +17,22 @@ const useStyles = makeStyles({
   },
 });
 
-const Login = ({onClick}) => {
+const Login = ({ onClick }) => {
   const style = useStyles();
   const history = useHistory();
   const [checked, setChecked] = useState(true);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const submitHandler = () => {
-    history.push("/home");
-  };
+  const [userLogin, { error }] = useMutation(USER_LOGIN);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
 
+  if (error) {
+    return <h1> {error} </h1>;
+  }
   return (
     <div className={classes.authCard}>
       <h1 className={classes.authCardTitle}>Admin Login</h1>
@@ -38,6 +43,9 @@ const Login = ({onClick}) => {
             type="text"
             placeholder="Username"
             className={classes.authCardInput}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
           />
         </div>
         <div className={classes.authCardItem}>
@@ -46,6 +54,9 @@ const Login = ({onClick}) => {
             type="password"
             placeholder="Password"
             className={classes.authCardInput}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
         </div>
         <div className={classes.authCheckbox}>
@@ -61,7 +72,15 @@ const Login = ({onClick}) => {
           color="primary"
           size="large"
           className={style.root}
-          onClick={submitHandler}
+          onClick={() => {
+            userLogin({
+              variables: {
+                username: username,
+                password: password,
+              },
+            });
+            history.push("/home");
+          }}
         >
           Login
         </Button>

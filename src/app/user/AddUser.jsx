@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
-import { CREATE_USER } from "../../Graphql/Mutation";
+import { USER_REGISTER } from "../../Graphql/User/Mutation";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
@@ -66,13 +66,14 @@ const AddUser = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const [createUser] = useMutation(CREATE_USER);
+  const [createUser] = useMutation(USER_REGISTER);
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
 
-  const submitHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault();
     createUser({
       variables: {
         name: name,
@@ -257,6 +258,7 @@ const AddUser = () => {
               variant="contained"
               color="primary"
               size="large"
+              type="submit"
               onClick={submitHandler}
             >
               Create
