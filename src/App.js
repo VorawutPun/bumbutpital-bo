@@ -26,6 +26,7 @@ import ManageContent from "./app/management/Content";
 import ListOfUsers from "./app/management/ListOfUser";
 
 import { setContext } from "@apollo/client/link/context";
+import { AUTH_TOKEN } from "./constants";
 
 function App() {
   const httpLink = createHttpLink({
@@ -34,13 +35,12 @@ function App() {
 
   const authLink = setContext((_, { headers }) => {
     // get the authentication token from local storage if it exists
-
+    const token = localStorage.getItem('token');
     // return the headers to the context so httpLink can read them
     return {
       headers: {
         ...headers,
-        authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTYzMjU1OTMyOX0.zQMaTM30cTiUP5bO85cV1l1zDN52VhX8QelITMLGsp0",
+        authorization: token ? `Bearer ${token}` : "",
       },
     };
   });

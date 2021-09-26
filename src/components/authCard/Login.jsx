@@ -4,6 +4,7 @@ import { Button, Checkbox, Link, makeStyles } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { USER_LOGIN } from "../../Graphql/User/Mutation";
+import { AUTH_TOKEN } from "../../constants";
 
 const useStyles = makeStyles({
   root: {
@@ -25,6 +26,8 @@ const Login = ({ onClick }) => {
   const [password, setPassword] = useState("");
 
   const [userLogin, { error }] = useMutation(USER_LOGIN);
+
+
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -72,13 +75,14 @@ const Login = ({ onClick }) => {
           color="primary"
           size="large"
           className={style.root}
-          onClick={() => {
-            userLogin({
+          onClick={ async () => {
+            const result = await userLogin({
               variables: {
                 username: username,
                 password: password,
               },
             });
+            localStorage.setItem("token", result.data.userLogin.accessToken)
             history.push("/home");
           }}
         >
