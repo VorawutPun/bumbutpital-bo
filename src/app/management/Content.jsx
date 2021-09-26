@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { GET_ALL_CONTENT } from "../../Graphql/User/Queries";
 import { useMutation, useQuery } from "@apollo/client";

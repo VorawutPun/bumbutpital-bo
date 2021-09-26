@@ -29,9 +29,9 @@ const Sidebar = (props) => {
             <Link to="/contents" className={classes.sidebarLink}>
               <li className={classes.sidebarListItem}>Manage Posts</li>
             </Link>
-            <Link to="/postCategories" className={classes.sidebarLink}>
+            {/* <Link to="/postCategories" className={classes.sidebarLink}>
               <li className={classes.sidebarListItem}>Manage Categories</li>
-            </Link>
+            </Link> */}
           </ul>
         </div>
         <div className={classes.sidebarMenu}>

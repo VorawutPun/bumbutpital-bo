@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import classes from "./Management.module.css";
-import AddVideoCard from "../../components/addVideoCard/AddVideoCard";
+// import AddVideoCard from "../../components/addVideoCard/AddVideoCard";
 
 import {
-  Backdrop,
   Button,
   Card,
   CardActions,
@@ -19,7 +18,6 @@ import {
   createStyles,
   makeStyles,
   Link,
-  Box,
 } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -82,10 +80,10 @@ const ManageVideo = (props) => {
 
   const [title, setTitle] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
-  const [pictureUrl, setPictureUrl] = useState("");
-  const [createAt, setCreateAt] = useState("");
+  const [pictureUrl, /* setPictureUrl */] = useState("");
+  const [createAt, /* setCreateAt */] = useState("");
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
-  const [staffID, setStaffID] = useState("");
+  const [staffID, /* setStaffID */] = useState("");
 
   const [open, setOpen] = useState(false);
   // const handleDelete = (id) => {

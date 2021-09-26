@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./Management.module.css";
 import { Backdrop, Button } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 // import { DataGrid } from "@mui/x-data-grid";
 import CategoryCard from "../../components/categoryCard/CategoryCard";
-import { Link } from "react-router-dom";
-import { categoryData } from "../../dummyData";
+// import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -26,12 +25,11 @@ const useStyles = makeStyles((theme) =>
 
 const ManageCategory = () => {
   const style = useStyles();
-  const [data, setData] = useState(categoryData);
   const [open, setOpen] = React.useState(false);
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
+  // const handleDelete = (id) => {
+  //   setData(data.filter((item) => item.id !== id));
+  // };
   const handleClose = () => {
     setOpen(false);
   };
@@ -39,7 +37,7 @@ const ManageCategory = () => {
     setOpen(!open);
   };
 
-  const columns = [
+ /*  const columns = [
     {
       field: "id",
       headerName: "No.",
@@ -89,7 +87,7 @@ const ManageCategory = () => {
         );
       },
     },
-  ];
+  ]; */
 
   return (
     <div className={classes.manageList}>

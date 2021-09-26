@@ -3,7 +3,6 @@ import classes from "./AuthCard.module.css";
 import { Button, makeStyles } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
 import { USER_REGISTER } from "../../Graphql/User/Mutation";
-import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   root: {
@@ -20,14 +19,14 @@ const useStyles = makeStyles({
 
 const Register = ({ onClick }) => {
   const style = useStyles();
-  const history = useHistory();
+  // const history = useHistory();
   const [createUser] = useMutation(USER_REGISTER);
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber, /* setPhoneNumber */] = useState("");
 
   const submitHandler = (e) => {
     createUser({

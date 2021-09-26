@@ -10,14 +10,11 @@ import {
   CardHeader,
   CardActions,
   CardContent,
-  Checkbox,
   FormControl,
   FormControlLabel,
-  FormGroup,
   Grid,
   InputLabel,
   MenuItem,
-  Paper,
   Radio,
   RadioGroup,
   Select,
@@ -30,7 +27,7 @@ import {
 // import UploadCard from "../../components/addContentCard/UploadCard";
 import PreviewChange from "../../components/addContentCard/PreviewChange";
 // import "filepond/dist/filepond.min.css";
-import storage from "../../firebase";
+// import storage from "../../firebase";
 
 import { CREATE_CONTENT } from "../../Graphql/Content/Mutation";
 
@@ -118,28 +115,28 @@ const useStyles = makeStyles((theme) =>
 const AddContent = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const [image, setImage] = useState();
+  // const [image, setImage] = useState();
   
   const [createContent] = useMutation(CREATE_CONTENT);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   // const [updateTime, setUpdateTime] = useState(Date());
-  const [pictureUrl, setPictureUrl] = useState("");
+  const [pictureUrl, /* setPictureUrl */] = useState("");
   // const [createAt, setCreateAt] = useState(Date());
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    createContent({
-      variables: {
-        title: title,
-        description: description,
-        pictureUrl: pictureUrl,
-        appropiatePHQSeverity: appropiatePHQSeverity,
-      },
-    });
-    history.push("/contents");
-  };
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   createContent({
+  //     variables: {
+  //       title: title,
+  //       description: description,
+  //       pictureUrl: pictureUrl,
+  //       appropiatePHQSeverity: appropiatePHQSeverity,
+  //     },
+  //   });
+  //   history.push("/contents");
+  // };
 
   // const upload = () => {
   //   if (image == null) return;
