@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./AuthCard.module.css";
 import { Button, makeStyles } from "@material-ui/core";
+import { useMutation } from "@apollo/client";
+import { USER_REGISTER } from "../../Graphql/User/Mutation";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   root: {
@@ -17,6 +20,28 @@ const useStyles = makeStyles({
 
 const Register = ({ onClick }) => {
   const style = useStyles();
+  const history = useHistory();
+  const [createUser] = useMutation(USER_REGISTER);
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const submitHandler = (e) => {
+    createUser({
+      variables: {
+        name: name,
+        surname: surname,
+        username: userName,
+        password: password,
+        email: email,
+        phoneNumber: phoneNumber,
+      },
+    });
+    onClick();
+  };
 
   return (
     <div className={classes.authCard}>
@@ -28,6 +53,9 @@ const Register = ({ onClick }) => {
             type="text"
             placeholder="First name"
             className={classes.authCardInput}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
         </div>
         <div className={classes.authCardItem}>
@@ -36,6 +64,9 @@ const Register = ({ onClick }) => {
             type="text"
             placeholder="Last name"
             className={classes.authCardInput}
+            onChange={(e) => {
+              setSurname(e.target.value);
+            }}
           />
         </div>
         <div className={classes.authCardItem}>
@@ -44,6 +75,9 @@ const Register = ({ onClick }) => {
             type="text"
             placeholder="Username"
             className={classes.authCardInput}
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
           />
         </div>
         <div className={classes.authCardItem}>
@@ -52,6 +86,9 @@ const Register = ({ onClick }) => {
             type="text"
             placeholder="Email"
             className={classes.authCardInput}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
         </div>
         <div className={classes.authCardItem}>
@@ -60,6 +97,9 @@ const Register = ({ onClick }) => {
             type="password"
             placeholder="Password"
             className={classes.authCardInput}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
         </div>
         <Button
@@ -67,7 +107,7 @@ const Register = ({ onClick }) => {
           color="primary"
           size="large"
           className={style.root}
-          onClick={onClick}
+          onClick={submitHandler}
         >
           Register
         </Button>

@@ -193,7 +193,7 @@ const AddUser = () => {
             <RadioGroup
               row
               aria-label="userType"
-              name="gender1"
+              name="role"
               value={value}
               onChange={handleChange}
             >

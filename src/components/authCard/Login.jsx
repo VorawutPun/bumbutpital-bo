@@ -25,9 +25,7 @@ const Login = ({ onClick }) => {
   const [password, setPassword] = useState("");
 
   const [userLogin, { error }] = useMutation(USER_LOGIN);
-
-
-
+  
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
