@@ -116,12 +116,12 @@ const AddContent = (props) => {
   const classes = useStyles();
   const history = useHistory();
   // const [image, setImage] = useState();
-  
+
   const [createContent] = useMutation(CREATE_CONTENT);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   // const [updateTime, setUpdateTime] = useState(Date());
-  const [pictureUrl, /* setPictureUrl */] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
   // const [createAt, setCreateAt] = useState(Date());
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
 
@@ -135,7 +135,7 @@ const AddContent = (props) => {
   //       appropiatePHQSeverity: appropiatePHQSeverity,
   //     },
   //   });
-  //   history.push("/contents");
+  //   props.history.push("/contents");
   // };
 
   // const upload = () => {
@@ -280,6 +280,26 @@ const AddContent = (props) => {
             rows={20}
             onChange={(e) => {
               setDescription(e.target.value);
+            }}
+          />
+          <Typography
+            variant="h2"
+            component="h1"
+            gutterBottom
+            className={classes.textTitle}
+          >
+            Picture URL :P
+          </Typography>
+          <TextField
+            className={classes.field}
+            label="Title"
+            variant="outlined"
+            color="primary"
+            fullWidth
+            required
+            id="title"
+            onChange={(e) => {
+              setPictureUrl(e.target.value);
             }}
           />
           <Card className={classes.uploadRoot}>
@@ -447,7 +467,8 @@ const AddContent = (props) => {
                 size="small"
                 color="primary"
                 type="submit"
-                onClick={ async () => {
+                onClick={async (e) => {
+                  e.preventDefault();
                   createContent({
                     variables: {
                       title: title,
