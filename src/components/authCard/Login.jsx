@@ -4,7 +4,6 @@ import { Button, Checkbox, Link, makeStyles } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { USER_LOGIN } from "../../Graphql/User/Mutation";
-import { AUTH_TOKEN } from "../../constants";
 
 const useStyles = makeStyles({
   root: {

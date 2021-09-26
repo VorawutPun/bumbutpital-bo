@@ -26,7 +26,6 @@ import ManageContent from "./app/management/Content";
 import ListOfUsers from "./app/management/ListOfUser";
 
 import { setContext } from "@apollo/client/link/context";
-import { AUTH_TOKEN } from "./constants";
 
 function App() {
   const httpLink = createHttpLink({
