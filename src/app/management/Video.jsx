@@ -80,10 +80,9 @@ const ManageVideo = (props) => {
 
   const [title, setTitle] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
-  const [pictureUrl, /* setPictureUrl */] = useState("");
-  const [createAt, /* setCreateAt */] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
-  const [staffID, /* setStaffID */] = useState("");
+  const [staffID /* setStaffID */] = useState("");
 
   const [open, setOpen] = useState(false);
   // const handleDelete = (id) => {
@@ -97,7 +96,6 @@ const ManageVideo = (props) => {
         title: title,
         videoUrl: videoUrl,
         pictureUrl: pictureUrl,
-        createAt: createAt,
         appropiatePHQSeverity: appropiatePHQSeverity,
         staffID: staffID,
       },
@@ -166,7 +164,7 @@ const ManageVideo = (props) => {
                 color="primary"
                 fullWidth
                 required
-                id="link"
+                id="title"
                 className={style.field}
                 onChange={(e) => {
                   setTitle(e.target.value);
@@ -184,18 +182,18 @@ const ManageVideo = (props) => {
                   setVideoUrl(e.target.value);
                 }}
               />
-              {/* <TextField
-                label="PHQ Severity"
+              <TextField
+                label="Picture Url"
                 variant="outlined"
                 color="primary"
                 fullWidth
                 required
-                id="appropiatePHQSeverity"
+                id="pictureUrl"
                 className={style.field}
                 onChange={(e) => {
-                  setAppropiatePHQSeverity(e.target.value);
+                  setPictureUrl(e.target.value);
                 }}
-              /> */}
+              />
               <Typography className={style.title}>
                 Depression Severity
               </Typography>

@@ -5,7 +5,6 @@ export const CREATE_VIDEO = gql`
     $title: String!
     $videoUrl: String!
     $pictureUrl: String!
-    $createAt: String!
     $appropiatePHQSeverity: String!
     $staffID: String!
   ) {
@@ -13,7 +12,6 @@ export const CREATE_VIDEO = gql`
       title: $title
       videoUrl: $videoUrl
       pictureUrl: $pictureUrl
-      createAt: $createAt
       appropiatePHQSeverity: $appropiatePHQSeverity
       staffID: $staffID
     ) {
@@ -21,7 +19,6 @@ export const CREATE_VIDEO = gql`
       title
       videoUrl
       pictureUrl
-      createAt
       appropiatePHQSeverity
       staffID
     }
