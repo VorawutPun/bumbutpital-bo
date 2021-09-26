@@ -52,34 +52,6 @@ export const DELETE_USER = gql`
   }
 `;
 
-export const CREATE_CONTENT = gql`
-  mutation createContent(
-    $title: String!
-    $description: String!
-    $updateTime: String!
-    $pictureUrl: String!
-    $createAt: String!
-    $appropiatePHQSeverity: String!
-  ) {
-    createContent(
-      title: $title
-      description: $description
-      updateTime: $updateTime
-      pictureUrl: $pictureUrl
-      createAt: $createAt
-      appropiatePHQSeverity: $appropiatePHQSeverity
-    ) {
-      contentID
-      title
-      description
-      updateTime
-      pictureUrl
-      createAt
-      appropiatePHQSeverity
-    }
-  }
-`;
-
 export const USER_LOGIN = gql`
   mutation userLogin(
     $username: String!

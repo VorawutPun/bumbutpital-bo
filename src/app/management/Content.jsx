@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import { GET_ALL_CONTENT } from "../../Graphql/User/Queries";
 import { useMutation, useQuery } from "@apollo/client";
-// import { DELETE_CONTENT } from "../../Graphql/Mutation";
+import { DELETE_CONTENT } from "../../Graphql/Content/Mutation";
 
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -71,7 +71,7 @@ const ManageContent = () => {
   const classes = useStyles();
   const history = useHistory();
   const { data } = useQuery(GET_ALL_CONTENT);
-//   const [deleteContent] = useMutation(DELETE_CONTENT);
+  const [deleteContent] = useMutation(DELETE_CONTENT);
 
   const submitHandler = () => {
     history.push("/createContent");
@@ -124,17 +124,17 @@ const ManageContent = () => {
                   <TableCell align="left">{content.createAt}</TableCell>
                   <TableCell align="left">{content.appropiatePHQSeverity}</TableCell>
                   <TableCell align="left">
-                    <Link
-                      to={"/user/" + content.id}
+                    {/* <Link
+                      to={"/user/" + content.contentID}
                       className={classes.manageListDetail}
                     >
                       View Detail
-                    </Link>
+                    </Link> */}
                     <Button
                       className={classes.manageListDelete}
-                      // onClick={() => {
-                      //   deleteContent({ variables: { id: content.id } });
-                      // }}
+                      onClick={() => {
+                        deleteContent({ variables: { contentID: content.contentID } });
+                      }}
                     >
                       Delete
                     </Button>

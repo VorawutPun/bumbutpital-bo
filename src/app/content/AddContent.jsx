@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
@@ -24,16 +24,17 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import PublishCard from "../../components/addContentCard/PublishCard";
-import SelectCategoryCard from "../../components/addContentCard/SelectCategoryCard";
-import SelectDepressionCard from "../../components/addContentCard/SelectDepressionCard";
-import UploadCard from "../../components/addContentCard/UploadCard";
+// import PublishCard from "../../components/addContentCard/PublishCard";
+// import SelectCategoryCard from "../../components/addContentCard/SelectCategoryCard";
+// import SelectDepressionCard from "../../components/addContentCard/SelectDepressionCard";
+// import UploadCard from "../../components/addContentCard/UploadCard";
 import PreviewChange from "../../components/addContentCard/PreviewChange";
 // import "filepond/dist/filepond.min.css";
 import storage from "../../firebase";
 
+import { CREATE_CONTENT } from "../../Graphql/Content/Mutation";
+
 import { useMutation } from "@apollo/client";
-import { CREATE_CONTENT } from "../../Graphql/User/Mutation";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -118,14 +119,14 @@ const AddContent = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const [image, setImage] = useState();
-
+  
+  const [createContent] = useMutation(CREATE_CONTENT);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [updateTime, setUpdateTime] = useState("");
+  // const [updateTime, setUpdateTime] = useState(Date());
   const [pictureUrl, setPictureUrl] = useState("");
-  const [createAt, setCreateAt] = useState("");
+  // const [createAt, setCreateAt] = useState(Date());
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
-  const [createContent] = useMutation(CREATE_CONTENT);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -133,23 +134,21 @@ const AddContent = (props) => {
       variables: {
         title: title,
         description: description,
-        updateTime: updateTime,
         pictureUrl: pictureUrl,
-        createAt: createAt,
         appropiatePHQSeverity: appropiatePHQSeverity,
       },
     });
-    props.history.push("/contents");
+    history.push("/contents");
   };
 
-  const upload = () => {
-    if (image == null) return;
-    storage
-      .ref(`/images/${image.name}`)
-      .put(image)
-      .on("state_changed", alert("success"), alert);
-    console.log(storage);
-  };
+  // const upload = () => {
+  //   if (image == null) return;
+  //   storage
+  //     .ref(`/images/${image.name}`)
+  //     .put(image)
+  //     .on("state_changed", alert("success"), alert);
+  //   console.log(storage);
+  // };
 
   //Upload Card
   const [file, setFile] = useState("");
@@ -451,7 +450,17 @@ const AddContent = (props) => {
                 size="small"
                 color="primary"
                 type="submit"
-                onClick={submitHandler}
+                onClick={ async () => {
+                  createContent({
+                    variables: {
+                      title: title,
+                      description: description,
+                      pictureUrl: pictureUrl,
+                      appropiatePHQSeverity: appropiatePHQSeverity,
+                    },
+                  });
+                  history.push("/contents");
+                }}
               >
                 Post
               </Button>
