@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -9,6 +9,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import UploadCard from "../../components/addContentCard/UploadCard";
+import { useMutation } from "@apollo/client";
+import { CREATE_PROMOTION } from "../../Graphql/Promotion/Mutation";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -55,6 +58,31 @@ const useStyles = makeStyles((theme) =>
 
 const AddPromotion = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const [hospitalId, /* setHospitalId */] = useState("");
+  const [userId, /* setUserId */] = useState("");
+  const [couponCode, /* setCouponCode */] = useState("");
+  const [title, setTitle] = useState("");
+  const [hospitalDetail, setHospitalDetail] = useState("");
+  const [Url, setUrl] = useState("");
+
+  const [createPromotion] = useMutation(CREATE_PROMOTION);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    createPromotion({
+      variables: {
+        hospitalId: hospitalId,
+        userId: userId,
+        title: title,
+        hospitalDetail: hospitalDetail,
+        couponCode: couponCode,
+        Url: Url,
+      },
+    });
+    history.push("/promotions");
+  };
+
   return (
     <div className={classes.root}>
       <Typography gutterBottom className={classes.title}>
@@ -68,12 +96,15 @@ const AddPromotion = () => {
           <TextField
             className={classes.field}
             fullWidth
-            label="Title"
+            placeholder="Title"
             variant="outlined"
             color="primary"
             size="medium"
             required
             id="Title"
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
           />
           <Typography gutterBottom className={classes.profileTitle}>
             Hospital:
@@ -81,12 +112,15 @@ const AddPromotion = () => {
           <TextField
             className={classes.field}
             fullWidth
-            label="Hospital"
+            placeholder="Hospital"
             variant="outlined"
             color="primary"
             size="medium"
             required
             id="Hospital"
+            onChange={(e) => {
+              setHospitalDetail(e.target.value);
+            }}
           />
           <Typography gutterBottom className={classes.profileTitle}>
             Promotion Picture:
@@ -95,12 +129,28 @@ const AddPromotion = () => {
             <UploadCard />
           </div>
           <Typography gutterBottom className={classes.profileTitle}>
+            Promotion Url:
+          </Typography>
+          <TextField
+            className={classes.field}
+            fullWidth
+            placeholder="Promotion Url"
+            variant="outlined"
+            color="primary"
+            size="medium"
+            required
+            id="Url"
+            onChange={(e) => {
+              setUrl(e.target.value);
+            }}
+          />
+          <Typography gutterBottom className={classes.profileTitle}>
             Expire Date:
           </Typography>
           <TextField
             className={classes.field}
             fullWidth
-            label="Expire Date"
+            placeholder="Expiredate"
             variant="outlined"
             color="primary"
             size="medium"
@@ -114,10 +164,21 @@ const AddPromotion = () => {
             alignItems="center"
             className={classes.buttonGroup}
           >
-            <Button color="secondary" size="large">
+            <Button
+              color="secondary"
+              size="large"
+              onclick={() => {
+                history.push("/promotions");
+              }}
+            >
               Cancel
             </Button>
-            <Button variant="contained" color="primary" size="large">
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={submitHandler}
+            >
               Create
             </Button>
           </Grid>

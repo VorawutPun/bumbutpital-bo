@@ -242,7 +242,7 @@ const ManageVideo = (props) => {
               <TableCell>No.</TableCell>
               <TableCell align="left">title</TableCell>
               <TableCell align="left">videoUrl</TableCell>
-              <TableCell align="left">pictureUrl</TableCell>
+              {/* <TableCell align="left">pictureUrl</TableCell> */}
               <TableCell align="left">createAt</TableCell>
               <TableCell align="left">AppropiatePHQSeverity</TableCell>
               <TableCell align="left">Action</TableCell>
@@ -263,7 +263,7 @@ const ManageVideo = (props) => {
                       </Typography>
                     </div>
                   </TableCell>
-                  <TableCell align="left">{video.pictureUrl}</TableCell>
+                  {/* <TableCell align="left">{video.pictureUrl}</TableCell> */}
                   <TableCell align="left">{video.createAt}</TableCell>
                   <TableCell align="left">
                     {video.appropiatePHQSeverity}

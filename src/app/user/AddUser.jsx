@@ -61,7 +61,7 @@ const AddUser = () => {
   const [value, setValue] = useState("Basic User");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
-  const [userName, setUserName] = useState("");
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -78,7 +78,7 @@ const AddUser = () => {
       variables: {
         name: name,
         surname: surname,
-        username: userName,
+        username: username,
         password: password,
         email: email,
         phoneNumber: phoneNumber,

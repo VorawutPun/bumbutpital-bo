@@ -36,26 +36,23 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const PreviewChange = ({ onClick }) => {
+const PreviewChange = ({ onClick, title, description, file }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
       <CardHeader title={<ArrowBack />} className={classes.header} />
       <CardContent>
-        <Typography variant="h5">What is?</Typography>
+        <Typography variant="h5">{title}</Typography>
         <CardMedia
           component="img"
-          alt="Contemplative Reptile"
+          alt="No photo"
           height="auto"
           width="200px"
-          image="/assets/images/BPTLogo.png"
-          title="Contemplative Reptile"
+          image={file}
+          title="No photo"
         />
         <Typography className={classes.title}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim non
-          nulla odio in. Morbi dignissim interdum molestie nulla nulla. Facilisi
-          aliquet egestas nunc aliquet cursus. Egestas at viverra posuere ornare
-          venenatis.
+          {description}
         </Typography>
       </CardContent>
       <CardActions className={classes.action}>

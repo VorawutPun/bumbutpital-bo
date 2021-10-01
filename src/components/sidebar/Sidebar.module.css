@@ -37,10 +37,9 @@
   align-items: center;
 }
 
-.sidebarListItem.active,
+.sidebarListItem:active,
 .sidebarListItem:hover {
   background-color: #CEDEFF;
-
 }
 
 .sidebarIcon {

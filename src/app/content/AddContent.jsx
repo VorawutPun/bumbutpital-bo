@@ -21,6 +21,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+
 // import PublishCard from "../../components/addContentCard/PublishCard";
 // import SelectCategoryCard from "../../components/addContentCard/SelectCategoryCard";
 // import SelectDepressionCard from "../../components/addContentCard/SelectDepressionCard";
@@ -250,7 +251,7 @@ const AddContent = (props) => {
           </Typography>
           <TextField
             className={classes.field}
-            label="Title"
+            placeholder="Title"
             variant="outlined"
             color="primary"
             fullWidth
@@ -270,7 +271,8 @@ const AddContent = (props) => {
           </Typography>
           <TextField
             className={classes.field}
-            label="Body"
+            // hiddenLabel
+            placeholder="Description"
             variant="outlined"
             color="primary"
             fullWidth
@@ -292,7 +294,7 @@ const AddContent = (props) => {
           </Typography>
           <TextField
             className={classes.field}
-            label="Title"
+            placeholder="Picture URL"
             variant="outlined"
             color="primary"
             fullWidth
@@ -455,7 +457,7 @@ const AddContent = (props) => {
                 Preview Changes
               </Button>
               <Backdrop className={classes.backdrop} open={open}>
-                <PreviewChange onClick={handleClose} />
+                <PreviewChange title={title} description={description} file={file} onClick={handleClose} />
               </Backdrop>
             </CardContent>
             <CardActions className={classes.action}>
@@ -510,6 +512,7 @@ const AddContent = (props) => {
                 >
                   {depressionSeverity.map((item) => (
                     <FormControlLabel
+                      key={item.severity}
                       value={item.severity}
                       control={<Radio color="primary" />}
                       label={item.severity}

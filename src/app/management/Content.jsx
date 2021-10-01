@@ -1,7 +1,7 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-import { GET_ALL_CONTENT } from "../../Graphql/User/Queries";
+import { GET_ALL_CONTENT } from "../../Graphql/Content/Queries";
 import { useMutation, useQuery } from "@apollo/client";
 import { DELETE_CONTENT } from "../../Graphql/Content/Mutation";
 
@@ -118,18 +118,18 @@ const ManageContent = () => {
                     {content.contentID}
                   </TableCell>
                   <TableCell align="left">{content.title}</TableCell>
-                  <TableCell align="left" nowrap>{content.description}</TableCell>
+                  <TableCell align="left">{content.description}</TableCell>
                   <TableCell align="left">{content.updateTime}</TableCell>
                   <TableCell align="left">{content.pictureUrl}</TableCell>
                   <TableCell align="left">{content.createAt}</TableCell>
                   <TableCell align="left">{content.appropiatePHQSeverity}</TableCell>
                   <TableCell align="left">
-                    {/* <Link
+                    <Link
                       to={"/user/" + content.contentID}
                       className={classes.manageListDetail}
                     >
                       View Detail
-                    </Link> */}
+                    </Link>
                     <Button
                       className={classes.manageListDelete}
                       onClick={() => {
