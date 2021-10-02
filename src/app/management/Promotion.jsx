@@ -106,7 +106,7 @@ const ManagePromotion = () => {
               <TableCell align="left">Title</TableCell>
               <TableCell align="left">Hospital </TableCell>
               <TableCell align="left">CreateAt</TableCell>
-              <TableCell align="left">Url</TableCell>
+              {/* <TableCell align="left">Url</TableCell> */}
               <TableCell align="left">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -120,7 +120,7 @@ const ManagePromotion = () => {
                   <TableCell align="left">{promotion.title}</TableCell>
                   <TableCell align="left">{promotion.hospitalDetail}</TableCell>
                   <TableCell align="left">{promotion.createAt}</TableCell>
-                  <TableCell align="left">{promotion.Url}</TableCell>
+                  {/* <TableCell align="left">{promotion.Url}</TableCell> */}
                   <TableCell align="left">
                     <Link
                       to={"/user/" + promotion.promotionID}
