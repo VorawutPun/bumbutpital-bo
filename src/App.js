@@ -17,7 +17,7 @@ import Authen from "./app/auth/Authen";
 import EditUser from "./app/user/EditUser";
 import Forum from "./app/forum/Forum";
 import Home from "./app/home/Home";
-import Landing from "./app/landing/Landing";
+// import Landing from "./app/landing/Landing";
 import ManageVideo from "./app/management/Video";
 // import ManageUser from "./app/management/User";
 import ManagePromotion from "./app/management/Promotion";
@@ -57,8 +57,8 @@ function App() {
           <Navbar />
           <div className="container">
             <Switch>
-              <Route exact path="/" component={Landing} />
-              <Route exact path="/auth" component={Authen} />
+              {/* <Route exact path="/" component={Landing} /> */}
+              <Route exact path="/" component={Authen} />
               <Router>
                 <Sidebar />
                 <Route exact path="/home" component={Home} />
