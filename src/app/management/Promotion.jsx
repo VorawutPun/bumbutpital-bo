@@ -131,7 +131,7 @@ const ManagePromotion = () => {
                     <Button
                       className={classes.manageListDelete}
                       onClick={() => {
-                        deletePromotion({ variables: { promotionID: promotion.promotionID } });
+                        deletePromotion({ variables: { promotionId: promotion.promotionId } });
                       }}
                     >
                       Delete
