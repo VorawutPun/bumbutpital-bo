@@ -61,9 +61,6 @@ const useStyles = makeStyles((theme) =>
       width: "50px",
       height: "50px",
     },
-    paperpong: {
-      textAlign: "center",
-    },
   })
 );
 
@@ -102,7 +99,7 @@ const ManageContent = () => {
             <TableRow>
               <TableCell>No.</TableCell>
               <TableCell align="left">Title</TableCell>
-              <TableCell align="left">Description</TableCell>
+              {/* <TableCell align="left">Description</TableCell> */}
               <TableCell align="left">UpdateTime</TableCell>
               <TableCell align="left">PictureUrl</TableCell>
               <TableCell align="left">CreateAt</TableCell>
@@ -118,14 +115,14 @@ const ManageContent = () => {
                     {content.contentID}
                   </TableCell>
                   <TableCell align="left">{content.title}</TableCell>
-                  <TableCell align="left">{content.description}</TableCell>
+                  {/* <TableCell align="left">{content.description}</TableCell> */}
                   <TableCell align="left">{content.updateTime}</TableCell>
                   <TableCell align="left">{content.pictureUrl}</TableCell>
                   <TableCell align="left">{content.createAt}</TableCell>
                   <TableCell align="left">{content.appropiatePHQSeverity}</TableCell>
                   <TableCell align="left">
                     <Link
-                      to={"/user/" + content.contentID}
+                      to={"/content/" + content.contentID}
                       className={classes.manageListDetail}
                     >
                       View Detail
