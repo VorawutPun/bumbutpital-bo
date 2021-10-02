@@ -271,7 +271,6 @@ const AddContent = (props) => {
           </Typography>
           <TextField
             className={classes.field}
-            // hiddenLabel
             placeholder="Description"
             variant="outlined"
             color="primary"

@@ -107,17 +107,18 @@ const AddPromotion = () => {
             }}
           />
           <Typography gutterBottom className={classes.profileTitle}>
-            Hospital:
+            Condition:
           </Typography>
           <TextField
             className={classes.field}
-            fullWidth
-            placeholder="Hospital"
-            variant="outlined"
             color="primary"
-            size="medium"
-            required
+            fullWidth
             id="Hospital"
+            placeholder="Hospital"
+            required
+            variant="outlined"
+            multiline
+            rows={10}
             onChange={(e) => {
               setHospitalDetail(e.target.value);
             }}
