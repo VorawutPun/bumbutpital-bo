@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) =>
       borderRadius: "14px",
       width: "360px",
       height: "640px",
+      overflowY:"scroll",
     },
     header: {
       padding: "16px",
@@ -51,20 +52,17 @@ const PreviewChange = ({ onClick, title, description, file, pictureUrl }) => {
           image={pictureUrl}
           title="No photo"
         />
-        <Typography className={classes.title}>
-          {description}
-        </Typography>
+        <Typography className={classes.title}>{description}</Typography>
       </CardContent>
-      <CardActions className={classes.action}>
-        <Button
-          variant="contained"
-          size="small"
-          color="primary"
-          onClick={onClick}
-        >
-          Done
-        </Button>
-      </CardActions>
+      <CardActions className={classes.action}></CardActions>
+      <Button
+        variant="contained"
+        size="small"
+        color="primary"
+        onClick={onClick}
+      >
+        Done
+      </Button>
     </Card>
   );
 };
