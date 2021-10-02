@@ -26,6 +26,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { Avatar } from "@material-ui/core";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_VIDEO, DELETE_VIDEO } from "../../Graphql/Video/Mutation";
@@ -313,7 +314,13 @@ const ManageVideo = (props) => {
                       </Typography>
                     </div>
                   </TableCell>
-                  {/* <TableCell align="left">{video.pictureUrl}</TableCell> */}
+                  <TableCell align="left">
+                  <Avatar
+                      alt="Remy Sharp"
+                      src={video.pictureUrl}
+                      style={{ width: 56, height: 56 }}
+                    />
+                    </TableCell>
                   <TableCell align="left">{video.createAt}</TableCell>
                   <TableCell align="left">
                     {video.appropiatePHQSeverity}

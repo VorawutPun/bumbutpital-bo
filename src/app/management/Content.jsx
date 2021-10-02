@@ -124,7 +124,6 @@ const ManageContent = () => {
                       src={content.pictureUrl}
                       style={{ width: 56, height: 56 }}
                     />
-
                   </TableCell>
                   <TableCell align="left">{content.createAt}</TableCell>
                   <TableCell align="left">

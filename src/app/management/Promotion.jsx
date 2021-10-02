@@ -9,6 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { Avatar } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 
 import { GET_ALL_PROMOTION } from "../../Graphql/Promotion/Query";
@@ -120,7 +121,12 @@ const ManagePromotion = () => {
                   <TableCell align="left">{promotion.title}</TableCell>
                   <TableCell align="left">{promotion.hospitalDetail}</TableCell>
                   <TableCell align="left">{promotion.createAt}</TableCell>
-                  {/* <TableCell align="left">{promotion.Url}</TableCell> */}
+                  <TableCell align="left">
+                  <Avatar
+                      alt="Remy Sharp"
+                      src={promotion.Url}
+                      style={{ width: 56, height: 56 }}
+                    /></TableCell>
                   <TableCell align="left">
                     <Link
                       to={"/user/" + promotion.promotionID}
