@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import classes from "./Management.module.css";
+// import classes from "./Management.module.css";
 // import AddVideoCard from "../../components/addVideoCard/AddVideoCard";
 
 import {
@@ -28,12 +28,43 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
 import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_VIDEO } from "../../Graphql/Video/Mutation";
+import { CREATE_VIDEO, DELETE_VIDEO } from "../../Graphql/Video/Mutation";
 import { GET_ALL_VIDEO } from "../../Graphql/Video/Queries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
+      flex: "auto",
+      padding: "30px",
+    },
+    addTitle: {
+      fontSize: "32px",
+      fontWeight: 600,
+    },
+    paper: {
+      width: "100%",
+      marginBottom: theme.spacing(2),
+    },
+    table: {
+      minWidth: 750,
+    },
+    manageListDetail: {
+      padding: "5px 10px",
+      color: "#6367ea",
+      cursor: "pointer",
+      marginRight: "20px",
+      textDecoration: "none",
+      fontSize: "16px",
+    },
+    manageListDelete: {
+      padding: "5px 10px",
+      color: "#ea6363",
+      cursor: "pointer",
+      marginRight: "20px",
+      textDecoration: "none",
+      fontSize: "16px",
+    },
+    titleButton: {
       background: "#6367EA",
       borderRadius: 5,
       border: 0,
@@ -41,6 +72,18 @@ const useStyles = makeStyles((theme) =>
       height: 36,
       float: "right",
     },
+    navLogo: {
+      width: "50px",
+      height: "50px",
+    },
+    // root: {
+    //   background: "#6367EA",
+    //   borderRadius: 5,
+    //   border: 0,
+    //   color: "white",
+    //   height: 36,
+    //   float: "right",
+    // },
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,
       color: "#fff",
@@ -74,9 +117,10 @@ const useStyles = makeStyles((theme) =>
 );
 
 const ManageVideo = (props) => {
-  const style = useStyles();
+  const classes= useStyles();
   const [createVideo] = useMutation(CREATE_VIDEO);
   const { data } = useQuery(GET_ALL_VIDEO);
+  const [deleteVideo] = useMutation(DELETE_VIDEO);
 
   const [title, setTitle] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
@@ -111,6 +155,7 @@ const ManageVideo = (props) => {
     setOpen(false);
   };
 
+
   const depressionSeverity = [
     {
       severity: "Minimal Depression",
@@ -134,14 +179,19 @@ const ManageVideo = (props) => {
   };
 
   return (
-    <div className={classes.manageList}>
-      <div className={classes.manageTitle}>
+    <div className={classes.root}>
+            <Typography
+        className={classes.addTitle}
+        gutterBottom
+        variant="h1"
+        component="h1"
+      >
         Video Management
         <Button
           variant="contained"
           color="primary"
           size="large"
-          className={style.root}
+          className={classes.titleButton}
           onClick={handleToggle}
         >
           Add Video
@@ -151,11 +201,11 @@ const ManageVideo = (props) => {
           <Card>
             <CardHeader
               title={
-                <Typography className={style.title}>
+                <Typography className={classes.title}>
                   Add Youtube Link
                 </Typography>
               }
-              className={style.header}
+              className={classes.header}
             />
             <CardContent>
               <TextField
@@ -165,7 +215,7 @@ const ManageVideo = (props) => {
                 fullWidth
                 required
                 id="title"
-                className={style.field}
+                className={classes.field}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -177,7 +227,7 @@ const ManageVideo = (props) => {
                 fullWidth
                 required
                 id="link"
-                className={style.field}
+                className={classes.field}
                 onChange={(e) => {
                   setVideoUrl(e.target.value);
                 }}
@@ -189,12 +239,12 @@ const ManageVideo = (props) => {
                 fullWidth
                 required
                 id="pictureUrl"
-                className={style.field}
+                className={classes.field}
                 onChange={(e) => {
                   setPictureUrl(e.target.value);
                 }}
               />
-              <Typography className={style.title}>
+              <Typography className={classes.title}>
                 Depression Severity
               </Typography>
               <FormControl component="fieldset">
@@ -214,7 +264,7 @@ const ManageVideo = (props) => {
                 </RadioGroup>
               </FormControl>
             </CardContent>
-            <CardActions className={style.action}>
+            <CardActions className={classes.action}>
               <Button
                 // variant="contained"
                 size="small"
@@ -234,7 +284,7 @@ const ManageVideo = (props) => {
             </CardActions>
           </Card>
         </Dialog>
-      </div>
+      </Typography>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -257,7 +307,7 @@ const ManageVideo = (props) => {
                   </TableCell>
                   <TableCell align="left">{video.title}</TableCell>
                   <TableCell align="left">
-                    <div className={style.tableCell}>
+                    <div className={classes.tableCell}>
                       <Typography variant="body2" nowrap>
                         <Link href={video.videoUrl}>{video.videoUrl}</Link>
                       </Typography>
@@ -270,16 +320,16 @@ const ManageVideo = (props) => {
                   </TableCell>
                   <TableCell align="left">
                     <Link
-                      to={"/user/" + video.id}
+                      to={"/video/" + video.id}
                       className={classes.manageListDetail}
                     >
-                      View Detail
+                      Edit
                     </Link>
                     <Button
                       className={classes.manageListDelete}
-                      // onClick={() => {
-                      //   deleteUser({ variables: { id: user.id } });
-                      // }}
+                      onClick={() => {
+                        deleteVideo({ variables: { videoID: video.videoID } });
+                      }}
                     >
                       Delete
                     </Button>

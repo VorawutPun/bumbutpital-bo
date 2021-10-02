@@ -24,3 +24,11 @@ export const CREATE_VIDEO = gql`
     }
   }
 `;
+
+export const DELETE_VIDEO = gql`
+  mutation deleteVideo($videoID: ID!) {
+    deleteVideo(videoID: $videoID) {
+      message
+    }
+  }
+`;
