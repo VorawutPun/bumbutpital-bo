@@ -26,6 +26,7 @@ import ManageContent from "./app/management/Content";
 import ListOfUsers from "./app/management/ListOfUser";
 
 import { setContext } from "@apollo/client/link/context";
+import EditContent from "./app/content/EditContent";
 
 function App() {
   const httpLink = createHttpLink({
@@ -65,6 +66,7 @@ function App() {
                 <Route path="/postCategories" component={ManageCategory} />
                 <Route path="/videos" component={ManageVideo} />
                 <Route path="/contents" component={ManageContent} />
+                <Route path="/content/:id" component={EditContent} />
                 <Route path="/createContent" component={AddContent} />
                 <Route path="/users" component={ListOfUsers} />
                 <Route path="/createUser" component={AddUser} />
