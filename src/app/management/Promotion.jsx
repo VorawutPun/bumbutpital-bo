@@ -107,7 +107,7 @@ const ManagePromotion = () => {
               <TableCell align="left">Title</TableCell>
               <TableCell align="left">Hospital </TableCell>
               <TableCell align="left">CreateAt</TableCell>
-              {/* <TableCell align="left">Url</TableCell> */}
+              <TableCell align="left">Picture</TableCell>
               <TableCell align="left">Action</TableCell>
             </TableRow>
           </TableHead>
