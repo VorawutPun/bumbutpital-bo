@@ -237,7 +237,7 @@ const EditContent = (props) => {
         gutterBottom
         className={classes.title}
       >
-        Add Content
+        Edit Content
       </Typography>
       <Grid container direction="row" justifyContent="flex-start" spacing={3}>
         <Grid item xs={9}>
