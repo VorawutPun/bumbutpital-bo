@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const PreviewChange = ({ onClick, title, description, file }) => {
+const PreviewChange = ({ onClick, title, description, file, pictureUrl }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -48,7 +48,7 @@ const PreviewChange = ({ onClick, title, description, file }) => {
           alt="No photo"
           height="auto"
           width="200px"
-          image={file}
+          image={pictureUrl}
           title="No photo"
         />
         <Typography className={classes.title}>

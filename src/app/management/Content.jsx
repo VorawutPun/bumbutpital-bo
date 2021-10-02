@@ -15,6 +15,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -117,9 +118,18 @@ const ManageContent = () => {
                   <TableCell align="left">{content.title}</TableCell>
                   {/* <TableCell align="left">{content.description}</TableCell> */}
                   <TableCell align="left">{content.updateTime}</TableCell>
-                  <TableCell align="left">{content.pictureUrl}</TableCell>
+                  <TableCell align="left">
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={content.pictureUrl}
+                      style={{ width: 56, height: 56 }}
+                    />
+
+                  </TableCell>
                   <TableCell align="left">{content.createAt}</TableCell>
-                  <TableCell align="left">{content.appropiatePHQSeverity}</TableCell>
+                  <TableCell align="left">
+                    {content.appropiatePHQSeverity}
+                  </TableCell>
                   <TableCell align="left">
                     <Link
                       to={"/content/" + content.contentID}
@@ -130,7 +140,9 @@ const ManageContent = () => {
                     <Button
                       className={classes.manageListDelete}
                       onClick={() => {
-                        deleteContent({ variables: { contentID: content.contentID } });
+                        deleteContent({
+                          variables: { contentID: content.contentID },
+                        });
                       }}
                     >
                       Delete

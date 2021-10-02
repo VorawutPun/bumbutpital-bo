@@ -457,7 +457,7 @@ const AddContent = (props) => {
                 Preview Changes
               </Button>
               <Backdrop className={classes.backdrop} open={open}>
-                <PreviewChange title={title} description={description} file={file} onClick={handleClose} />
+                <PreviewChange title={title} description={description} file={file} pictureUrl={pictureUrl} onClick={handleClose} />
               </Backdrop>
             </CardContent>
             <CardActions className={classes.action}>
