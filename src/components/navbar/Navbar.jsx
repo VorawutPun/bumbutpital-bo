@@ -19,14 +19,14 @@ const Navbar = (props) => {
           />
           <h2 className={classes.navTitle}>BUMBUTPITAL</h2>
         </div>
-        <div className={classes.navRight}>
+        {/* <div className={classes.navRight}>
           <img
             src="https://icon-library.com/images/username-icon/username-icon-18.jpg"
             alt=""
             className={classes.navAvatar}
           />
           Username
-        </div>
+        </div> */}
       </div>
     </div>
   );
