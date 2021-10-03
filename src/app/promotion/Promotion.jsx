@@ -108,7 +108,7 @@ const ManagePromotion = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data &&
+            {data && 
               data.getAllPromotion.map((promotion) => (
                 <TableRow key={promotion.promotionId}>
                   <TableCell component="th" scope="row">

@@ -65,6 +65,7 @@ const AddPromotion = () => {
   const [title, setTitle] = useState("");
   const [hospitalDetail, setHospitalDetail] = useState("");
   const [Url, setUrl] = useState("");
+  const [expiredDate, setExpiredDate] = useState("")
 
   const [createPromotion] = useMutation(CREATE_PROMOTION);
 
@@ -78,6 +79,7 @@ const AddPromotion = () => {
         hospitalDetail: hospitalDetail,
         couponCode: couponCode,
         Url: Url,
+        expiredDate: expiredDate,
       },
     });
     history.push("/promotions");
@@ -114,7 +116,7 @@ const AddPromotion = () => {
             color="primary"
             fullWidth
             id="Hospital"
-            placeholder="Hospital"
+            placeholder="Condition"
             required
             variant="outlined"
             multiline
@@ -146,17 +148,20 @@ const AddPromotion = () => {
             }}
           />
           <Typography gutterBottom className={classes.profileTitle}>
-            Expire Date:
+            Expired Date:
           </Typography>
           <TextField
             className={classes.field}
             fullWidth
-            placeholder="Expiredate"
+            placeholder="Expired date"
             variant="outlined"
             color="primary"
             size="medium"
             required
-            id="expiredate"
+            id="expiredDate"
+            onChange={(e) => {
+              setExpiredDate(e.target.value);
+            }}
           />
           <Grid
             container

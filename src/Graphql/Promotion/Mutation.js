@@ -8,6 +8,7 @@ export const CREATE_PROMOTION = gql`
     $hospitalDetail: String!
     $Url: String!
     $couponCode: String!
+    $expireDate: String!
   ) {
     createPromotion(
         hospitalId: $hospitalId
@@ -16,6 +17,7 @@ export const CREATE_PROMOTION = gql`
         hospitalDetail: $hospitalDetail
         Url: $Url
         couponCode: $couponCode
+        expireDate: $expireDate
     ) {
         promotionId
         hospitalId
@@ -24,6 +26,7 @@ export const CREATE_PROMOTION = gql`
         hospitalDetail
         Url
         couponCode
+        expireDate
     }
   }
 `;

@@ -5,11 +5,11 @@ export const GET_ALL_PROMOTION = gql`
     getAllPromotion {
         promotionId
         hospitalId
-        userId
         createAt
         title
         hospitalDetail
         Url
+        expiredDate
     }
   }
 `;
