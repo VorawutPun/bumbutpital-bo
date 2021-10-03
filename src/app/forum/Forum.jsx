@@ -2,11 +2,14 @@ import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Grid, Link, Typography } from "@material-ui/core";
 import ForumCard from "../../components/forumCard/ForumCard";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
+// import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      flex: "auto",
+      flex: "4",
     },
     title: {
       fontSize: "32px",
@@ -53,6 +56,8 @@ const useStyles = makeStyles((theme) =>
 
 const Forum = () => {
   const classes = useStyles();
+  const { data } = useQuery(GET_ALL_FORUM);
+
   return (
     <div className={classes.root}>
       <Grid container direction="row" alignItems="center" spacing={3}>
@@ -106,8 +111,10 @@ const Forum = () => {
           <Link className={classes.selectionItem}>Pinned</Link>
         </Grid>
       </Grid>
-      <ForumCard />
-      <ForumCard />
+      {data &&
+        data.getAllForum.map((forum) => (
+            <ForumCard forum={forum} key={forum.forumID}/>
+        ))}
     </div>
   );
 };

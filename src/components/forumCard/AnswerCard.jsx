@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const AnswerCard = ({ onClick }) => {
+const AnswerCard = ({ onClick, setAnswer }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -54,6 +54,9 @@ const AnswerCard = ({ onClick }) => {
           required
           id="answer"
           className={classes.field}
+          onChange={(e) => {
+            setAnswer(e.target.value);
+          }}
         />
       </CardContent>
       <CardActions className={classes.action}>

@@ -12,6 +12,9 @@ import {
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import AnswerCard from "./AnswerCard";
 import UrgentCard from "./UrgentCard";
+import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
+import { useMutation } from "@apollo/client";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -38,7 +41,7 @@ const useStyles = makeStyles((theme) =>
     user: {
       display: "flex",
       alignItems: "center",
-      paddingTop: "32px",
+      paddingTop: "12px",
     },
 
     action: {
@@ -82,17 +85,32 @@ const useStyles = makeStyles((theme) =>
       alignItems: "center",
       justifyContent: "center",
     },
+    adminAnswer: {
+      fontSize: "24px",
+      fontWeight: 300,
+      padding: "16px",
+      color: "#3CA75A",
+    }
   })
 );
 
-const ForumCard = () => {
+const ForumCard = React.forwardRef((props, ref) => {
   const classes = useStyles();
   const [openAnswer, setOpenAnswer] = useState(false);
   const [openUrgent, setOpenUrgent] = useState(false);
+  const [answerForum] = useMutation(ANSWER_FORUM);
+  const [answer, setAnswer] = useState("");
 
   const handleAnswerBackdrop = () => {
+    answerForum({
+      variables: {
+        forumID: props.forum.forumID,
+        adminAnswer: answer,
+      }
+    })
     setOpenAnswer(false);
   };
+
   const handleAnswer = () => {
     setOpenAnswer(!openAnswer);
   };
@@ -100,101 +118,106 @@ const ForumCard = () => {
   const handleUrgentBackdrop = () => {
     setOpenUrgent(false);
   };
+  
   const handleUrgent = () => {
     setOpenUrgent(!openUrgent);
   };
 
   return (
-    <Card variant="outlined" className={classes.root}>
-      <div className={classes.detail}>
-        <CardContent className={classes.content}>
-          <Typography
-            className={classes.question}
-            gutterBottom
-          >
-            Q: I want you to help.
-          </Typography>
-          <Typography
-            className={classes.questionDetail}
-            component="h5"
-            variant="h5"
-            gutterBottom
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </Typography>
-          <div className={classes.user}>
-            <Typography variant="subtitle1" color="textSecondary">
-              User: Wisa Asked on 30 April 2021
+    <>
+      <Card variant="outlined" className={classes.root}>
+        <div className={classes.detail}>
+          <CardContent className={classes.content}>
+            <Typography className={classes.question} gutterBottom>
+              {props.forum.title}
             </Typography>
-          </div>
-        </CardContent>
-      </div>
-      <CardActions className={classes.action}>
-        <Grid
-          container
-          direction="column"
-          justifyContent="flex-start"
-          alignItems="center"
-        >
-          <Avatar className={classes.messageNumber}>1</Avatar>
-          <Typography
-            variant="body1"
-            component="h5"
-            className={classes.answer}
-            gutterBottom
+            <Typography
+              className={classes.questionDetail}
+              component="h5"
+              variant="h5"
+              gutterBottom
+            >
+              {props.forum.description}
+            </Typography>
+            <div className={classes.user}>
+              <Typography variant="subtitle1" color="textSecondary">
+                User: Wisa Asked on 30 April 2021
+              </Typography>
+            </div>
+            <Typography
+              className={classes.adminAnswer}
+              component="h5"
+              variant="h5"
+              gutterBottom
+            >
+              Answer: {props.forum.answer}
+            </Typography>
+          </CardContent>
+        </div>
+        <CardActions className={classes.action}>
+          <Grid
+            container
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="center"
           >
-            Answer
-          </Typography>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="flex-start"
-        >
-          <Button
-            variant="contained"
-            className={classes.buttonAnswer}
-            onClick={handleAnswer}
+            <Avatar className={classes.messageNumber}>1</Avatar>
+            <Typography
+              variant="body1"
+              component="h5"
+              className={classes.answer}
+              gutterBottom
+            >
+              Answer
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="flex-start"
           >
-            Answer
-          </Button>
-          <Modal
-            open={openAnswer}
-            className={classes.modal}
-            onClose={handleAnswerBackdrop}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-          >
-            <AnswerCard onClick={handleAnswerBackdrop} />
-          </Modal>
-          <Button variant="contained" className={classes.buttonPinned}>
-            Pin
-          </Button>
+            <Button
+              variant="contained"
+              className={classes.buttonAnswer}
+              onClick={handleAnswer}
+            >
+              Answer
+            </Button>
+            <Modal
+              open={openAnswer}
+              className={classes.modal}
+              onClose={handleAnswerBackdrop}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            >
+              <AnswerCard onClick={handleAnswerBackdrop} setAnswer={setAnswer}/>
+            </Modal>
+            <Button variant="contained" className={classes.buttonPinned}>
+              Pin
+            </Button>
 
-          <Button
-            variant="contained"
-            className={classes.buttonUrgent}
-            onClick={handleUrgent}
-          >
-            Urgent
-          </Button>
-          <Modal
-            open={openUrgent}
-            className={classes.modal}
-            onClose={handleUrgentBackdrop}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-          >
-            <UrgentCard onClick={handleUrgentBackdrop} />
-          </Modal>
-        </Grid>
-      </CardActions>
-    </Card>
+            <Button
+              variant="contained"
+              className={classes.buttonUrgent}
+              onClick={handleUrgent}
+            >
+              Urgent
+            </Button>
+            <Modal
+              open={openUrgent}
+              className={classes.modal}
+              onClose={handleUrgentBackdrop}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            >
+              <UrgentCard onClick={handleUrgentBackdrop} />
+            </Modal>
+          </Grid>
+        </CardActions>
+      </Card>
+    </>
   );
-};
+});
 
 export default ForumCard;
