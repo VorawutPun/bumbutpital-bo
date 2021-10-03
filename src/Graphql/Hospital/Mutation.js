@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const CREATE_PROMOTION = gql`
+export const CREATE_HOSPITAL = gql`
   mutation createHospital(
     $staffID: String!
     $hospitalName: String!
@@ -22,7 +22,7 @@ export const CREATE_PROMOTION = gql`
   }
 `;
 
-export const DELETE_PROMOTION = gql`
+export const DELETE_HOSPITAL = gql`
   mutation deleteHospital($hospitalID: ID!) {
     deleteHospital(hospitalID: $hospitalID) {
       message

@@ -57,6 +57,11 @@ const Sidebar = (props) => {
               <li className={classes.sidebarListItem}>Manage Promotion</li>
             </Link>
           </ul>
+          <ul className={classes.sidebarList}>
+            <Link to="/hospitals" className={classes.sidebarLink}>
+              <li className={classes.sidebarListItem}>Manage Hospital</li>
+            </Link>
+          </ul>
         </div>
       </div>
     </div>

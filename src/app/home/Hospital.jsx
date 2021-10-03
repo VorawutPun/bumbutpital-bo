@@ -12,9 +12,9 @@ import Button from "@material-ui/core/Button";
 import { Avatar } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 
-import { GET_ALL_PROMOTION } from "../../Graphql/Promotion/Query";
 import { useMutation, useQuery } from "@apollo/client";
-import { DELETE_PROMOTION } from "../../Graphql/Promotion/Mutation";
+import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
+import { DELETE_HOSPITAL } from "../../Graphql/Hospital/Mutation";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -66,12 +66,13 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-const ManagePromotion = () => {
+
+const ManageHospital = () => {
   const history = useHistory();
   const classes = useStyles();
-  const { data } = useQuery(GET_ALL_PROMOTION);
-  const [deletePromotion] = useMutation(DELETE_PROMOTION);
-  
+  const { data } = useQuery(GET_ALL_HOSPITAL);
+  const [deleteHospital] = useMutation(DELETE_HOSPITAL);
+
   const submitHandler = () => {
     history.push("/promotion/add");
   };
@@ -84,7 +85,7 @@ const ManagePromotion = () => {
         variant="h1"
         component="h1"
       >
-        Promotion Management
+        Hospital Management
         <Button
           variant="contained"
           color="primary"
@@ -92,7 +93,7 @@ const ManagePromotion = () => {
           className={classes.titleButton}
           onClick={submitHandler}
         >
-          Add Promotion
+          Add Hospital
         </Button>
       </Typography>
       <TableContainer component={Paper}>
@@ -100,33 +101,32 @@ const ManagePromotion = () => {
           <TableHead>
             <TableRow>
               <TableCell>No.</TableCell>
-              <TableCell align="left">Title</TableCell>
-              <TableCell align="left">Hospital </TableCell>
-              <TableCell align="left">CreateAt</TableCell>
               <TableCell align="left">Picture</TableCell>
+              <TableCell align="left">Hospital </TableCell>
               <TableCell align="left">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data &&
-              data.getAllPromotion.map((promotion) => (
-                <TableRow key={promotion.promotionId}>
+              data.getAllHospital.map((hospital) => (
+                <TableRow key={hospital.hospitalID}>
                   <TableCell component="th" scope="row">
-                    {promotion.promotionId}
+                    {hospital.hospitalID}
                   </TableCell>
-                  <TableCell align="left">{promotion.title}</TableCell>
-                  <TableCell align="left">{promotion.hospitalDetail}</TableCell>
-                  <TableCell align="left">{promotion.createAt}</TableCell>
                   <TableCell align="left">
                     <Avatar
                       alt="Remy Sharp"
-                      src={promotion.Url}
+                      src={hospital.imageUrl}
                       style={{ width: 56, height: 56 }}
                     />
                   </TableCell>
+                  <TableCell align="left">{hospital.hospitalName}</TableCell>
+                  <TableCell align="left">
+                    {hospital.hospitalDescription}
+                  </TableCell>
                   <TableCell align="left">
                     <Link
-                      to={"/user/" + promotion.promotionID}
+                      to={"/user/" + hospital.hospitalID}
                       className={classes.manageListDetail}
                     >
                       View Detail
@@ -134,8 +134,8 @@ const ManagePromotion = () => {
                     <Button
                       className={classes.manageListDelete}
                       onClick={() => {
-                        deletePromotion({
-                          variables: { promotionId: promotion.promotionId },
+                        deleteHospital({
+                          variables: { hospitalID: hospital.hospitalID },
                         });
                       }}
                     >
@@ -151,4 +151,4 @@ const ManagePromotion = () => {
   );
 };
 
-export default ManagePromotion;
+export default ManageHospital;

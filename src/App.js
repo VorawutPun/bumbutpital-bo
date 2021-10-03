@@ -27,6 +27,8 @@ import ListOfUsers from "./app/user/ListOfUser";
 
 import { setContext } from "@apollo/client/link/context";
 import EditContent from "./app/content/EditContent";
+import ManageHospital from "./app/hospital/Hospital";
+import AddHospital from "./app/hospital/AddHospital";
 
 function App() {
   const httpLink = createHttpLink({
@@ -35,7 +37,7 @@ function App() {
 
   const authLink = setContext((_, { headers }) => {
     // get the authentication token from local storage if it exists
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     // return the headers to the context so httpLink can read them
     return {
       headers: {
@@ -57,7 +59,6 @@ function App() {
           <Navbar />
           <div className="container">
             <Switch>
-              
               <Route exact path="/" component={Authen} />
               <Router>
                 <Sidebar />
@@ -73,6 +74,8 @@ function App() {
                 <Route path="/user/:id" component={EditUser} />
                 <Route path="/promotions" component={ManagePromotion} />
                 <Route path="/promotion/add" component={AddPromotion} />
+                <Route path="/hospitals" component={ManageHospital} />
+                <Route path="/hospital/add" component={AddHospital} />
               </Router>
             </Switch>
           </div>
