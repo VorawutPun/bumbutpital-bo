@@ -20,7 +20,7 @@ import { Avatar } from "@material-ui/core";
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      flex: "auto",
+      flex: "4",
       padding: "30px",
     },
     addTitle: {

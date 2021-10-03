@@ -35,7 +35,7 @@ import { GET_ALL_VIDEO } from "../../Graphql/Video/Queries";
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      flex: "auto",
+      flex: "4",
       padding: "30px",
     },
     addTitle: {
