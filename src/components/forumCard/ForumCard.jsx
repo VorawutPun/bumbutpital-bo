@@ -8,9 +8,10 @@ import {
   Grid,
   Modal,
   Typography,
+  TextField,
 } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import AnswerCard from "./AnswerCard";
+// import AnswerCard from "./AnswerCard";
 import UrgentCard from "./UrgentCard";
 import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
 import { useMutation } from "@apollo/client";
@@ -41,9 +42,7 @@ const useStyles = makeStyles((theme) =>
     user: {
       display: "flex",
       alignItems: "center",
-      paddingTop: "12px",
     },
-
     action: {
       display: "flex",
       flexDirection: "column",
@@ -90,7 +89,7 @@ const useStyles = makeStyles((theme) =>
       fontWeight: 300,
       padding: "16px",
       color: "#3CA75A",
-    }
+    },
   })
 );
 
@@ -106,8 +105,8 @@ const ForumCard = React.forwardRef((props, ref) => {
       variables: {
         forumID: props.forum.forumID,
         adminAnswer: answer,
-      }
-    })
+      },
+    });
     setOpenAnswer(false);
   };
 
@@ -128,6 +127,11 @@ const ForumCard = React.forwardRef((props, ref) => {
       <Card variant="outlined" className={classes.root}>
         <div className={classes.detail}>
           <CardContent className={classes.content}>
+            <div className={classes.user}>
+              <Typography variant="subtitle1" color="textSecondary">
+                User: Wisa Asked on 30 April 2021
+              </Typography>
+            </div>
             <Typography className={classes.question} gutterBottom>
               {props.forum.title}
             </Typography>
@@ -139,11 +143,6 @@ const ForumCard = React.forwardRef((props, ref) => {
             >
               {props.forum.description}
             </Typography>
-            <div className={classes.user}>
-              <Typography variant="subtitle1" color="textSecondary">
-                User: Wisa Asked on 30 April 2021
-              </Typography>
-            </div>
             <Typography
               className={classes.adminAnswer}
               component="h5"
@@ -152,9 +151,30 @@ const ForumCard = React.forwardRef((props, ref) => {
             >
               Answer: {props.forum.answer}
             </Typography>
+            <TextField
+              className={classes.field}
+              color="primary"
+              fullWidth
+              id="hospitalDescription"
+              placeholder="Hospital Description"
+              required
+              variant="outlined"
+              // multiline
+              rows={1}
+              onChange={(e) => {
+                setAnswer(e.target.value);
+              }}
+            />
+            <Button
+              variant="contained"
+              className={classes.buttonAnswer}
+              onClick={handleAnswer}
+            >
+              Answer
+            </Button>
           </CardContent>
         </div>
-        <CardActions className={classes.action}>
+        {/* <CardActions className={classes.action}>
           <Grid
             container
             direction="column"
@@ -170,6 +190,7 @@ const ForumCard = React.forwardRef((props, ref) => {
             >
               Answer
             </Typography>
+
           </Grid>
           <Grid
             container
@@ -177,13 +198,7 @@ const ForumCard = React.forwardRef((props, ref) => {
             justifyContent="center"
             alignItems="flex-start"
           >
-            <Button
-              variant="contained"
-              className={classes.buttonAnswer}
-              onClick={handleAnswer}
-            >
-              Answer
-            </Button>
+
             <Modal
               open={openAnswer}
               className={classes.modal}
@@ -214,7 +229,7 @@ const ForumCard = React.forwardRef((props, ref) => {
               <UrgentCard onClick={handleUrgentBackdrop} />
             </Modal>
           </Grid>
-        </CardActions>
+        </CardActions> */}
       </Card>
     </>
   );
