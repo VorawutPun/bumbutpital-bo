@@ -59,7 +59,6 @@ const useStyles = makeStyles((theme) =>
 const AddHospital = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [hospitalID /* setHospitalId */] = useState("");
   const [staffID /* setUserId */] = useState("");
   const [hospitalName, setHospitalName] = useState("");
   const [hospitalDescription, setHospitalDescription] = useState("");
@@ -71,7 +70,6 @@ const AddHospital = () => {
     e.preventDefault();
     createHospital({
       variables: {
-        hospitalID: hospitalID,
         staffID: staffID,
         hospitalName: hospitalName,
         hospitalDescription: hospitalDescription,
