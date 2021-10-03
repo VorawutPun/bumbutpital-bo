@@ -14,7 +14,7 @@ import AnswerCard from "./AnswerCard";
 import UrgentCard from "./UrgentCard";
 import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
 import { useMutation } from "@apollo/client";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -118,7 +118,7 @@ const ForumCard = React.forwardRef((props, ref) => {
   const handleUrgentBackdrop = () => {
     setOpenUrgent(false);
   };
-  
+
   const handleUrgent = () => {
     setOpenUrgent(!openUrgent);
   };
