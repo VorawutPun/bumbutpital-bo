@@ -18,12 +18,12 @@ import EditUser from "./app/user/EditUser";
 import Forum from "./app/forum/Forum";
 import Home from "./app/home/Home";
 // import Landing from "./app/landing/Landing";
-import ManageVideo from "./app/management/Video";
+import ManageVideo from "./app/video/Video";
 // import ManageUser from "./app/management/User";
-import ManagePromotion from "./app/management/Promotion";
+import ManagePromotion from "./app/promotion/Promotion";
 import ManageCategory from "./app/management/Category";
-import ManageContent from "./app/management/Content";
-import ListOfUsers from "./app/management/ListOfUser";
+import ManageContent from "./app/content/Content";
+import ListOfUsers from "./app/user/ListOfUser";
 
 import { setContext } from "@apollo/client/link/context";
 import EditContent from "./app/content/EditContent";
@@ -57,7 +57,7 @@ function App() {
           <Navbar />
           <div className="container">
             <Switch>
-              {/* <Route exact path="/" component={Landing} /> */}
+              
               <Route exact path="/" component={Authen} />
               <Router>
                 <Sidebar />
