@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { Grid, Link, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import ForumCard from "../../components/forumCard/ForumCard";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
@@ -104,16 +104,16 @@ const Forum = () => {
         justifyContent="flex-start"
         alignItems="flex-start"
       >
-        <Grid item>
+        {/* <Grid item>
           <Link className={classes.selectionItem}>Lastest</Link>
         </Grid>
         <Grid item>
           <Link className={classes.selectionItem}>Pinned</Link>
-        </Grid>
+        </Grid> */}
       </Grid>
       {data &&
-        data.getAllForum.map((forum) => (
-            <ForumCard forum={forum} key={forum.forumID}/>
+        data.getAllForum.map(() => (
+            <ForumCard />
         ))}
     </div>
   );

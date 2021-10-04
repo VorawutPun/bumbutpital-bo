@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import {
-  Avatar,
+  // Avatar,
   Button,
   Card,
-  CardActions,
+  // CardActions,
   CardContent,
-  Grid,
+  // Grid,
   Modal,
   Typography,
   TextField,
@@ -15,9 +15,10 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 // import AnswerCard from "./AnswerCard";
 import UrgentCard from "./UrgentCard";
 import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
-import { useMutation } from "@apollo/client";
-import { useHistory } from "react-router";
+import { useMutation, useQuery } from "@apollo/client";
+// import { useHistory } from "react-router";
 // import { useHistory } from "react-router-dom";
+import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) =>
     detail: {
       display: "flex",
       flexDirection: "column",
-      width: "700px"
+      minWidth: "1000px",
     },
     content: {
       flex: "1 0 auto",
@@ -96,26 +97,27 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const ForumCard = ({forum}) => {
+const ForumCard = () => {
   const classes = useStyles();
-  const [openAnswer, setOpenAnswer] = useState(false);
+  // const [openAnswer, setOpenAnswer] = useState(false);
   const [openUrgent, setOpenUrgent] = useState(false);
   const [answer, setAnswer] = useState("");
   const [answerForum] = useMutation(ANSWER_FORUM);
+  const { data } = useQuery(GET_ALL_FORUM);
 
-  const handleAnswerBackdrop = (e) => {
-    e.preventDefault();
-    answerForum({
-      variables: {
-        forumID: forum.forumID,
-        adminAnswer: answer,
-      },
-    });
-  };
+  // const handleAnswerBackdrop = (e) => {
+  //   e.preventDefault();
+  //   answerForum({
+  //     variables: {
+  //       forumID: forum.forumID,
+  //       adminAnswer: answer,
+  //     },
+  //   });
+  // };
 
-  const handleAnswer = () => {
-    setOpenAnswer(!openAnswer);
-  };
+  // const handleAnswer = () => {
+  //   setOpenAnswer(!openAnswer);
+  // };
 
   const handleUrgentBackdrop = () => {
     setOpenUrgent(false);
@@ -127,63 +129,92 @@ const ForumCard = ({forum}) => {
 
   return (
     <>
-      <Card variant="outlined" className={classes.root}>
-        <div className={classes.detail}>
-          <CardContent className={classes.content}>
-            <div className={classes.user}>
-              <Typography variant="subtitle1" color="textSecondary">
-                User: Wisa Asked on 30 April 2021
-              </Typography>
-            </div>
-            <Typography className={classes.question} gutterBottom>
-              {forum.title}
-            </Typography>
-            <Typography
-              className={classes.questionDetail}
-              component="h5"
-              variant="h5"
-              gutterBottom
-            >
-              {forum.description}
-            </Typography>
-            <Typography
-              className={classes.adminAnswer}
-              component="h5"
-              variant="h5"
-              gutterBottom
-            >
-              Answer: {forum.answer} 
-            </Typography>
-          </CardContent>
-          <CardHeader
-            action={
-              <Button
-                variant="contained"
-                className={classes.buttonAnswer}
-                onClick={handleAnswerBackdrop}
-              >
-                Answer
-              </Button>
-            }
-            title={
-              <TextField
-                className={classes.field}
-                color="primary"
-                fullWidth
-                id="hospitalDescription"
-                placeholder="Hospital Description"
-                required
-                variant="outlined"
-                multiline
-                maxRows={4}
-                onChange={(e) => {
-                  setAnswer(e.target.value);
-                }}
-              />
-            }
-          />
-        </div>
-        {/* <CardActions className={classes.action}>
+      {data &&
+        data.getAllForum.map((forum) => {
+          return (
+            <Card variant="outlined" className={classes.root}>
+              <div className={classes.detail}>
+                <CardContent className={classes.content}>
+                  <div className={classes.user}>
+                    <Typography variant="subtitle1" color="textSecondary">
+                      User: Wisa Asked on{" "}
+                      {new Date(forum.createAt).toLocaleDateString()}
+                    </Typography>
+                  </div>
+                  <Typography className={classes.question} gutterBottom>
+                    {forum.title}
+                  </Typography>
+                  <Typography
+                    className={classes.questionDetail}
+                    component="h5"
+                    variant="h5"
+                    gutterBottom
+                  >
+                    {forum.description}
+                  </Typography>
+                  <Typography
+                    className={classes.adminAnswer}
+                    component="h5"
+                    variant="h5"
+                    gutterBottom
+                  >
+                    Answer: {forum.answer}
+                  </Typography>
+                </CardContent>
+                <CardHeader
+                  action={
+                    <>
+                      <Button
+                        variant="contained"
+                        className={classes.buttonAnswer}
+                        onClick={(e) => {
+                          answerForum({
+                            variables: {
+                              forumID: forum.forumID,
+                              adminAnswer: answer,
+                            },
+                          });
+                        }}
+                      >
+                        Answer
+                      </Button>
+                      <Button
+                        variant="contained"
+                        className={classes.buttonUrgent}
+                        onClick={handleUrgent}
+                      >
+                        Urgent
+                      </Button>
+                      <Modal
+                        open={openUrgent}
+                        className={classes.modal}
+                        onClose={handleUrgentBackdrop}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                      >
+                        <UrgentCard onClick={handleUrgentBackdrop} />
+                      </Modal>
+                    </>
+                  }
+                  title={
+                    <TextField
+                      className={classes.field}
+                      color="primary"
+                      fullWidth
+                      id="hospitalDescription"
+                      placeholder="Hospital Description"
+                      required
+                      variant="outlined"
+                      multiline
+                      maxRows={4}
+                      onChange={(e) => {
+                        setAnswer(e.target.value);
+                      }}
+                    />
+                  }
+                />
+              </div>
+              {/* <CardActions className={classes.action}>
           <Grid
             container
             direction="column"
@@ -239,7 +270,9 @@ const ForumCard = ({forum}) => {
             </Modal>
           </Grid>
         </CardActions> */}
-      </Card>
+            </Card>
+          );
+        })}
     </>
   );
 };
