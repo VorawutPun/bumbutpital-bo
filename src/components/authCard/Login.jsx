@@ -28,7 +28,7 @@ const Login = ({ onClick }) => {
   const [checked, setChecked] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [authError, setAuthError] = useState(true);
+  const [/* authError */, setAuthError] = useState(true);
 
   const [userLogin, { error }] = useMutation(USER_LOGIN);
 
