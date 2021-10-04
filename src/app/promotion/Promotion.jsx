@@ -102,7 +102,8 @@ const ManagePromotion = () => {
               <TableCell>No.</TableCell>
               <TableCell align="left">Title</TableCell>
               <TableCell align="left">Hospital </TableCell>
-              <TableCell align="left">CreateAt</TableCell>
+              <TableCell align="left">Create At</TableCell>
+              <TableCell align="left">Expired Date</TableCell>
               <TableCell align="left">Picture</TableCell>
               <TableCell align="left">Action</TableCell>
             </TableRow>
@@ -119,6 +120,7 @@ const ManagePromotion = () => {
                   <TableCell align="left">
                     {new Date(promotion.createAt).toLocaleDateString()}
                   </TableCell>
+                  <TableCell align="left">{promotion.expiredDate}</TableCell>
                   <TableCell align="left">
                     <Avatar
                       alt="Remy Sharp"
