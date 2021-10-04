@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const ForumCard = () => {
+const ForumCard = ({ forum }) => {
   const classes = useStyles();
   // const [openAnswer, setOpenAnswer] = useState(false);
   const [openUrgent, setOpenUrgent] = useState(false);
@@ -128,93 +128,89 @@ const ForumCard = () => {
   };
 
   return (
-    <>
-      {data &&
-        data.getAllForum.map((forum) => {
-          return (
-            <Card variant="outlined" className={classes.root}>
-              <div className={classes.detail}>
-                <CardContent className={classes.content}>
-                  <div className={classes.user}>
-                    <Typography variant="subtitle1" color="textSecondary">
-                      User: Wisa Asked on{" "}
-                      {new Date(forum.createAt).toLocaleDateString()}
-                    </Typography>
-                  </div>
-                  <Typography className={classes.question} gutterBottom>
-                    {forum.title}
-                  </Typography>
-                  <Typography
-                    className={classes.questionDetail}
-                    component="h5"
-                    variant="h5"
-                    gutterBottom
-                  >
-                    {forum.description}
-                  </Typography>
-                  <Typography
-                    className={classes.adminAnswer}
-                    component="h5"
-                    variant="h5"
-                    gutterBottom
-                  >
-                    Answer: {forum.answer}
-                  </Typography>
-                </CardContent>
-                <CardHeader
-                  action={
-                    <>
-                      <Button
-                        variant="contained"
-                        className={classes.buttonAnswer}
-                        onClick={(e) => {
-                          answerForum({
-                            variables: {
-                              forumID: forum.forumID,
-                              adminAnswer: answer,
-                            },
-                          });
-                        }}
-                      >
-                        Answer
-                      </Button>
-                      <Button
-                        variant="contained"
-                        className={classes.buttonUrgent}
-                        onClick={handleUrgent}
-                      >
-                        Urgent
-                      </Button>
-                      <Modal
-                        open={openUrgent}
-                        className={classes.modal}
-                        onClose={handleUrgentBackdrop}
-                        aria-labelledby="simple-modal-title"
-                        aria-describedby="simple-modal-description"
-                      >
-                        <UrgentCard onClick={handleUrgentBackdrop} />
-                      </Modal>
-                    </>
-                  }
-                  title={
-                    <TextField
-                      className={classes.field}
-                      color="primary"
-                      fullWidth
-                      id="hospitalDescription"
-                      placeholder="Hospital Description"
-                      required
-                      variant="outlined"
-                      multiline
-                      maxRows={4}
-                      onChange={(e) => {
-                        setAnswer(e.target.value);
-                      }}
-                    />
-                  }
-                />
-              </div>
-              {/* <CardActions className={classes.action}>
+    <Card variant="outlined" className={classes.root}>
+      <div className={classes.detail}>
+        <CardContent className={classes.content}>
+          <div className={classes.user}>
+            <Typography variant="subtitle1" color="textSecondary">
+              User: Wisa Asked on{" "}
+              {new Date(forum.createAt).toLocaleDateString()}
+            </Typography>
+          </div>
+          <Typography className={classes.question} gutterBottom>
+            {forum.title}
+          </Typography>
+          <Typography
+            className={classes.questionDetail}
+            component="h5"
+            variant="h5"
+            gutterBottom
+          >
+            {forum.description}
+          </Typography>
+          <Typography
+            className={classes.adminAnswer}
+            component="h5"
+            variant="h5"
+            gutterBottom
+          >
+            Answer: {forum.answer}
+          </Typography>
+        </CardContent>
+        <CardHeader
+          action={
+            <>
+              <Button
+                variant="contained"
+                className={classes.buttonAnswer}
+                onClick={(e) => {
+                  answerForum({
+                    variables: {
+                      forumID: forum.forumID,
+                      adminAnswer: answer,
+                    },
+                  });
+                }}
+              >
+                Answer
+              </Button>
+              <Button
+                variant="contained"
+                className={classes.buttonUrgent}
+                onClick={handleUrgent}
+              >
+                Urgent
+              </Button>
+              <Modal
+                open={openUrgent}
+                className={classes.modal}
+                onClose={handleUrgentBackdrop}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+              >
+                <UrgentCard onClick={handleUrgentBackdrop} />
+              </Modal>
+            </>
+          }
+          title={
+            <TextField
+              className={classes.field}
+              color="primary"
+              fullWidth
+              id="hospitalDescription"
+              placeholder="Hospital Description"
+              required
+              variant="outlined"
+              multiline
+              maxRows={4}
+              onChange={(e) => {
+                setAnswer(e.target.value);
+              }}
+            />
+          }
+        />
+      </div>
+      {/* <CardActions className={classes.action}>
           <Grid
             container
             direction="column"
@@ -270,10 +266,7 @@ const ForumCard = () => {
             </Modal>
           </Grid>
         </CardActions> */}
-            </Card>
-          );
-        })}
-    </>
+    </Card>
   );
 };
 

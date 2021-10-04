@@ -112,8 +112,8 @@ const Forum = () => {
         </Grid> */}
       </Grid>
       {data &&
-        data.getAllForum.map(() => (
-            <ForumCard />
+        data.getAllForum.map((forum) => (
+            <ForumCard forum={forum}/>
         ))}
     </div>
   );
