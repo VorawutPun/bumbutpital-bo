@@ -8,16 +8,16 @@ export const CREATE_HOSPITAL = gql`
     $imageUrl: String!
   ) {
     createHospital(
-        staffID: $staffID
-        hospitalName: $hospitalName
-        hospitalDescription: $hospitalDescription
-        imageUrl: $imageUrl
+      staffID: $staffID
+      hospitalName: $hospitalName
+      hospitalDescription: $hospitalDescription
+      imageUrl: $imageUrl
     ) {
-        hospitalID
-        staffID
-        hospitalName
-        hospitalDescription
-        imageUrl
+      hospitalID
+      staffID
+      hospitalName
+      hospitalDescription
+      imageUrl
     }
   }
 `;
