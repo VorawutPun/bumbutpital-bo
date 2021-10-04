@@ -9,12 +9,14 @@ import {
   Modal,
   Typography,
   TextField,
+  CardHeader,
 } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 // import AnswerCard from "./AnswerCard";
 import UrgentCard from "./UrgentCard";
 import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
 import { useMutation } from "@apollo/client";
+import { useHistory } from "react-router";
 // import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
@@ -31,6 +33,7 @@ const useStyles = makeStyles((theme) =>
     detail: {
       display: "flex",
       flexDirection: "column",
+      width: "700px"
     },
     content: {
       flex: "1 0 auto",
@@ -93,21 +96,21 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const ForumCard = React.forwardRef((props, ref) => {
+const ForumCard = ({forum}) => {
   const classes = useStyles();
   const [openAnswer, setOpenAnswer] = useState(false);
   const [openUrgent, setOpenUrgent] = useState(false);
-  const [answerForum] = useMutation(ANSWER_FORUM);
   const [answer, setAnswer] = useState("");
+  const [answerForum] = useMutation(ANSWER_FORUM);
 
-  const handleAnswerBackdrop = () => {
+  const handleAnswerBackdrop = (e) => {
+    e.preventDefault();
     answerForum({
       variables: {
-        forumID: props.forum.forumID,
+        forumID: forum.forumID,
         adminAnswer: answer,
       },
     });
-    setOpenAnswer(false);
   };
 
   const handleAnswer = () => {
@@ -133,7 +136,7 @@ const ForumCard = React.forwardRef((props, ref) => {
               </Typography>
             </div>
             <Typography className={classes.question} gutterBottom>
-              {props.forum.title}
+              {forum.title}
             </Typography>
             <Typography
               className={classes.questionDetail}
@@ -141,7 +144,7 @@ const ForumCard = React.forwardRef((props, ref) => {
               variant="h5"
               gutterBottom
             >
-              {props.forum.description}
+              {forum.description}
             </Typography>
             <Typography
               className={classes.adminAnswer}
@@ -149,30 +152,36 @@ const ForumCard = React.forwardRef((props, ref) => {
               variant="h5"
               gutterBottom
             >
-              Answer: {props.forum.answer}
+              Answer: {forum.answer} 
             </Typography>
-            <TextField
-              className={classes.field}
-              color="primary"
-              fullWidth
-              id="hospitalDescription"
-              placeholder="Hospital Description"
-              required
-              variant="outlined"
-              // multiline
-              rows={1}
-              onChange={(e) => {
-                setAnswer(e.target.value);
-              }}
-            />
-            <Button
-              variant="contained"
-              className={classes.buttonAnswer}
-              onClick={handleAnswer}
-            >
-              Answer
-            </Button>
           </CardContent>
+          <CardHeader
+            action={
+              <Button
+                variant="contained"
+                className={classes.buttonAnswer}
+                onClick={handleAnswerBackdrop}
+              >
+                Answer
+              </Button>
+            }
+            title={
+              <TextField
+                className={classes.field}
+                color="primary"
+                fullWidth
+                id="hospitalDescription"
+                placeholder="Hospital Description"
+                required
+                variant="outlined"
+                multiline
+                maxRows={4}
+                onChange={(e) => {
+                  setAnswer(e.target.value);
+                }}
+              />
+            }
+          />
         </div>
         {/* <CardActions className={classes.action}>
           <Grid
@@ -233,6 +242,6 @@ const ForumCard = React.forwardRef((props, ref) => {
       </Card>
     </>
   );
-});
+};
 
 export default ForumCard;
