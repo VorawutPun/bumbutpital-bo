@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) =>
     },
     content: {
       flex: "1 0 auto",
+      padding: "8px 8px 0px 8px",
     },
     questionDetail: {
       fontSize: "16px",
@@ -91,8 +92,7 @@ const useStyles = makeStyles((theme) =>
     adminAnswer: {
       fontSize: "24px",
       fontWeight: 300,
-      padding: "16px",
-      color: "#3CA75A",
+      padding: "16px 16px 0px 16px",
     },
   })
 );
@@ -152,11 +152,11 @@ const ForumCard = ({ forum }) => {
             className={classes.adminAnswer}
             component="h5"
             variant="h5"
-            gutterBottom
           >
-            Answer: {forum.answer}
+            {forum.answer}
           </Typography>
         </CardContent>
+        {!forum.answer && 
         <CardHeader
           action={
             <>
@@ -208,7 +208,7 @@ const ForumCard = ({ forum }) => {
               }}
             />
           }
-        />
+        />}
       </div>
       {/* <CardActions className={classes.action}>
           <Grid
