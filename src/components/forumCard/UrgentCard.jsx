@@ -83,14 +83,7 @@ const UrgentCard = ({ onClick }) => {
         />
       </CardContent>
       <CardActions className={classes.action}>
-        <Button
-          variant="contained"
-          size="small"
-          color="secondary"
-          onClick={onClick}
-        >
-          Answer
-        </Button>
+
       </CardActions>
     </Card>
   );

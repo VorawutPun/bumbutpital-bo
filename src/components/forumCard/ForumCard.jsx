@@ -3,9 +3,9 @@ import {
   // Avatar,
   Button,
   Card,
-  // CardActions,
+  CardActions,
   CardContent,
-  // Grid,
+  Grid,
   Modal,
   Typography,
   TextField,
@@ -156,60 +156,70 @@ const ForumCard = ({ forum }) => {
             {forum.answer}
           </Typography>
         </CardContent>
-        {!forum.answer && 
-        <CardHeader
-          action={
-            <>
-              <Button
-                variant="contained"
-                className={classes.buttonAnswer}
-                onClick={(e) => {
-                  answerForum({
-                    variables: {
-                      forumID: forum.forumID,
-                      adminAnswer: answer,
-                    },
-                  });
+        {!forum.answer && (
+          <CardHeader
+            action={
+              <>
+                <Button
+                  variant="contained"
+                  className={classes.buttonAnswer}
+                  onClick={(e) => {
+                    answerForum({
+                      variables: {
+                        forumID: forum.forumID,
+                        adminAnswer: answer,
+                      },
+                    });
+                  }}
+                >
+                  Answer
+                </Button>
+              </>
+            }
+            title={
+              <TextField
+                className={classes.field}
+                color="primary"
+                fullWidth
+                id="hospitalDescription"
+                placeholder="Hospital Description"
+                required
+                variant="outlined"
+                multiline
+                maxRows={4}
+                onChange={(e) => {
+                  setAnswer(e.target.value);
                 }}
-              >
-                Answer
-              </Button>
-              <Button
-                variant="contained"
-                className={classes.buttonUrgent}
-                onClick={handleUrgent}
-              >
-                Urgent
-              </Button>
-              <Modal
-                open={openUrgent}
-                className={classes.modal}
-                onClose={handleUrgentBackdrop}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-              >
-                <UrgentCard onClick={handleUrgentBackdrop} />
-              </Modal>
-            </>
-          }
-          title={
-            <TextField
-              className={classes.field}
-              color="primary"
-              fullWidth
-              id="hospitalDescription"
-              placeholder="Hospital Description"
-              required
-              variant="outlined"
-              multiline
-              maxRows={4}
-              onChange={(e) => {
-                setAnswer(e.target.value);
-              }}
-            />
-          }
-        />}
+              />
+            }
+          />
+        )}
       </div>
+      <CardActions className={classes.action}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <Button
+            variant="contained"
+            className={classes.buttonUrgent}
+            onClick={handleUrgent}
+          >
+            Urgent
+          </Button>
+          <Modal
+            open={openUrgent}
+            className={classes.modal}
+            onClose={handleUrgentBackdrop}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            <UrgentCard onClick={handleUrgentBackdrop} />
+          </Modal>
+        </Grid>
+      </CardActions>
       {/* <CardActions className={classes.action}>
           <Grid
             container
