@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import classes from "./AuthCard.module.css";
-import { Button, Checkbox, Link, makeStyles } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import {
+  Button,
+  Checkbox,
+  makeStyles,
+  TextField,
+} from "@material-ui/core";
+import { useHistory, Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { USER_LOGIN } from "../../Graphql/User/Mutation";
 
@@ -23,9 +28,10 @@ const Login = ({ onClick }) => {
   const [checked, setChecked] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState(true);
 
   const [userLogin, { error }] = useMutation(USER_LOGIN);
-  
+
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -39,24 +45,32 @@ const Login = ({ onClick }) => {
       <div className={classes.authCardForm}>
         <div className={classes.authCardItem}>
           <label>Username or Email</label>
-          <input
+          <TextField
+            required
+            variant="outlined"
             type="text"
             placeholder="Username"
             className={classes.authCardInput}
             onChange={(e) => {
               setUsername(e.target.value);
             }}
+            // error={authError}
+            // helperText="Incorrect entry."
           />
         </div>
         <div className={classes.authCardItem}>
           <label>Password</label>
-          <input
+          <TextField
+            required
+            variant="outlined"
             type="password"
             placeholder="Password"
             className={classes.authCardInput}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            // error={authError}
+            // helperText="Incorrect entry."
           />
         </div>
         <div className={classes.authCheckbox}>
@@ -72,15 +86,25 @@ const Login = ({ onClick }) => {
           color="primary"
           size="large"
           className={style.root}
-          onClick={ async () => {
-            const result = await userLogin({
-              variables: {
-                username: username,
-                password: password,
-              },
-            });
-            localStorage.setItem("token", result.data.userLogin.accessToken)
-            history.push("/home");
+          onClick={async (e) => {
+            e.preventDefault();
+            setAuthError(false);
+            if (username === "") {
+              setAuthError(true);
+            }
+            if (password === "") {
+              setAuthError(true);
+            }
+            if (username && password) {
+              const result = await userLogin({
+                variables: {
+                  username: username,
+                  password: password,
+                },
+              });
+              localStorage.setItem("token", result.data.userLogin.accessToken);
+              history.push("/home");
+            }
           }}
         >
           Login
