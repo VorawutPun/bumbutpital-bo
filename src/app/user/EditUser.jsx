@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import { Person } from "@material-ui/icons";
 import Chart from "../../components/dashboardCard/Chart";
-import ForumCard from "../../components/forumCard/ForumCard";
+// import ForumCard from "../../components/forumCard/ForumCard";
 import OverviewInfo from "../../components/dashboardCard/OvervewInfo";
 // import { GET_ALL_USERS } from "../../Graphql/Queries";
 // import { useQuery } from "@apollo/client";
@@ -226,10 +226,10 @@ const EditUser = () => {
           </Paper>
         </Grid>
         <Grid item xs={6}>
-          <Chart />
+          {/* <Chart /> */}
           {/* will change later */}
-          <OverviewInfo />
-          <ForumCard />
+          {/* <OverviewInfo /> */}
+          {/* <ForumCard /> */}
         </Grid>
       </Grid>
     </div>
