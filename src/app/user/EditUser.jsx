@@ -13,9 +13,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Person } from "@material-ui/icons";
-import Chart from "../../components/dashboardCard/Chart";
+// import Chart from "../../components/dashboardCard/Chart";
 // import ForumCard from "../../components/forumCard/ForumCard";
-import OverviewInfo from "../../components/dashboardCard/OvervewInfo";
+// import OverviewInfo from "../../components/dashboardCard/OvervewInfo";
 // import { GET_ALL_USERS } from "../../Graphql/Queries";
 // import { useQuery } from "@apollo/client";
 

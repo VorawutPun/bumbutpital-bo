@@ -15,10 +15,10 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 // import AnswerCard from "./AnswerCard";
 import UrgentCard from "./UrgentCard";
 import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 // import { useHistory } from "react-router";
 // import { useHistory } from "react-router-dom";
-import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
+// import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -103,7 +103,7 @@ const ForumCard = ({ forum }) => {
   const [openUrgent, setOpenUrgent] = useState(false);
   const [answer, setAnswer] = useState("");
   const [answerForum] = useMutation(ANSWER_FORUM);
-  const { data } = useQuery(GET_ALL_FORUM);
+  // const { data } = useQuery(GET_ALL_FORUM);
 
   // const handleAnswerBackdrop = (e) => {
   //   e.preventDefault();
