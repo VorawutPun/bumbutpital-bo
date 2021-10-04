@@ -13,11 +13,11 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
-  InputLabel,
-  MenuItem,
+  // InputLabel,
+  // MenuItem,
   Radio,
   RadioGroup,
-  Select,
+  // Select,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -125,6 +125,7 @@ const AddContent = (props) => {
   const [pictureUrl, setPictureUrl] = useState("");
   // const [createAt, setCreateAt] = useState(Date());
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
+  const [contenttype, setContenttype] = useState("");
 
   // const submitHandler = (e) => {
   //   e.preventDefault();
@@ -158,20 +159,20 @@ const AddContent = (props) => {
   };
 
   //Publish Card
-  const [status, setStatus] = useState("");
-  const [visibility, setVisibility] = useState("");
-  const [publish, setPublish] = useState("");
+  // const [status, setStatus] = useState("");
+  // const [visibility, setVisibility] = useState("");
+  // const [publish, setPublish] = useState("");
   const [open, setOpen] = React.useState(false);
 
-  const handleStatusChange = (event) => {
-    setStatus(event.target.value);
-  };
-  const handleVisibilityChange = (event) => {
-    setVisibility(event.target.value);
-  };
-  const handlePublishChange = (event) => {
-    setPublish(event.target.value);
-  };
+  // const handleStatusChange = (event) => {
+  //   setStatus(event.target.value);
+  // };
+  // const handleVisibilityChange = (event) => {
+  //   setVisibility(event.target.value);
+  // };
+  // const handlePublishChange = (event) => {
+  //   setPublish(event.target.value);
+  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -228,6 +229,19 @@ const AddContent = (props) => {
   // }, []);
 
   // console.log(files);
+
+    const categoryItems = [
+    {
+      category: "Depression",
+    },
+    {
+      category: "Health",
+    },
+  ];
+
+  const handleChangeContentType = (event) => {
+    setContenttype(event.target.value);
+  };
 
   return (
     <div className={classes.root}>
@@ -289,7 +303,7 @@ const AddContent = (props) => {
             gutterBottom
             className={classes.textTitle}
           >
-            Picture URL :P
+            Picture URL
           </Typography>
           <TextField
             className={classes.field}
@@ -362,7 +376,7 @@ const AddContent = (props) => {
               className={classes.header}
             />
             <CardContent className={classes.content}>
-              <Grid
+              {/* <Grid
                 container
                 direction="row"
                 justifyContent="flex-start"
@@ -451,7 +465,7 @@ const AddContent = (props) => {
                     <MenuItem value={1}>in 1 hour</MenuItem>
                   </Select>
                 </FormControl>
-              </Grid>
+              </Grid> */}
               <Button size="medium" color="primary" onClick={handleToggle}>
                 Preview Changes
               </Button>
@@ -476,6 +490,7 @@ const AddContent = (props) => {
                       description: description,
                       pictureUrl: pictureUrl,
                       appropiatePHQSeverity: appropiatePHQSeverity,
+                      contenttype: contenttype,
                     },
                   });
                   history.push("/contents");
@@ -485,7 +500,36 @@ const AddContent = (props) => {
               </Button>
             </CardActions>
           </Card>
-          {/* <SelectCategoryCard /> */}
+          {/* <SelectCategoryCard setContenttype={setContenttype}/> */}
+          <Card className={classes.cardRoot}>
+            <CardHeader
+              title={
+                <Typography className={classes.cardTitle}>
+                  Categories
+                </Typography>
+              }
+              className={classes.header}
+            />
+            <CardContent>
+              <FormControl component="fieldset">
+                <RadioGroup
+                  aria-label="category"
+                  name="category"
+                  value={contenttype}
+                  onChange={handleChangeContentType}
+                >
+                  {categoryItems.map((item) => (
+                    <FormControlLabel
+                      key={item.category}
+                      value={item.category}
+                      control={<Radio color="primary" />}
+                      label={item.category}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            </CardContent>
+          </Card>
 
           {/* <SelectDepressionCard
             onChange={(e) => {

@@ -117,7 +117,10 @@ const ManageContent = () => {
                   </TableCell>
                   <TableCell align="left">{content.title}</TableCell>
                   {/* <TableCell align="left">{content.description}</TableCell> */}
-                  <TableCell align="left">{content.updateTime}</TableCell>
+                  <TableCell align="left">
+                    {" "}
+                    {new Date(content.updateTime).toLocaleDateString()}
+                  </TableCell>
                   <TableCell align="left">
                     <Avatar
                       alt="Remy Sharp"
@@ -125,7 +128,9 @@ const ManageContent = () => {
                       style={{ width: 56, height: 56 }}
                     />
                   </TableCell>
-                  <TableCell align="left">{content.createAt}</TableCell>
+                  <TableCell align="left">
+                    {new Date(content.createAt).toLocaleDateString()}
+                  </TableCell>
                   <TableCell align="left">
                     {content.appropiatePHQSeverity}
                   </TableCell>

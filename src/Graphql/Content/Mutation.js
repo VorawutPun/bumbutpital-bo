@@ -6,18 +6,21 @@ export const CREATE_CONTENT = gql`
     $description: String!
     $pictureUrl: String!
     $appropiatePHQSeverity: String!
+    $contenttype: String!
   ) {
     createContent(
       title: $title
       description: $description
       pictureUrl: $pictureUrl
       appropiatePHQSeverity: $appropiatePHQSeverity
+      contenttype: $contenttype
     ) {
       contentID
       title
       description
       pictureUrl
       appropiatePHQSeverity
+      contenttype
     }
   }
 `;
