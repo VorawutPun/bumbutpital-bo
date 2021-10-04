@@ -151,6 +151,7 @@ const AddPromotion = () => {
             Expired Date:
           </Typography>
           <TextField
+            type="datetime-local"  
             className={classes.field}
             fullWidth
             placeholder="Expired date"

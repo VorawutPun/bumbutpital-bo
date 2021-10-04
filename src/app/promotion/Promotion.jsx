@@ -71,7 +71,7 @@ const ManagePromotion = () => {
   const classes = useStyles();
   const { data } = useQuery(GET_ALL_PROMOTION);
   const [deletePromotion] = useMutation(DELETE_PROMOTION);
-  
+
   const submitHandler = () => {
     history.push("/promotion/add");
   };
@@ -108,7 +108,7 @@ const ManagePromotion = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data && 
+            {data &&
               data.getAllPromotion.map((promotion) => (
                 <TableRow key={promotion.promotionId}>
                   <TableCell component="th" scope="row">
@@ -116,7 +116,9 @@ const ManagePromotion = () => {
                   </TableCell>
                   <TableCell align="left">{promotion.title}</TableCell>
                   <TableCell align="left">{promotion.hospitalDetail}</TableCell>
-                  <TableCell align="left">{promotion.createAt}</TableCell>
+                  <TableCell align="left">
+                    {new Date(promotion.createAt).toLocaleDateString()}
+                  </TableCell>
                   <TableCell align="left">
                     <Avatar
                       alt="Remy Sharp"
