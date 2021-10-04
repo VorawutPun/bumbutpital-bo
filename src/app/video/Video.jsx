@@ -118,7 +118,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 const ManageVideo = (props) => {
-  const classes= useStyles();
+  const classes = useStyles();
   const [createVideo] = useMutation(CREATE_VIDEO);
   const { data } = useQuery(GET_ALL_VIDEO);
   const [deleteVideo] = useMutation(DELETE_VIDEO);
@@ -156,7 +156,6 @@ const ManageVideo = (props) => {
     setOpen(false);
   };
 
-
   const depressionSeverity = [
     {
       severity: "Minimal Depression",
@@ -181,7 +180,7 @@ const ManageVideo = (props) => {
 
   return (
     <div className={classes.root}>
-            <Typography
+      <Typography
         className={classes.addTitle}
         gutterBottom
         variant="h1"
@@ -315,13 +314,15 @@ const ManageVideo = (props) => {
                     </div>
                   </TableCell>
                   <TableCell align="left">
-                  <Avatar
+                    <Avatar
                       alt="Remy Sharp"
                       src={video.pictureUrl}
                       style={{ width: 56, height: 56 }}
                     />
-                    </TableCell>
-                  <TableCell align="left">{video.createAt}</TableCell>
+                  </TableCell>
+                  <TableCell align="left">
+                    {new Date(video.createAt).toLocaleDateString()}
+                  </TableCell>
                   <TableCell align="left">
                     {video.appropiatePHQSeverity}
                   </TableCell>
