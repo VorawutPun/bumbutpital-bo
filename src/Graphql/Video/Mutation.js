@@ -7,6 +7,7 @@ export const CREATE_VIDEO = gql`
     $pictureUrl: String!
     $appropiatePHQSeverity: String!
     $staffID: String!
+    $videoType: String!
   ) {
     createVideo(
       title: $title
@@ -14,6 +15,7 @@ export const CREATE_VIDEO = gql`
       pictureUrl: $pictureUrl
       appropiatePHQSeverity: $appropiatePHQSeverity
       staffID: $staffID
+      videoType: $videoType
     ) {
       videoID
       title
@@ -21,6 +23,7 @@ export const CREATE_VIDEO = gql`
       pictureUrl
       appropiatePHQSeverity
       staffID
+      videoType
     }
   }
 `;

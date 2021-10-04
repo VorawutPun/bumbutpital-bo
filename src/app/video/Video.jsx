@@ -128,6 +128,7 @@ const ManageVideo = (props) => {
   const [pictureUrl, setPictureUrl] = useState("");
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
   const [staffID /* setStaffID */] = useState("");
+  const [videoType, setVideoType] = useState("");
 
   const [open, setOpen] = useState(false);
   // const handleDelete = (id) => {
@@ -143,6 +144,7 @@ const ManageVideo = (props) => {
         pictureUrl: pictureUrl,
         appropiatePHQSeverity: appropiatePHQSeverity,
         staffID: staffID,
+        videoType: videoType,
       },
     });
     setOpen(false);
@@ -173,9 +175,22 @@ const ManageVideo = (props) => {
       severity: "Severe Depression",
     },
   ];
-  // const [value, setValue] = useState("Depression");
+
+  const categoryItems = [
+    {
+      category: "Depression",
+    },
+    {
+      category: "Health",
+    },
+  ];
+
   const handleChangeSeverity = (event) => {
     setAppropiatePHQSeverity(event.target.value);
+  };
+
+  const handleChangeCategory = (event) => {
+    setVideoType(event.target.value);
   };
 
   return (
@@ -244,6 +259,25 @@ const ManageVideo = (props) => {
                   setPictureUrl(e.target.value);
                 }}
               />
+              <Typography className={classes.title}>
+                Category
+              </Typography>
+              <FormControl component="fieldset">
+                <RadioGroup
+                  aria-label="category"
+                  name="category"
+                  value={videoType}
+                  onChange={handleChangeCategory}
+                >
+                  {categoryItems.map((item) => (
+                    <FormControlLabel
+                      value={item.category}
+                      control={<Radio color="primary" />}
+                      label={item.category}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
               <Typography className={classes.title}>
                 Depression Severity
               </Typography>
