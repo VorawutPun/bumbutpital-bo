@@ -33,6 +33,7 @@ import PreviewChange from "../../components/addContentCard/PreviewChange";
 import { CREATE_CONTENT } from "../../Graphql/Content/Mutation";
 
 import { useMutation } from "@apollo/client";
+import { GET_ALL_CONTENT } from "../../Graphql/Content/Queries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -118,27 +119,14 @@ const AddContent = (props) => {
   const history = useHistory();
   // const [image, setImage] = useState();
 
-  const [createContent] = useMutation(CREATE_CONTENT);
+  const [createContent] = useMutation(CREATE_CONTENT, {
+    refetchQueries: [{ query: GET_ALL_CONTENT }],
+  });
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  // const [updateTime, setUpdateTime] = useState(Date());
   const [pictureUrl, setPictureUrl] = useState("");
-  // const [createAt, setCreateAt] = useState(Date());
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
   const [contenttype, setContenttype] = useState("");
-
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   createContent({
-  //     variables: {
-  //       title: title,
-  //       description: description,
-  //       pictureUrl: pictureUrl,
-  //       appropiatePHQSeverity: appropiatePHQSeverity,
-  //     },
-  //   });
-  //   props.history.push("/contents");
-  // };
 
   // const upload = () => {
   //   if (image == null) return;
@@ -230,7 +218,7 @@ const AddContent = (props) => {
 
   // console.log(files);
 
-    const categoryItems = [
+  const categoryItems = [
     {
       category: "Depression",
     },
@@ -470,7 +458,13 @@ const AddContent = (props) => {
                 Preview Changes
               </Button>
               <Backdrop className={classes.backdrop} open={open}>
-                <PreviewChange title={title} description={description} file={file} pictureUrl={pictureUrl} onClick={handleClose} />
+                <PreviewChange
+                  title={title}
+                  description={description}
+                  file={file}
+                  pictureUrl={pictureUrl}
+                  onClick={handleClose}
+                />
               </Backdrop>
             </CardContent>
             <CardActions className={classes.action}>

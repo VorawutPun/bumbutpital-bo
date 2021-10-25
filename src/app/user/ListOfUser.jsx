@@ -69,7 +69,9 @@ const ListOfUsers = () => {
   const classes = useStyles();
   const history = useHistory();
   const { data } = useQuery(GET_ALL_USERS);
-  const [deleteUser] = useMutation(DELETE_USER);
+  const [deleteUser] = useMutation(DELETE_USER, {
+    refetchQueries: [{ query: GET_ALL_USERS }],
+  });
 
   const submitHandler = () => {
     history.push("/createUser");

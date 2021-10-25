@@ -69,7 +69,9 @@ const ManageContent = () => {
   const classes = useStyles();
   const history = useHistory();
   const { data } = useQuery(GET_ALL_CONTENT);
-  const [deleteContent] = useMutation(DELETE_CONTENT);
+  const [deleteContent] = useMutation(DELETE_CONTENT, {
+    refetchQueries: [{ query: GET_ALL_CONTENT }],
+  });
 
   const submitHandler = () => {
     history.push("/createContent");

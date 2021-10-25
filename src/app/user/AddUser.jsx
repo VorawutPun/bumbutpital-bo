@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
 import { USER_REGISTER } from "../../Graphql/User/Mutation";
+import { GET_ALL_USERS } from "../../Graphql/User/Queries";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
@@ -66,7 +67,9 @@ const AddUser = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const [createUser] = useMutation(USER_REGISTER);
+  const [createUser] = useMutation(USER_REGISTER, {
+    refetchQueries: [{ query: GET_ALL_USERS }],
+  });
 
   const handleChange = (event) => {
     setValue(event.target.value);

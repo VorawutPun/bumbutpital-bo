@@ -16,6 +16,7 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import UrgentCard from "./UrgentCard";
 import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
 import { useMutation } from "@apollo/client";
+import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
 // import { useHistory } from "react-router";
 // import { useHistory } from "react-router-dom";
 // import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
@@ -102,7 +103,9 @@ const ForumCard = ({ forum }) => {
   // const [openAnswer, setOpenAnswer] = useState(false);
   const [openUrgent, setOpenUrgent] = useState(false);
   const [answer, setAnswer] = useState("");
-  const [answerForum] = useMutation(ANSWER_FORUM);
+  const [answerForum] = useMutation(ANSWER_FORUM, {
+    refetchQueries: [{ query: GET_ALL_FORUM }],
+  });
   // const { data } = useQuery(GET_ALL_FORUM);
 
   // const handleAnswerBackdrop = (e) => {

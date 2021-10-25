@@ -71,7 +71,9 @@ const ManageHospital = () => {
   const history = useHistory();
   const classes = useStyles();
   const { data } = useQuery(GET_ALL_HOSPITAL);
-  const [deleteHospital] = useMutation(DELETE_HOSPITAL);
+  const [deleteHospital] = useMutation(DELETE_HOSPITAL, {
+    refetchQueries: [{ query: GET_ALL_HOSPITAL }],
+  });
 
   const submitHandler = () => {
     history.push("/hospital/add");

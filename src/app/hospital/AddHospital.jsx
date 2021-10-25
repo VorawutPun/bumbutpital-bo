@@ -12,6 +12,7 @@ import UploadCard from "../../components/addContentCard/UploadCard";
 import { useMutation } from "@apollo/client";
 import { CREATE_HOSPITAL } from "../../Graphql/Hospital/Mutation";
 import { useHistory } from "react-router-dom";
+import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -64,7 +65,9 @@ const AddHospital = () => {
   const [hospitalDescription, setHospitalDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  const [createHospital] = useMutation(CREATE_HOSPITAL);
+  const [createHospital] = useMutation(CREATE_HOSPITAL, {
+    refetchQueries: [{ query: GET_ALL_HOSPITAL }],
+  });
 
   const submitHandler = (e) => {
     e.preventDefault();

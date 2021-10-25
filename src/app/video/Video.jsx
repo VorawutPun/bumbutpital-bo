@@ -119,9 +119,13 @@ const useStyles = makeStyles((theme) =>
 
 const ManageVideo = (props) => {
   const classes = useStyles();
-  const [createVideo] = useMutation(CREATE_VIDEO);
+  const [createVideo] = useMutation(CREATE_VIDEO, {
+    refetchQueries: [{ query: GET_ALL_VIDEO }],
+  });
   const { data } = useQuery(GET_ALL_VIDEO);
-  const [deleteVideo] = useMutation(DELETE_VIDEO);
+  const [deleteVideo] = useMutation(DELETE_VIDEO, {
+    refetchQueries: [{ query: GET_ALL_VIDEO }],
+  });
 
   const [title, setTitle] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
@@ -259,9 +263,7 @@ const ManageVideo = (props) => {
                   setPictureUrl(e.target.value);
                 }}
               />
-              <Typography className={classes.title}>
-                Category
-              </Typography>
+              <Typography className={classes.title}>Category</Typography>
               <FormControl component="fieldset">
                 <RadioGroup
                   aria-label="category"

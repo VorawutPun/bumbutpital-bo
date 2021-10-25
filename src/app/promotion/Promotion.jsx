@@ -70,7 +70,9 @@ const ManagePromotion = () => {
   const history = useHistory();
   const classes = useStyles();
   const { data } = useQuery(GET_ALL_PROMOTION);
-  const [deletePromotion] = useMutation(DELETE_PROMOTION);
+  const [deletePromotion] = useMutation(DELETE_PROMOTION, {
+    refetchQueries: [{ query: GET_ALL_PROMOTION }],
+  });
 
   const submitHandler = () => {
     history.push("/promotion/add");

@@ -11,6 +11,7 @@ import {
 import UploadCard from "../../components/addContentCard/UploadCard";
 import { useMutation } from "@apollo/client";
 import { CREATE_PROMOTION } from "../../Graphql/Promotion/Mutation";
+import { GET_ALL_PROMOTION } from "../../Graphql/Promotion/Query";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
@@ -67,7 +68,9 @@ const AddPromotion = () => {
   const [Url, setUrl] = useState("");
   const [expiredDate, setExpiredDate] = useState("")
 
-  const [createPromotion] = useMutation(CREATE_PROMOTION);
+  const [createPromotion] = useMutation(CREATE_PROMOTION, {
+    refetchQueries: [{ query: GET_ALL_PROMOTION }],
+  });
 
   const submitHandler = (e) => {
     e.preventDefault();
