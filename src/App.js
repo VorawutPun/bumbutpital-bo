@@ -68,7 +68,7 @@ function App() {
                   <Route path="/postCategories" component={ManageCategory} />
                   <Route path="/videos" component={ManageVideo} />
                   <Route path="/contents" component={ManageContent} />
-                  <Route path="/content/:id" component={EditContent} />
+                  <Route path="/content/:contentID" component={EditContent} />
                   <Route path="/createContent" component={AddContent} />
                   <Route path="/users" component={ListOfUsers} />
                   <Route path="/createUser" component={AddUser} />
