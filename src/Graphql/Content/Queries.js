@@ -13,3 +13,16 @@ export const GET_ALL_CONTENT = gql`
     }
   }
 `;
+
+export const GET_CONTENT = gql`
+  query getContent($contentID: ID!) {
+    getContent(contentID: $contentID) {
+      contentID
+      title
+      description
+      pictureUrl
+      appropiatePHQSeverity
+      contenttype
+    }
+  }
+`;
