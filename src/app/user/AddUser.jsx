@@ -97,7 +97,7 @@ const AddUser = () => {
   return (
     <div className={classes.root}>
       <Typography gutterBottom className={classes.title}>
-        Create Staff Account
+        Create Account
       </Typography>
       <Card className={classes.card} elevation={0}>
         <Typography gutterBottom className={classes.addUserTitle}>
@@ -185,33 +185,7 @@ const AddUser = () => {
             }}
           />
         </Paper>
-        <Typography gutterBottom className={classes.addUserTitle}>
-          Security
-        </Typography>
         <Paper className={classes.paper} elevation={0}>
-          <Typography gutterBottom className={classes.profileTitle}>
-            User Type Role:
-          </Typography>
-          <FormControl component="fieldset">
-            <RadioGroup
-              row
-              aria-label="userType"
-              name="role"
-              value={value}
-              onChange={handleChange}
-            >
-              <FormControlLabel
-                value="SystemAdministrator"
-                control={<Radio color="primary" />}
-                label="System Administrator"
-              />
-              <FormControlLabel
-                value="moph"
-                control={<Radio color="primary" />}
-                label="Ministry of Public Health Staff"
-              />
-            </RadioGroup>
-          </FormControl>
           <Typography gutterBottom className={classes.profileTitle}>
             Password:
           </Typography>
