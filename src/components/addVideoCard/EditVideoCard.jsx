@@ -66,7 +66,7 @@ const categoryItems = [
   },
 ];
 
-const AddVideoCard = (props) => {
+const EditVideoCard = (props) => {
   const classes = useStyles();
 
   const handleChangeSeverity = (event) => {
@@ -76,7 +76,6 @@ const AddVideoCard = (props) => {
   const handleChangeCategory = (event) => {
     props.setVideoType(event.target.value);
   };
-
   return (
     <Card>
       <CardHeader
@@ -176,4 +175,4 @@ const AddVideoCard = (props) => {
   );
 };
 
-export default AddVideoCard;
+export default EditVideoCard;

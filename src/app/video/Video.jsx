@@ -1,19 +1,10 @@
 import React, { useState } from "react";
 // import classes from "./Management.module.css";
-// import AddVideoCard from "../../components/addVideoCard/AddVideoCard";
-
+import AddVideoCard from "../../components/addVideoCard/AddVideoCard";
+import EditVideoCard from "../../components/addVideoCard/EditVideoCard";
 import {
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
   Dialog,
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  TextField,
   Typography,
   createStyles,
   makeStyles,
@@ -27,10 +18,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Avatar } from "@material-ui/core";
-
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_VIDEO, DELETE_VIDEO } from "../../Graphql/Video/Mutation";
-import { GET_ALL_VIDEO } from "../../Graphql/Video/Queries";
+import { GET_ALL_VIDEO, GET_VIDEO } from "../../Graphql/Video/Queries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -77,37 +67,9 @@ const useStyles = makeStyles((theme) =>
       width: "50px",
       height: "50px",
     },
-    // root: {
-    //   background: "#6367EA",
-    //   borderRadius: 5,
-    //   border: 0,
-    //   color: "white",
-    //   height: 36,
-    //   float: "right",
-    // },
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,
       color: "#fff",
-    },
-    backdropRoot: {
-      borderRadius: "14px",
-      width: "760px",
-    },
-    header: {
-      backgroundColor: "#6367EA",
-      padding: "16px",
-      color: "white",
-    },
-    title: {
-      fontSize: "16px",
-      fontWeight: 500,
-    },
-    action: {
-      padding: "16px",
-      justifyContent: "space-between",
-    },
-    field: {
-      marginBottom: "10px",
     },
     tableCell: {
       width: "300px",
@@ -118,11 +80,16 @@ const useStyles = makeStyles((theme) =>
 );
 
 const ManageVideo = (props) => {
+  const videoID = props.match.params.videoID;
   const classes = useStyles();
   const [createVideo] = useMutation(CREATE_VIDEO, {
     refetchQueries: [{ query: GET_ALL_VIDEO }],
   });
-  const { data } = useQuery(GET_ALL_VIDEO);
+  const { data } = useQuery(GET_ALL_VIDEO, GET_VIDEO, {
+    variables: {
+      videoID,
+    },
+  });
   const [deleteVideo] = useMutation(DELETE_VIDEO, {
     refetchQueries: [{ query: GET_ALL_VIDEO }],
   });
@@ -135,9 +102,6 @@ const ManageVideo = (props) => {
   const [videoType, setVideoType] = useState("");
 
   const [open, setOpen] = useState(false);
-  // const handleDelete = (id) => {
-  //   setData(data.filter((item) => item.id !== id));
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -162,41 +126,6 @@ const ManageVideo = (props) => {
     setOpen(false);
   };
 
-  const depressionSeverity = [
-    {
-      severity: "Minimal Depression",
-    },
-    {
-      severity: "Mild Depression",
-    },
-    {
-      severity: "Moderate Depression",
-    },
-    {
-      severity: "Moderately severe Depression",
-    },
-    {
-      severity: "Severe Depression",
-    },
-  ];
-
-  const categoryItems = [
-    {
-      category: "Depression",
-    },
-    {
-      category: "Health",
-    },
-  ];
-
-  const handleChangeSeverity = (event) => {
-    setAppropiatePHQSeverity(event.target.value);
-  };
-
-  const handleChangeCategory = (event) => {
-    setVideoType(event.target.value);
-  };
-
   return (
     <div className={classes.root}>
       <Typography
@@ -216,109 +145,14 @@ const ManageVideo = (props) => {
           Add Video
         </Button>
         <Dialog onClose={handleClose} open={open}>
-          {/* <AddVideoCard onClick={handleSubmit} /> */}
-          <Card>
-            <CardHeader
-              title={
-                <Typography className={classes.title}>
-                  Add Youtube Link
-                </Typography>
-              }
-              className={classes.header}
-            />
-            <CardContent>
-              <TextField
-                label="Title"
-                variant="outlined"
-                color="primary"
-                fullWidth
-                required
-                id="title"
-                className={classes.field}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              />
-              <TextField
-                label="Link"
-                variant="outlined"
-                color="primary"
-                fullWidth
-                required
-                id="link"
-                className={classes.field}
-                onChange={(e) => {
-                  setVideoUrl(e.target.value);
-                }}
-              />
-              <TextField
-                label="Picture Url"
-                variant="outlined"
-                color="primary"
-                fullWidth
-                required
-                id="pictureUrl"
-                className={classes.field}
-                onChange={(e) => {
-                  setPictureUrl(e.target.value);
-                }}
-              />
-              <Typography className={classes.title}>Category</Typography>
-              <FormControl component="fieldset">
-                <RadioGroup
-                  aria-label="category"
-                  name="category"
-                  value={videoType}
-                  onChange={handleChangeCategory}
-                >
-                  {categoryItems.map((item) => (
-                    <FormControlLabel
-                      value={item.category}
-                      control={<Radio color="primary" />}
-                      label={item.category}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-              <Typography className={classes.title}>
-                Depression Severity
-              </Typography>
-              <FormControl component="fieldset">
-                <RadioGroup
-                  aria-label="gender"
-                  name="gender1"
-                  value={appropiatePHQSeverity}
-                  onChange={handleChangeSeverity}
-                >
-                  {depressionSeverity.map((item) => (
-                    <FormControlLabel
-                      value={item.severity}
-                      control={<Radio color="primary" />}
-                      label={item.severity}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            </CardContent>
-            <CardActions className={classes.action}>
-              <Button
-                // variant="contained"
-                size="small"
-                color="secondary"
-                onClick={handleClose}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="contained"
-                size="small"
-                color="primary"
-                onClick={handleSubmit}
-              >
-                Post Link
-              </Button>
-            </CardActions>
-          </Card>
+          <AddVideoCard
+            onClick={handleSubmit}
+            setTitle={setTitle}
+            setVideoUrl={setVideoUrl}
+            setPictureUrl={setPictureUrl}
+            setAppropiatePHQSeverity={setAppropiatePHQSeverity}
+            setVideoType={setVideoType}
+          />
         </Dialog>
       </Typography>
       <TableContainer component={Paper}>
@@ -363,12 +197,24 @@ const ManageVideo = (props) => {
                     {video.appropiatePHQSeverity}
                   </TableCell>
                   <TableCell align="left">
-                    <Link
-                      to={"/video/" + video.id}
+                    <Button
                       className={classes.manageListDetail}
+                      onClick={() => {
+                        deleteVideo({ variables: { videoID: video.videoID } });
+                      }}
                     >
                       Edit
-                    </Link>
+                    </Button>
+                    <Dialog onClose={handleClose} open={open}>
+                      <EditVideoCard
+                        onClick={handleSubmit}
+                        setTitle={setTitle}
+                        setVideoUrl={setVideoUrl}
+                        setPictureUrl={setPictureUrl}
+                        setAppropiatePHQSeverity={setAppropiatePHQSeverity}
+                        setVideoType={setVideoType}
+                      />
+                    </Dialog>
                     <Button
                       className={classes.manageListDelete}
                       onClick={() => {

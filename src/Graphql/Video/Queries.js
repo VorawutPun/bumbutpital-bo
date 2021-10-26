@@ -13,3 +13,16 @@ query getAllVideo {
   }
 }
 `;
+
+export const GET_VIDEO = gql`
+query getVideo($videoID: ID!) {
+  getVideo(videoID: $videoID) {
+    title
+    videoUrl
+    pictureUrl
+    createAt
+    appropiatePHQSeverity
+    staffID
+  }
+}
+`;
