@@ -60,13 +60,13 @@ const useStyles = makeStyles((theme) =>
 const AddPromotion = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [hospitalId, /* setHospitalId */] = useState("");
-  const [userId, /* setUserId */] = useState("");
-  const [couponCode, /* setCouponCode */] = useState("");
+  const [hospitalId /* setHospitalId */] = useState("");
+  const [userId /* setUserId */] = useState("");
+  const [couponCode /* setCouponCode */] = useState("");
   const [title, setTitle] = useState("");
   const [hospitalDetail, setHospitalDetail] = useState("");
   const [Url, setUrl] = useState("");
-  const [expiredDate, setExpiredDate] = useState("")
+  const [expiredDate, setExpiredDate] = useState("");
 
   const [createPromotion] = useMutation(CREATE_PROMOTION, {
     refetchQueries: [{ query: GET_ALL_PROMOTION }],
@@ -154,7 +154,12 @@ const AddPromotion = () => {
             Expired Date:
           </Typography>
           <TextField
-            type="datetime-local"  
+            type="datetime-local"
+            InputProps={{
+              inputProps: {
+                min: new Date().toISOString().slice(0, -8),
+              },
+            }}
             className={classes.field}
             fullWidth
             placeholder="Expired date"
