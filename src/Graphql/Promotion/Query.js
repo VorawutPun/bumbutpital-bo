@@ -13,3 +13,16 @@ export const GET_ALL_PROMOTION = gql`
     }
   }
 `;
+
+export const GET_PROMOTION = gql`
+query getPromotion($promotionId: ID!) {
+  getPromotion(promotionId: $promotionId) {
+    hospitalId
+    createAt
+    title
+    hospitalDetail
+    Url
+    expiredDate
+  }
+}
+`;

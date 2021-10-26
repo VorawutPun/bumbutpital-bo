@@ -177,7 +177,7 @@ const AddPromotion = () => {
             <Button
               color="secondary"
               size="large"
-              onclick={() => {
+              onClick={() => {
                 history.push("/promotions");
               }}
             >

@@ -131,12 +131,13 @@ const ManagePromotion = () => {
                     />
                   </TableCell>
                   <TableCell align="left">
-                    <Link
-                      to={"/user/" + promotion.promotionID}
+                    <Button
+                      component={Link}
+                      to={"/promotion/" + promotion.promotionId}
                       className={classes.manageListDetail}
                     >
                       View Detail
-                    </Link>
+                    </Button>
                     <Button
                       className={classes.manageListDelete}
                       onClick={() => {
