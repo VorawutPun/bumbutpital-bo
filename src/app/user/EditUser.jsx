@@ -206,7 +206,10 @@ const EditUser = (props) => {
                 </Paper>
               </Grid>
               <Grid item xs={6}>
-                <Chart appropiatePHQSeverity={user.appropiatePHQSeverity} />
+                <Chart
+                  appropiatePHQSeverity={user.appropiatePHQSeverity}
+                  appropiatePHQSeverityScore={user.appropiatePHQSeverityScore}
+                />
                 {/* will change later */}
                 {/* <OverviewInfo /> */}
                 {/* <ForumCard /> */}

@@ -15,7 +15,7 @@ const Chart = (props) => {
         nrOfLevels={5}
         colors={["#20CBFE", "#32D475", "#FFBC17", "#E76849", "#F14949"]}
         arcWidth={0.1}
-        percent={0.40}
+        percent={props.appropiatePHQSeverityScore/100}
         cornerRadius={4}
         arcPadding={0}
         style={chartStyle}
