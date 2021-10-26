@@ -3,12 +3,8 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Button,
   Card,
-  FormControl,
-  FormControlLabel,
   Grid,
   Paper,
-  Radio,
-  RadioGroup,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -59,7 +55,6 @@ const useStyles = makeStyles((theme) =>
 const AddUser = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [value, setValue] = useState("Basic User");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [username, setUserName] = useState("");
@@ -70,10 +65,6 @@ const AddUser = () => {
   const [createUser] = useMutation(USER_REGISTER, {
     refetchQueries: [{ query: GET_ALL_USERS }],
   });
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
 
   const submitHandler = (e) => {
     e.preventDefault();

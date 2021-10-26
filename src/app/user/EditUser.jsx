@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Avatar,
   Button,
-  FormControl,
-  FormControlLabel,
   Grid,
   Paper,
-  Radio,
-  RadioGroup,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -79,12 +75,6 @@ const EditUser = (props) => {
   const id = props.match.params.id;
   const classes = useStyles();
   const history = useHistory();
-
-  const [value, setValue] = useState("female");
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
 
   const { data } = useQuery(GET_USER, {
     variables: {
