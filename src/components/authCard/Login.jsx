@@ -5,8 +5,9 @@ import {
   Checkbox,
   makeStyles,
   TextField,
+  Link,
 } from "@material-ui/core";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { USER_LOGIN } from "../../Graphql/User/Mutation";
 
@@ -28,7 +29,7 @@ const Login = ({ onClick }) => {
   const [checked, setChecked] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [/* authError */, setAuthError] = useState(true);
+  const [, /* authError */ setAuthError] = useState(true);
 
   const [userLogin, { error }] = useMutation(USER_LOGIN);
 
