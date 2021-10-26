@@ -154,7 +154,7 @@ const AddHospital = () => {
             <Button
               color="secondary"
               size="large"
-              onclick={() => {
+              onClick={() => {
                 history.push("/promotions");
               }}
             >

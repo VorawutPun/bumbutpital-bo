@@ -124,12 +124,13 @@ const ManageHospital = () => {
                   </TableCell>
                   <TableCell align="left">{hospital.hospitalName}</TableCell>
                   <TableCell align="left">
-                    <Link
-                      to={"/user/" + hospital.hospitalID}
+                    <Button
+                      component={Link}
+                      to={"/hospital/" + hospital.hospitalID}
                       className={classes.manageListDetail}
                     >
                       View Detail
-                    </Link>
+                    </Button>
                     <Button
                       className={classes.manageListDelete}
                       onClick={() => {
