@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Backdrop,
@@ -27,12 +26,8 @@ import {
 // import SelectDepressionCard from "../../components/addContentCard/SelectDepressionCard";
 // import UploadCard from "../../components/addContentCard/UploadCard";
 import PreviewChange from "../../components/addContentCard/PreviewChange";
-// import "filepond/dist/filepond.min.css";
-// import storage from "../../firebase";
-
 import { GET_CONTENT } from "../../Graphql/Content/Queries";
-// import { gql } from "@apollo/client";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -116,7 +111,6 @@ const useStyles = makeStyles((theme) =>
 function EditContent(props) {
   const contentID = props.match.params.contentID;
   const classes = useStyles();
-  const history = useHistory();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState("");

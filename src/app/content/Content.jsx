@@ -137,12 +137,13 @@ const ManageContent = () => {
                     {content.appropiatePHQSeverity}
                   </TableCell>
                   <TableCell align="left">
-                    <Link
+                    <Button
+                      component={Link}
                       to={"/content/" + content.contentID}
                       className={classes.manageListDetail}
                     >
                       View Detail
-                    </Link>
+                    </Button>
                     <Button
                       className={classes.manageListDelete}
                       onClick={() => {
