@@ -122,12 +122,13 @@ const ListOfUsers = () => {
                   <TableCell align="left">{user.email}</TableCell>
                   <TableCell align="left">{user.phoneNumber}</TableCell>
                   <TableCell align="left">
-                    <Link
+                    <Button
+                      component={Link}
                       to={"/user/" + user.id}
                       className={classes.manageListDetail}
                     >
                       View Detail
-                    </Link>
+                    </Button>
                     <Button
                       className={classes.manageListDelete}
                       onClick={() => {
