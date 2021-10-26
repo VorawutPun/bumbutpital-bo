@@ -29,6 +29,8 @@ import { setContext } from "@apollo/client/link/context";
 import EditContent from "./app/content/EditContent";
 import ManageHospital from "./app/hospital/Hospital";
 import AddHospital from "./app/hospital/AddHospital";
+import EditPromotion from "./app/promotion/EditPromotion";
+import EditHospital from "./app/hospital/EditHospital";
 
 function App() {
   const httpLink = createHttpLink({
@@ -75,8 +77,10 @@ function App() {
                   <Route path="/user/:id" component={EditUser} />
                   <Route path="/promotions" component={ManagePromotion} />
                   <Route path="/promotion/add" component={AddPromotion} />
+                  <Route path="/promotion/:promotionId" component={EditPromotion} />
                   <Route path="/hospitals" component={ManageHospital} />
                   <Route path="/hospital/add" component={AddHospital} />
+                  <Route path="/hospital/:hospitalID" component={EditHospital} />
                 </Router>
               </Switch>
             </div>
