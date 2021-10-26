@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Chart.module.css";
 import GaugeChart from "react-gauge-chart";
 
-const Chart = () => {
+const Chart = (props) => {
   const chartStyle = {
     height: 243,
     width: 540,
@@ -10,7 +10,7 @@ const Chart = () => {
 
   return (
     <div className={classes.chart}>
-      <h3 className={classes.chartTitle}>Average depression of all users</h3>
+      <h3 className={classes.chartTitle}>{props.appropiatePHQSeverity}</h3>
       <GaugeChart
         nrOfLevels={5}
         colors={["#20CBFE", "#32D475", "#FFBC17", "#E76849", "#F14949"]}
