@@ -162,9 +162,6 @@ function EditContent(props) {
       severity: "Severe Depression",
     },
   ];
-  // const handleChangeSeverity = (event) => {
-  //   setAppropiatePHQSeverity(event.target.value);
-  // };
 
   const { data } = useQuery(GET_CONTENT, {
     variables: {
@@ -202,7 +199,8 @@ function EditContent(props) {
                 </Typography>
                 <TextField
                   className={classes.field}
-                  placeholder={content.title}
+                  placeholder="Title"
+                  defaultValue={content.title}
                   variant="outlined"
                   color="primary"
                   fullWidth
@@ -223,7 +221,8 @@ function EditContent(props) {
                 <TextField
                   className={classes.field}
                   // hiddenLabel
-                  placeholder={content.description}
+                  placeholder="Description"
+                  defaultValue={content.description}
                   variant="outlined"
                   color="primary"
                   fullWidth
@@ -245,7 +244,8 @@ function EditContent(props) {
                 </Typography>
                 <TextField
                   className={classes.field}
-                  placeholder={content.pictureUrl}
+                  placeholder="Picture Url"
+                  defaultValue={content.pictureUrl}
                   variant="outlined"
                   color="primary"
                   fullWidth
