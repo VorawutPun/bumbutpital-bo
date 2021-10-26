@@ -22,6 +22,8 @@ query getUser($id: ID!) {
     surname
     email
     phoneNumber
+    appropiatePHQSeverity
+    appropiatePHQSeverityScore
   }
 }
 `;
