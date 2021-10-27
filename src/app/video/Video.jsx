@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) =>
     root: {
       flex: "4",
       padding: "30px",
+      marginTop: "60px",
     },
     addTitle: {
       fontSize: "32px",

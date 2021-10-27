@@ -54,35 +54,35 @@ function App() {
       <ApolloProvider client={client}>
         <Router>
           <div className="App">
-            <Navbar />
+            {/* <Navbar /> */}
             <div className="container">
               <Switch>
                 <Route exact path="/" component={Authen} />
                 <Router>
-                  <Sidebar />
-                  <Route exact path="/home" component={Home} />
-                  <Route path="/forum" component={Forum} />
-                  <Route path="/contents" component={ManageContent} />
-                  <Route path="/content/:contentID" component={EditContent} />
-                  <Route path="/createContent" component={AddContent} />
-                  <Route path="/videos" component={ManageVideo} />
-                  <Route path="/createVideo" component={AddVideo} />
-                  <Route path="/video/:videoID" component={EditVideo} />
-                  <Route path="/users" component={ListOfUsers} />
-                  <Route path="/user/:id" component={EditUser} />
-                  <Route path="/createUser" component={AddUser} />
-                  <Route path="/promotions" component={ManagePromotion} />
-                  <Route path="/promotion/add" component={AddPromotion} />
-                  <Route
-                    path="/promotion/:promotionId"
-                    component={EditPromotion}
-                  />
-                  <Route path="/hospitals" component={ManageHospital} />
-                  <Route path="/hospital/add" component={AddHospital} />
-                  <Route
-                    path="/hospital/:hospitalID"
-                    component={EditHospital}
-                  />
+                  <Sidebar/>
+                    <Route exact path="/home" component={Home} />
+                    <Route path="/forum" component={Forum} />
+                    <Route path="/contents" component={ManageContent} />
+                    <Route path="/content/:contentID" component={EditContent} />
+                    <Route path="/createContent" component={AddContent} />
+                    <Route path="/videos" component={ManageVideo} />
+                    <Route path="/createVideo" component={AddVideo} />
+                    <Route path="/video/:videoID" component={EditVideo} />
+                    <Route path="/users" component={ListOfUsers} />
+                    <Route path="/user/:id" component={EditUser} />
+                    <Route path="/createUser" component={AddUser} />
+                    <Route path="/promotions" component={ManagePromotion} />
+                    <Route path="/promotion/add" component={AddPromotion} />
+                    <Route
+                      path="/promotion/:promotionId"
+                      component={EditPromotion}
+                    />
+                    <Route path="/hospitals" component={ManageHospital} />
+                    <Route path="/hospital/add" component={AddHospital} />
+                    <Route
+                      path="/hospital/:hospitalID"
+                      component={EditHospital}
+                    />
                 </Router>
               </Switch>
             </div>

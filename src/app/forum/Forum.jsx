@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       flex: "4",
+      marginTop: "60px",
     },
     title: {
       fontSize: "32px",
