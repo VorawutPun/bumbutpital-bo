@@ -113,7 +113,7 @@ const Forum = () => {
       </Grid>
       {data &&
         data.getAllForum.map((forum) => (
-            <ForumCard forum={forum}/>
+            <ForumCard forum={forum} key={forum}/>
         ))}
     </div>
   );
