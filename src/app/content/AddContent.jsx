@@ -34,6 +34,7 @@ import { CREATE_CONTENT } from "../../Graphql/Content/Mutation";
 
 import { useMutation } from "@apollo/client";
 import { GET_ALL_CONTENT } from "../../Graphql/Content/Queries";
+import { depressionSeverity, categoryItems } from "../../utils/util";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -170,23 +171,6 @@ const AddContent = (props) => {
   };
 
   //SelectDepressionCard
-  const depressionSeverity = [
-    {
-      severity: "Minimal Depression",
-    },
-    {
-      severity: "Mild Depression",
-    },
-    {
-      severity: "Moderate Depression",
-    },
-    {
-      severity: "Moderately severe Depression",
-    },
-    {
-      severity: "Severe Depression",
-    },
-  ];
   // const [value, setValue] = useState("Depression");
   const handleChangeSeverity = (event) => {
     setAppropiatePHQSeverity(event.target.value);
@@ -217,15 +201,6 @@ const AddContent = (props) => {
   // }, []);
 
   // console.log(files);
-
-  const categoryItems = [
-    {
-      category: "Depression",
-    },
-    {
-      category: "Health",
-    },
-  ];
 
   const handleChangeContentType = (event) => {
     setContenttype(event.target.value);

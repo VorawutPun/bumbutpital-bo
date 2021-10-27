@@ -17,6 +17,7 @@ import { useMutation } from "@apollo/client";
 import { CREATE_VIDEO } from "../../Graphql/Video/Mutation";
 import { GET_ALL_VIDEO } from "../../Graphql/Video/Queries";
 import { useHistory } from "react-router-dom";
+import { depressionSeverity, categoryItems } from "../../utils/util";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -60,33 +61,6 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
-const depressionSeverity = [
-  {
-    severity: "Minimal Depression",
-  },
-  {
-    severity: "Mild Depression",
-  },
-  {
-    severity: "Moderate Depression",
-  },
-  {
-    severity: "Moderately severe Depression",
-  },
-  {
-    severity: "Severe Depression",
-  },
-];
-
-const categoryItems = [
-  {
-    category: "Depression",
-  },
-  {
-    category: "Health",
-  },
-];
 
 const AddVideo = () => {
   const classes = useStyles();
@@ -187,7 +161,7 @@ const AddVideo = () => {
           <div className={classes.uploadCard}>
             <UploadCard />
           </div>
-          <Typography className={classes.title}>Category</Typography>
+          <Typography className={classes.profileTitle}>Category</Typography>
           <FormControl component="fieldset">
             <RadioGroup
               aria-label="category"
@@ -205,7 +179,7 @@ const AddVideo = () => {
               ))}
             </RadioGroup>
           </FormControl>
-          <Typography className={classes.title}>Depression Severity</Typography>
+          <Typography className={classes.profileTitle}>Depression Severity</Typography>
           <FormControl component="fieldset">
             <RadioGroup
               aria-label="gender"
