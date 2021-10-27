@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) =>
     root: {
       flexGrow: 1,
       padding: "32px",
-      marginTop: "60px"
+      marginTop: "60px",
     },
     title: {
       fontSize: "32px",
@@ -444,8 +444,14 @@ const AddContent = (props) => {
               </Backdrop>
             </CardContent>
             <CardActions className={classes.action}>
-              <Button size="small" color="secondary">
-                Move to Trash
+              <Button
+                size="small"
+                color="secondary"
+                onClick={() => {
+                  history.push("/contents");
+                }}
+              >
+                cancel
               </Button>
               <Button
                 variant="contained"
