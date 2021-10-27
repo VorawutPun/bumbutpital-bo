@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 // import classes from "./Management.module.css";
-import AddVideoCard from "../../components/addVideoCard/AddVideoCard";
-import EditVideoCard from "../../components/addVideoCard/EditVideoCard";
 import {
   Button,
-  Dialog,
   Typography,
   createStyles,
   makeStyles,
@@ -19,8 +16,9 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Avatar } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_VIDEO, DELETE_VIDEO } from "../../Graphql/Video/Mutation";
-import { GET_ALL_VIDEO, GET_VIDEO } from "../../Graphql/Video/Queries";
+import { DELETE_VIDEO } from "../../Graphql/Video/Mutation";
+import { GET_ALL_VIDEO } from "../../Graphql/Video/Queries";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -63,67 +61,20 @@ const useStyles = makeStyles((theme) =>
       height: 36,
       float: "right",
     },
-    navLogo: {
-      width: "50px",
-      height: "50px",
-    },
-    backdrop: {
-      zIndex: theme.zIndex.drawer + 1,
-      color: "#fff",
-    },
-    tableCell: {
-      width: "300px",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-    },
   })
 );
 
 const ManageVideo = (props) => {
-  const videoID = props.match.params.videoID;
   const classes = useStyles();
-  const [createVideo] = useMutation(CREATE_VIDEO, {
-    refetchQueries: [{ query: GET_ALL_VIDEO }],
-  });
-  const { data } = useQuery(GET_ALL_VIDEO, GET_VIDEO, {
-    variables: {
-      videoID,
-    },
-  });
+  const history = useHistory();
+  // const videoID = props.match.params.videoID;
+  const { data } = useQuery(GET_ALL_VIDEO);
   const [deleteVideo] = useMutation(DELETE_VIDEO, {
     refetchQueries: [{ query: GET_ALL_VIDEO }],
   });
 
-  const [title, setTitle] = useState("");
-  const [videoUrl, setVideoUrl] = useState("");
-  const [pictureUrl, setPictureUrl] = useState("");
-  const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
-  const [staffID /* setStaffID */] = useState("");
-  const [videoType, setVideoType] = useState("");
-
-  const [open, setOpen] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createVideo({
-      variables: {
-        title: title,
-        videoUrl: videoUrl,
-        pictureUrl: pictureUrl,
-        appropiatePHQSeverity: appropiatePHQSeverity,
-        staffID: staffID,
-        videoType: videoType,
-      },
-    });
-    setOpen(false);
-  };
-
-  const handleToggle = () => {
-    setOpen(!open);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+  const submitHandler = () => {
+    history.push("/createVideo");
   };
 
   return (
@@ -140,20 +91,10 @@ const ManageVideo = (props) => {
           color="primary"
           size="large"
           className={classes.titleButton}
-          onClick={handleToggle}
+          onClick={submitHandler}
         >
           Add Video
         </Button>
-        <Dialog onClose={handleClose} open={open}>
-          <AddVideoCard
-            onClick={handleSubmit}
-            setTitle={setTitle}
-            setVideoUrl={setVideoUrl}
-            setPictureUrl={setPictureUrl}
-            setAppropiatePHQSeverity={setAppropiatePHQSeverity}
-            setVideoType={setVideoType}
-          />
-        </Dialog>
       </Typography>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
@@ -178,7 +119,7 @@ const ManageVideo = (props) => {
                   <TableCell align="left">{video.title}</TableCell>
                   <TableCell align="left">
                     <div className={classes.tableCell}>
-                      <Typography variant="body2" nowrap>
+                      <Typography variant="body2">
                         <Link href={video.videoUrl}>{video.videoUrl}</Link>
                       </Typography>
                     </div>
@@ -205,16 +146,6 @@ const ManageVideo = (props) => {
                     >
                       Edit
                     </Button>
-                    <Dialog onClose={handleClose} open={open}>
-                      <EditVideoCard
-                        onClick={handleSubmit}
-                        setTitle={setTitle}
-                        setVideoUrl={setVideoUrl}
-                        setPictureUrl={setPictureUrl}
-                        setAppropiatePHQSeverity={setAppropiatePHQSeverity}
-                        setVideoType={setVideoType}
-                      />
-                    </Dialog>
                     <Button
                       className={classes.manageListDelete}
                       onClick={() => {
