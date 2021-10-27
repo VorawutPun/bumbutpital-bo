@@ -18,7 +18,7 @@ import { Avatar } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
 import { DELETE_VIDEO } from "../../Graphql/Video/Mutation";
 import { GET_ALL_VIDEO } from "../../Graphql/Video/Queries";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -67,7 +67,6 @@ const useStyles = makeStyles((theme) =>
 const ManageVideo = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  // const videoID = props.match.params.videoID;
   const { data } = useQuery(GET_ALL_VIDEO);
   const [deleteVideo] = useMutation(DELETE_VIDEO, {
     refetchQueries: [{ query: GET_ALL_VIDEO }],
@@ -139,12 +138,11 @@ const ManageVideo = (props) => {
                   </TableCell>
                   <TableCell align="left">
                     <Button
+                      component={RouterLink}
+                      to={"/video/" + video.videoID}
                       className={classes.manageListDetail}
-                      onClick={() => {
-                        deleteVideo({ variables: { videoID: video.videoID } });
-                      }}
                     >
-                      Edit
+                      View Detail
                     </Button>
                     <Button
                       className={classes.manageListDelete}

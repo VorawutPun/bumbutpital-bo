@@ -23,6 +23,7 @@ query getVideo($videoID: ID!) {
     createAt
     appropiatePHQSeverity
     staffID
+    videoType
   }
 }
 `;

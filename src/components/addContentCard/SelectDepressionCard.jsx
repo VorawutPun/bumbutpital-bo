@@ -10,6 +10,7 @@ import {
   RadioGroup,
   Typography,
 } from "@material-ui/core";
+import { depressionSeverity } from "../../utils/util";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -31,28 +32,9 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const SelectDepressionCard = () => {
-  const depressionSeverity = [
-    {
-      severity: "Minimal Depression",
-    },
-    {
-      severity: "Mild Depression",
-    },
-    {
-      severity: "Moderate Depression",
-    },
-    {
-      severity: "Moderately severe Depression",
-    },
-    {
-      severity: "Severe Depression",
-    },
-  ];
-
+const SelectDepressionCard = (props) => {
   const classes = useStyles();
-
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState(props.appropiatePHQSeverity);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -68,13 +50,14 @@ const SelectDepressionCard = () => {
       <CardContent>
         <FormControl component="fieldset">
           <RadioGroup
-            aria-label="gender"
-            name="gender1"
+            aria-label="depressionSeverity"
+            name="depressionSeverity"
             value={value}
             onChange={handleChange}
           >
             {depressionSeverity.map((item) => (
               <FormControlLabel
+                key={item.severity}
                 value={item.severity}
                 control={<Radio color="primary" />}
                 label={item.severity}

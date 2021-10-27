@@ -1,19 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
-  // Button,
   Card,
-  // CardActions,
   CardContent,
   CardHeader,
   FormControl,
   FormControlLabel,
   Radio,
-  // Paper,
-  Typography,
   RadioGroup,
+  Typography,
 } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
-// import { Add } from "@material-ui/icons";
+import { categoryItems } from "../../utils/util";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -32,66 +29,31 @@ const useStyles = makeStyles((theme) =>
       fontSize: "16px",
       fontWeight: 600,
     },
-    content: {
-      alignItems: "center",
-    },
-    contentTitle: {
-      fontSize: "14px",
-      fontWeight: 600,
-      textDecoration: "underline",
-      textDecorationThickness: "6px",
-      textDecorationColor: "#FFB55E",
-      "&:hover": {
-        textDecoration: "none",
-      },
-    },
-    paper: {
-      padding: "0px 12px",
-    },
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 100,
-    },
-    action: {
-      padding: "0px 16px 16px 16px",
-    },
-    button: {
-      color: "#6367EA",
-    },
   })
 );
 
 const SelectCategoryCard = (props) => {
-
-  const categoryItems = [
-    {
-      category: "Depression",
-    },
-    {
-      category: "Health",
-    },
-  ];
-
   const classes = useStyles();
+  const [videoValue, setVideoValue] = useState(props.videoType);
 
-  const handleChange = (event) => {
-    props.setContenttype(event.target.value);
+  const handleChange = (e) => {
+    setVideoValue(e.target.value);
   };
 
   return (
     <Card className={classes.root}>
       <CardHeader
-        title={<Typography className={classes.title}>Categories</Typography>}
+        title={
+          <Typography className={classes.title}>Categories</Typography>
+        }
         className={classes.header}
       />
-      <CardContent className={classes.content}>
-        {/* <Typography className={classes.contentTitle}>All Categories</Typography> */}
-
-        <FormControl component="fieldset" className={classes.formControl}>
+      <CardContent>
+        <FormControl component="fieldset">
           <RadioGroup
-            aria-label="gender"
-            name="gender1"
-            // value={value}
+            aria-label="category"
+            name="category"
+            value={videoValue}
             onChange={handleChange}
           >
             {categoryItems.map((item) => (
@@ -105,12 +67,6 @@ const SelectCategoryCard = (props) => {
           </RadioGroup>
         </FormControl>
       </CardContent>
-      {/* <CardActions className={classes.action}>
-          <Button size="small" className={classes.button}>
-            <Add />
-            Add New Category
-          </Button>
-        </CardActions> */}
     </Card>
   );
 };
