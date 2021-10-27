@@ -11,17 +11,14 @@ import {
 } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core";
 import clsx from "clsx";
-import ReorderIcon from "@material-ui/icons/Reorder";
-import AddIcon from "@material-ui/icons/Add";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import MenuIcon from "@material-ui/icons/Menu";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-// import classes from "./Sidebar.module.css";
+import { menuItems } from "../../utils/util";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => {
@@ -58,6 +55,7 @@ const useStyles = makeStyles((theme) => {
     },
     drawer: {
       width: drawerWidth,
+      fontWeight: 600,
     },
     drawerPaper: {
       background: "#ecf2ff",
@@ -74,6 +72,7 @@ const useStyles = makeStyles((theme) => {
     active: {
       color: "black",
       backgroundColor: "#CEDEFF",
+      fontWeight: 500,
     },
     title: {
       padding: theme.spacing(2),
@@ -99,7 +98,7 @@ const useStyles = makeStyles((theme) => {
       height: "50px",
       marginRight: "8px",
       borderRadius: "10px",
-    },
+    }
   };
 });
 
@@ -117,37 +116,6 @@ const Sidebar = ({ children }) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  const menuItems = [
-    {
-      text: "Dashboard",
-      path: "/home",
-    },
-    {
-      text: "Manage Contents",
-      path: "/contents",
-    },
-    {
-      text: "Manage Videos",
-      path: "/videos",
-    },
-    {
-      text: "Manage Users",
-      path: "/users",
-    },
-    {
-      text: "Manage Promotions",
-      path: "/promotions",
-    },
-    {
-      text: "Manage Hospitals",
-      path: "/hospitals",
-    },
-    {
-      text: "Forum",
-      path: "/forum",
-    },
-  ];
 
   return (
     <div className={classes.root}>
@@ -223,37 +191,6 @@ const Sidebar = ({ children }) => {
         <div className={classes.drawerHeader} />
       </main>
     </div>
-    // <div className={classes.sidebar}>
-    //   <div className={classes.sidebarWrapper}>
-    //     <div className={classes.sidebarMenu}>
-    //       <ul className={classes.sidebarList}>
-    //         <Link to="/home" className={classes.sidebarLink}>
-    //           <li className={classes.sidebarListItem} active>
-    //             Dashboard
-    //           </li>
-    //         </Link>
-    //         <Link to="/contents" className={classes.sidebarLink}>
-    //           <li className={classes.sidebarListItem}>Manage Posts</li>
-    //         </Link>
-    //         <Link to="/videos" className={classes.sidebarLink}>
-    //           <li className={classes.sidebarListItem}>Manage Video</li>
-    //         </Link>
-    //         <Link to="/users" className={classes.sidebarLink}>
-    //           <li className={classes.sidebarListItem}>Manage Users</li>
-    //         </Link>
-    //         <Link to="/promotions" className={classes.sidebarLink}>
-    //           <li className={classes.sidebarListItem}>Manage Promotion</li>
-    //         </Link>
-    //         <Link to="/hospitals" className={classes.sidebarLink}>
-    //           <li className={classes.sidebarListItem}>Manage Hospital</li>
-    //         </Link>
-    //         <Link to="/forum" className={classes.sidebarLink}>
-    //           <li className={classes.sidebarListItem}>Forum</li>
-    //         </Link>
-    //       </ul>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

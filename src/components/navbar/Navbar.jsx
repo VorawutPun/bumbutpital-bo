@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./Navbar.module.css";
 
-const Navbar = (props) => {
+const Navbar = ({ children }) => {
   return (
     <div className={classes.navbar}>
       <div className={classes.navbarWrapper}>
@@ -28,6 +28,7 @@ const Navbar = (props) => {
           Username
         </div> */}
       </div>
+      { children }
     </div>
   );
 };
