@@ -15,6 +15,11 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) =>
@@ -22,7 +27,7 @@ const useStyles = makeStyles((theme) =>
     root: {
       flex: "4",
       padding: "30px",
-      marginTop: "60px"
+      marginTop: "60px",
     },
     addTitle: {
       fontSize: "32px",
@@ -69,6 +74,16 @@ const useStyles = makeStyles((theme) =>
 const ManageContent = () => {
   const classes = useStyles();
   const history = useHistory();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const { data } = useQuery(GET_ALL_CONTENT);
   const [deleteContent] = useMutation(DELETE_CONTENT, {
     refetchQueries: [{ query: GET_ALL_CONTENT }],
@@ -147,14 +162,33 @@ const ManageContent = () => {
                     </Button>
                     <Button
                       className={classes.manageListDelete}
-                      onClick={() => {
-                        deleteContent({
-                          variables: { contentID: content.contentID },
-                        });
-                      }}
+                      onClick={handleClickOpen}
                     >
                       Delete
                     </Button>
+                    <Dialog
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogTitle id="alert-dialog-title">
+                        {"Are you sure you want to delete?"}
+                      </DialogTitle>
+                      <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button
+                          onClick={() => {
+                            deleteContent({
+                              variables: { contentID: content.contentID },
+                            });
+                            setOpen(false);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
                   </TableCell>
                 </TableRow>
               ))}
