@@ -98,7 +98,10 @@ const useStyles = makeStyles((theme) => {
       height: "50px",
       marginRight: "8px",
       borderRadius: "10px",
-    }
+    },
+    icon: {
+      color: "black",
+    },
   };
 });
 
@@ -177,7 +180,7 @@ const Sidebar = ({ children }) => {
                 location.pathname === item.path ? classes.active : null
               }
             >
-              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemIcon className={classes.icon}>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItem>
           ))}
