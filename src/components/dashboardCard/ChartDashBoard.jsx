@@ -14,7 +14,7 @@ const ChartDashBoard = () => {
   return (
     <div className={classes.chart}>
       <h3 className={classes.chartTitle}>
-        Overall PHQ-9 score
+        Overall PHQ-9 score {data && data.totalPHQ9.toFixed(2)}
       </h3>
       <GaugeChart
         nrOfLevels={5}
