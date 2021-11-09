@@ -16,11 +16,26 @@ const ChartDashBoard = () => {
       <h3 className={classes.chartTitle}>
         Overall PHQ-9 score {data && data.totalPHQ9.toFixed(2)}
       </h3>
+      {data && data.totalPHQ9 >= 0 && data.totalPHQ9 <= 4 && (
+        <h3 className={classes.chartPHQ}>Minimal Depression</h3>
+      )}
+      {data && data.totalPHQ9 > 4 && data.totalPHQ9 <= 9 && (
+        <h3 className={classes.chartPHQ}>Mild Depression</h3>
+      )}
+      {data && data.totalPHQ9 > 9 && data.totalPHQ9 <= 14 && (
+        <h3 className={classes.chartPHQ}>Moderate Depression</h3>
+      )}
+      {data && data.totalPHQ9 > 14 && data.totalPHQ9 <= 19 && (
+        <h3 className={classes.chartPHQ}>Moderately severe Depression</h3>
+      )}
+      {data && data.totalPHQ9 > 19 && data.totalPHQ9 <= 27 && (
+        <h3 className={classes.chartPHQ}>Severe Depression</h3>
+      )}
       <GaugeChart
         nrOfLevels={5}
         colors={["#20CBFE", "#32D475", "#FFBC17", "#E76849", "#F14949"]}
         arcWidth={0.1}
-        percent={data && data.totalPHQ9 / 100}
+        percent={data && data.totalPHQ9 / 27}
         hideText
         cornerRadius={4}
         arcPadding={0}
