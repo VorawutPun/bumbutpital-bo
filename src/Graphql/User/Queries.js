@@ -33,3 +33,8 @@ export const COUNT_USER = gql`
     countUser
   }
 `
+export const TOTAL_PHQ9 = gql`
+  query {
+    totalPHQ9
+  }
+`
