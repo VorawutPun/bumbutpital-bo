@@ -25,3 +25,9 @@ export const GET_CONTENT = gql`
     }
   }
 `;
+
+export const COUNT_CONTENT = gql`
+  query {
+    countContent
+  }
+`

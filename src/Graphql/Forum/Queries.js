@@ -13,3 +13,9 @@ export const GET_ALL_FORUM = gql`
     }
   }
 `;
+
+export const COUNT_FORUM = gql`
+  query {
+    countForum
+  }
+`

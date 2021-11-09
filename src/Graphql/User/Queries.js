@@ -27,3 +27,9 @@ query getUser($id: ID!) {
   }
 }
 `;
+
+export const COUNT_USER = gql`
+  query {
+    countUser
+  }
+`

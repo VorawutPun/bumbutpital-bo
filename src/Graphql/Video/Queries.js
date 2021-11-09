@@ -27,3 +27,10 @@ query getVideo($videoID: ID!) {
   }
 }
 `;
+
+
+export const COUNT_VIDEO = gql`
+  query {
+    countVideo
+  }
+`
