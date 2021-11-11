@@ -20,22 +20,18 @@ const useStyles = makeStyles({
     height: 52,
     padding: "0 30px",
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    marginTop: "20px"
   },
 });
 
 const Login = ({ onClick }) => {
   const style = useStyles();
   const history = useHistory();
-  const [checked, setChecked] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [, /* authError */ setAuthError] = useState(true);
+  const [authError, setAuthError] = useState(true);
 
   const [userLogin, { error }] = useMutation(USER_LOGIN);
-
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
 
   if (error) {
     return <h1> {error} </h1>;
@@ -45,7 +41,7 @@ const Login = ({ onClick }) => {
       <h1 className={classes.authCardTitle}>Admin Login</h1>
       <div className={classes.authCardForm}>
         <div className={classes.authCardItem}>
-          <label>Username or Email</label>
+          <label>Username</label>
           <TextField
             required
             variant="outlined"
@@ -73,14 +69,6 @@ const Login = ({ onClick }) => {
             // error={authError}
             // helperText="Incorrect entry."
           />
-        </div>
-        <div className={classes.authCheckbox}>
-          <Checkbox
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ "aria-label": "primary checkbox" }}
-          />
-          <span>Remember me</span>
         </div>
         <Button
           variant="contained"
@@ -110,9 +98,7 @@ const Login = ({ onClick }) => {
         >
           Login
         </Button>
-        <Link onClick={onClick} className={classes.authLink}>
-          Sign Up
-        </Link>
+
       </div>
     </div>
   );

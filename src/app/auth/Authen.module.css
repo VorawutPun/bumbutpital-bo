@@ -5,7 +5,7 @@
   align-items: center;
   margin: 0 auto;
   padding-bottom: 300px;
-  padding-top: 72px;
+  /* padding-top: 72px; */
   background-color: #ecf2ff;
 }
 
@@ -26,7 +26,7 @@
   font-weight: 500;
 }
 
-.authenCard {
-  flex: 1px;
-  align-items: center;
-}
+/* .authenCard { */
+  /* flex: 1px; */
+  /* align-items: center; */
+/* } */
