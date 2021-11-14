@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       padding: "24px",
       justifyContent: "space-between",
+      marginRight: "48px",
     },
     question: {
       fontSize: "24px",
