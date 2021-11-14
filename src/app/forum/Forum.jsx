@@ -3,8 +3,8 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Grid, Typography } from "@material-ui/core";
 import ForumCard from "../../components/forumCard/ForumCard";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
-// import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
+import { GET_ALL_FORUM, COUNT_FORUM } from "../../Graphql/Forum/Queries";
+import { COUNT_USER } from "../../Graphql/User/Queries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -58,6 +58,8 @@ const useStyles = makeStyles((theme) =>
 const Forum = () => {
   const classes = useStyles();
   const { data } = useQuery(GET_ALL_FORUM);
+  const { data: countForum } = useQuery(COUNT_FORUM);
+  const { data: countUser } = useQuery(COUNT_USER);
 
   return (
     <div className={classes.root}>
@@ -82,7 +84,7 @@ const Forum = () => {
             gutterBottom
             className={classes.stat}
           >
-            12
+            {countForum && countForum.countForum}
           </Typography>
         </div>
 
@@ -95,7 +97,7 @@ const Forum = () => {
             gutterBottom
             className={classes.stat}
           >
-            12
+            {countUser && countUser.countUser}
           </Typography>
         </div>
       </Grid>
