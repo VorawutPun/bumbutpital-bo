@@ -20,6 +20,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { menuItems } from "../../utils/util";
 import { ApolloConsumer, useQuery } from "@apollo/client";
 import { GET_USER } from "../../Graphql/User/Queries";
+import { ExitToApp } from "@material-ui/icons";
 
 const drawerWidth = 240;
 
@@ -113,7 +114,7 @@ const Sidebar = () => {
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
-  const {client, data} = useQuery(GET_USER)
+  const { client, data } = useQuery(GET_USER);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -124,10 +125,10 @@ const Sidebar = () => {
   };
 
   const logout = () => {
-   window.localStorage.clear();
-   client.resetStore();
-   history.push("/")
-  }
+    window.localStorage.clear();
+    client.resetStore();
+    history.push("/");
+  };
 
   return (
     <div className={classes.root}>
@@ -193,11 +194,10 @@ const Sidebar = () => {
               <ListItemText primary={item.text} />
             </ListItem>
           ))}
-          <ListItem
-            button
-            onClick={logout}
-          >
-            <ListItemIcon className={classes.icon}></ListItemIcon>
+          <ListItem button onClick={logout}>
+            <ListItemIcon className={classes.icon}>
+              <ExitToApp />
+            </ListItemIcon>
             <ListItemText primary="test" />
           </ListItem>
         </List>
