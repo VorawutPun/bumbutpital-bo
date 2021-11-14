@@ -14,7 +14,7 @@ const ChartDashBoard = () => {
   return (
     <div className={classes.chart}>
       <h3 className={classes.chartTitle}>
-        Overall PHQ-9 score {data && data.totalPHQ9.toFixed(2)}
+        Average PHQ-9 score {data && data.totalPHQ9.toFixed(2)}
       </h3>
       {data && data.totalPHQ9 >= 0 && data.totalPHQ9 <= 4 && (
         <h3 className={classes.chartPHQ}>Minimal Depression</h3>

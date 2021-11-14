@@ -1,57 +1,91 @@
 import React from "react";
-import classes from "./ContentCard.module.css";
+import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import { red } from "@material-ui/core/colors";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-//have to deconstruct, will do later, lazy for
-const ContentCard = () => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    maxWidth: 500,
+    backgroundColor: "#ecf2ff",
+    borderRadius: "10px",
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%", // 16:9
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: "rotate(180deg)",
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+}));
+
+const ContentCard = (props) => {
+  const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   return (
-    <div className={classes.contentCard}>
-      <div className={classes.contentCardTitle}>Content</div>
-      <ul className={classes.contentCardList}>
-        <li className={classes.contentCardListItem}>
-          <img
-            src="https://icon-library.com/images/username-icon/username-icon-18.jpg"
-            alt=""
-            className={classes.avatar}
-          />
-          <div className={classes.contentDetail}>
-            <span className={classes.contentDetailTitle}>
-              Content About depression
-            </span>
-            <span className={classes.contentDetailAdmin}>By: MOPH Admin</span>
-            <span className={classes.contentBriefDetail}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </span>
-          </div>
-          <div className={classes.contentDate}>
-            <span className={classes.date}>30</span>
-            <span className={classes.month}>April</span>
-          </div>
-        </li>
-        <hr />
-        <li className={classes.contentCardListItem}>
-          <img
-            src="https://icon-library.com/images/username-icon/username-icon-18.jpg"
-            alt=""
-            className={classes.avatar}
-          />
-          <div className={classes.contentDetail}>
-            <span className={classes.contentDetailTitle}>
-              Content About depression
-            </span>
-            <span className={classes.contentDetailAdmin}>By: MOPH Admin</span>
-            <span className={classes.contentBriefDetail}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </span>
-          </div>
-          <div className={classes.contentDate}>
-            <span className={classes.date}>30</span>
-            <span className={classes.month}>April</span>
-          </div>
-        </li>
-      </ul>
-    </div>
+    <Card className={classes.root}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            {props.title.charAt(0)}
+          </Avatar>
+        }
+        title={props.title}
+        subheader={props.createAt}
+      />
+      <CardMedia
+        className={classes.media}
+        image={props.pictureURL}
+        title={props.title}
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p" noWrap>
+          {props.description}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography paragraph>{props.description}</Typography>
+        </CardContent>
+      </Collapse>
+    </Card>
   );
 };
 

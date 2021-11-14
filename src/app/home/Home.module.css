@@ -1,15 +1,29 @@
 .home {
-    flex: 4;
-    padding: 32px;
-    margin-top: 60px;
+  flex: 4;
+  padding: 32px;
+  margin-top: 60px;
 }
 
 .dashboardTitle {
-    font-size: 32px;
-    font-weight: 600;
+  font-size: 32px;
+  font-weight: 600;
 }
 
-.cards{
-    display: flex;
-    margin-top: 30px;
+.cards {
+  margin-top: 30px;
+}
+
+.grid {
+  margin-bottom: 10px;
+}
+
+.content {
+  margin-right: 10px;
+}
+
+.overview {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 0px 0px 0px;
 }
