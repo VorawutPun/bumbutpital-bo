@@ -15,12 +15,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+// import Dialog from "@material-ui/core/Dialog";
+// import DialogActions from "@material-ui/core/DialogActions";
+// import DialogContent from "@material-ui/core/DialogContent";
+// import DialogContentText from "@material-ui/core/DialogContentText";
+// import DialogTitle from "@material-ui/core/DialogTitle";
 import { Avatar } from "@material-ui/core";
+import DeleteDialog from "../../components/dialog/DeleteDialog";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -76,9 +77,9 @@ const ManageContent = () => {
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+ /*  const handleClickOpen = () => {
     setOpen(true);
-  };
+  }; */
 
   const handleClose = () => {
     setOpen(false);
@@ -162,22 +163,38 @@ const ManageContent = () => {
                     </Button>
                     <Button
                       className={classes.manageListDelete}
-                      onClick={handleClickOpen}
+                      onClick={() => {
+                        setOpen(true);
+                        console.log(content.contentID);
+                      }}
                     >
                       Delete
                     </Button>
-                    <Dialog
+                    <DeleteDialog
                       open={open}
                       onClose={handleClose}
-                      aria-labelledby="alert-dialog-title"
-                      aria-describedby="alert-dialog-description"
-                    >
-                      <DialogTitle id="alert-dialog-title">
+                      onClick={() => {
+                        deleteContent({
+                          variables: { contentID: content.contentID },
+                        });
+                        setOpen(false);
+                      }}
+                      title={content.title}
+                    />
+                    {/* <Dialog open={open} onClose={handleClose}>
+                      <DialogTitle>
                         {"Are you sure you want to delete?"}
                       </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          You are about to delete the content "{content.title}"
+                          and all its data. Do you want to continue?
+                        </DialogContentText>
+                      </DialogContent>
                       <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
                         <Button
+                          color="error"
                           onClick={() => {
                             deleteContent({
                               variables: { contentID: content.contentID },
@@ -188,7 +205,7 @@ const ManageContent = () => {
                           Delete
                         </Button>
                       </DialogActions>
-                    </Dialog>
+                    </Dialog> */}
                   </TableCell>
                 </TableRow>
               ))}
