@@ -2,7 +2,6 @@ import React from "react";
 import classes from "./Home.module.css";
 // import Chart from "../../components/dashboardCard/Chart";
 import ContentCard from "../../components/dashboardCard/ContentCard";
-import ForumCard from "../../components/dashboardCard/ForumCard";
 import OverviewInfo from "../../components/dashboardCard/OvervewInfo";
 import ChartDashBoard from "../../components/dashboardCard/ChartDashBoard";
 import { useQuery } from "@apollo/client";

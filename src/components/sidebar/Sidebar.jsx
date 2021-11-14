@@ -1,6 +1,6 @@
 import React from "react";
 // import { Link } from "react-router-dom";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   Drawer,
   Typography,
@@ -18,7 +18,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { menuItems } from "../../utils/util";
-import { ApolloConsumer, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_USER } from "../../Graphql/User/Queries";
 import { ExitToApp } from "@material-ui/icons";
 
@@ -114,7 +114,7 @@ const Sidebar = () => {
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
-  const { client, data } = useQuery(GET_USER);
+  const { client, /* data */ } = useQuery(GET_USER);
 
   const handleDrawerOpen = () => {
     setOpen(true);
