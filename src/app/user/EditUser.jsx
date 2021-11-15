@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { Person } from "@material-ui/icons";
 import { GET_USER } from "../../Graphql/User/Queries";
-import Chart from "../../components/dashboardCard/Chart";
+import Chart from "../../components/userProfile/Chart";
 // import ForumCard from "../../components/forumCard/ForumCard";
 // import OverviewInfo from "../../components/dashboardCard/OvervewInfo";
 import { useQuery } from "@apollo/client";

@@ -22,11 +22,12 @@ import ManageVideo from "./app/video/Video";
 import ManageContent from "./app/content/Content";
 import ManageHospital from "./app/hospital/Hospital";
 import ManagePromotion from "./app/promotion/Promotion";
-import EditUser from "./app/user/EditUser";
+// import EditUser from "./app/user/EditUser";
 import EditContent from "./app/content/EditContent";
 import EditPromotion from "./app/promotion/EditPromotion";
 import EditHospital from "./app/hospital/EditHospital";
 import EditVideo from "./app/video/EditVideo";
+import Profile from "./app/user/Profile";
 // import ManageUser from "./app/management/User";
 
 function App() {
@@ -69,7 +70,7 @@ function App() {
                     <Route path="/createVideo" component={AddVideo} />
                     <Route path="/video/:videoID" component={EditVideo} />
                     <Route path="/users" component={ListOfUsers} />
-                    <Route path="/user/:id" component={EditUser} />
+                    <Route path="/user/:id" component={Profile} />
                     <Route path="/createUser" component={AddUser} />
                     <Route path="/promotions" component={ManagePromotion} />
                     <Route path="/promotion/add" component={AddPromotion} />

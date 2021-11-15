@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./Chart.module.css";
+import classes from "../dashboardCard/Chart.module.css";
 import GaugeChart from "react-gauge-chart";
 
 const Chart = (props) => {
@@ -9,7 +9,7 @@ const Chart = (props) => {
   };
 
   return (
-    <div className={classes.chart}>
+    <div className={classes.userChart}>
       <h3 className={classes.chartTitle}>{props.appropiatePHQSeverity}{" "}{props.appropiatePHQSeverityScore}</h3>
       <GaugeChart
         nrOfLevels={5}
