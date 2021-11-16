@@ -71,7 +71,7 @@ const Profile = (props) => {
                 <CardContent>
                   <Typography className={classes.name} gutterBottom>
                     {user.name} {user.surname}
-                    <Chip label="Admin"/>
+                    <Chip label={user.role}/>
                   </Typography>
                   <Typography variant="h5" component="h2">
                     Email

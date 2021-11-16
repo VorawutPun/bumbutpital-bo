@@ -7,6 +7,10 @@ import {
   Paper,
   TextField,
   Typography,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
 import { USER_REGISTER } from "../../Graphql/User/Mutation";
@@ -62,6 +66,11 @@ const AddUser = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [role, setRole] = useState("");
+
+  const handleChangeRole = (event) => {
+    setRole(event.target.value);
+  };
 
   const [createUser] = useMutation(USER_REGISTER, {
     refetchQueries: [{ query: GET_ALL_USERS }],
@@ -77,6 +86,7 @@ const AddUser = () => {
         password: password,
         email: email,
         phoneNumber: phoneNumber,
+        role: role,
       },
     });
     history.push("/users");
@@ -176,6 +186,29 @@ const AddUser = () => {
               setPhoneNumber(e.target.value);
             }}
           />
+          <Typography gutterBottom className={classes.profileTitle}>
+          User Type Role:
+          </Typography>
+          <FormControl component="fieldset">
+            <RadioGroup
+              row
+              aria-label="userType"
+              name="gender1"
+              value={role}
+              onChange={handleChangeRole}
+            >
+              <FormControlLabel
+                value="SystemAdministrator"
+                control={<Radio color="primary" />}
+                label="System Administrator"
+              />
+              <FormControlLabel
+                value="moph"
+                control={<Radio color="primary" />}
+                label="Ministry of Public Health Staff"
+              />
+            </RadioGroup>
+          </FormControl>
         </Paper>
         <Paper className={classes.paper} elevation={0}>
           <Typography gutterBottom className={classes.profileTitle}>

@@ -8,6 +8,7 @@ export const USER_REGISTER = gql`
     $password: String!
     $email: String!
     $phoneNumber: String!
+    $role: String!
   ) {
     userRegister(
       name: $name
@@ -16,6 +17,7 @@ export const USER_REGISTER = gql`
       password: $password
       email: $email
       phoneNumber: $phoneNumber
+      role: $role
     ) {
       id
       name
@@ -24,6 +26,7 @@ export const USER_REGISTER = gql`
       password
       email
       phoneNumber
+      role
     }
   }
 `;
@@ -66,3 +69,16 @@ export const USER_LOGIN = gql`
   }
 `;
 
+export const STAFF_LOGIN = gql`
+mutation userLogin(
+  $username: String!
+  $password: String!
+) {
+  userLogin(
+    username: $username
+    password: $password
+  ) {
+    accessToken
+  }
+}
+`;

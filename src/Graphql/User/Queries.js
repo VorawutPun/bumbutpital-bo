@@ -24,6 +24,7 @@ query getUser($id: ID!) {
     phoneNumber
     appropiatePHQSeverity
     appropiatePHQSeverityScore
+    role
   }
 }
 `;
