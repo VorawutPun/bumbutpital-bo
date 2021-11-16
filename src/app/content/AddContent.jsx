@@ -315,20 +315,6 @@ const AddContent = (props) => {
             )}
             <Button>Upload</Button>
           </Card>
-          {/* <UploadCard
-            onChange={(e) => {
-              setImage(e.target.files[0]);
-            }}
-            onClick={upload}
-          /> */}
-          {/* <input
-            type="file"
-            onChange={(e) => {
-              setImage(e.target.files[0]);
-            }}
-          />
-          <button onClick={upload}>Upload</button> */}
-          {/* <button>Upload</button> */}
         </Grid>
         <Grid item xs={3}>
           {/* <PublishCard onClick={submitHandler} /> */}
@@ -340,96 +326,6 @@ const AddContent = (props) => {
               className={classes.header}
             />
             <CardContent className={classes.content}>
-              {/* <Grid
-                container
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="center"
-              >
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Status:
-                </Typography>
-                <FormControl
-                  variant="outlined"
-                  className={classes.formControl}
-                  size="small"
-                >
-                  <InputLabel id="status">Status</InputLabel>
-                  <Select
-                    labelId="status"
-                    id="status"
-                    onChange={handleStatusChange}
-                    value={status}
-                    label="Status"
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={"Draft"}>Draft</MenuItem>
-                    <MenuItem value={"Sent"}>Sent</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="center"
-              >
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Visibility:
-                </Typography>
-                <FormControl
-                  variant="outlined"
-                  className={classes.formControl}
-                  size="small"
-                >
-                  <InputLabel id="visibility">Visibility</InputLabel>
-                  <Select
-                    labelId="visibility"
-                    id="visibility"
-                    onChange={handleVisibilityChange}
-                    value={visibility}
-                    label="visibility"
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={"Private"}>Private</MenuItem>
-                    <MenuItem value={"Public"}>Public</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="center"
-              >
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Publish:
-                </Typography>
-                <FormControl
-                  variant="outlined"
-                  className={classes.formControl}
-                  size="small"
-                >
-                  <InputLabel id="publish">Publish</InputLabel>
-                  <Select
-                    labelId="publish"
-                    id="publish"
-                    onChange={handlePublishChange}
-                    value={publish}
-                    label="publish"
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={"immediately"}>immediately</MenuItem>
-                    <MenuItem value={1}>in 1 hour</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid> */}
               <Button size="medium" color="primary" onClick={handleToggle}>
                 Preview Changes
               </Button>
@@ -476,7 +372,6 @@ const AddContent = (props) => {
               </Button>
             </CardActions>
           </Card>
-          {/* <SelectCategoryCard setContenttype={setContenttype}/> */}
           <Card className={classes.cardRoot}>
             <CardHeader
               title={
@@ -506,12 +401,6 @@ const AddContent = (props) => {
               </FormControl>
             </CardContent>
           </Card>
-
-          {/* <SelectDepressionCard
-            onChange={(e) => {
-              setAppropiatePHQSeverity(e.target.value);
-            }}
-          /> */}
           <Card className={classes.cardRoot}>
             <CardHeader
               title={
