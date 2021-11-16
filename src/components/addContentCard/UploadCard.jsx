@@ -19,6 +19,7 @@ const useStyles = makeStyles({
       borderRadius: "8px",
       marginBottom: "40px",
       marginTop: "40px",
+      maxWidth: "400px"
     },
     header: {
       backgroundColor: "#F8F8F8",
