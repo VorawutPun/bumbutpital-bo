@@ -130,23 +130,22 @@ const AddVideo = () => {
             className={classes.field}
             color="primary"
             fullWidth
-            id="Hospital"
+            id="VideoUrl"
             placeholder="Condition"
             required
             variant="outlined"
-            multiline
             rows={10}
             onChange={(e) => {
               setVideoUrl(e.target.value);
             }}
           />
           <Typography gutterBottom className={classes.profileTitle}>
-            Promotion Url:
+            Picture of Video's Url :
           </Typography>
           <TextField
             className={classes.field}
             fullWidth
-            placeholder="Promotion Url"
+            placeholder="Picture of Video's Url"
             variant="outlined"
             color="primary"
             size="medium"
@@ -157,7 +156,7 @@ const AddVideo = () => {
             }}
           />
           <Typography gutterBottom className={classes.profileTitle}>
-            Promotion Picture:
+            Or
           </Typography>
           <div className={classes.uploadCard}>
             <UploadCard />

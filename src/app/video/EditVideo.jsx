@@ -1,13 +1,6 @@
 import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import {
-  Button,
-  Card,
-  Grid,
-  Paper,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import UploadCard from "../../components/addContentCard/UploadCard";
 // import { useMutation } from "@apollo/client";
 import { GET_VIDEO } from "../../Graphql/Video/Queries";
@@ -22,22 +15,15 @@ const useStyles = makeStyles((theme) =>
       flexGrow: 1,
       padding: "32px",
       marginTop: "60px",
+      // maxWidth: "600px",
     },
     title: {
       fontSize: "34px",
       fontWeight: 600,
     },
-    card: {
-      margin: "20px 48px",
-    },
     addUserTitle: {
       fontSize: "24px",
       fontWeight: 500,
-    },
-    paper: {
-      alignItems: "center",
-      margin: "20px 48px",
-      width: "600px",
     },
     profileTitle: {
       margin: "8px 0px",
@@ -64,24 +50,24 @@ const EditVideo = (props) => {
   const classes = useStyles();
   const videoID = props.match.params.videoID;
   const history = useHistory();
-//   const [title, setTitle] = useState("");
-//   const [videoUrl, setVideoUrl] = useState("");
-//   const [pictureUrl, setPictureUrl] = useState("");
-//   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
-//   const [staffID /* setStaffID */] = useState("");
-//   const [videoType, setVideoType] = useState("");
+  //   const [title, setTitle] = useState("");
+  //   const [videoUrl, setVideoUrl] = useState("");
+  //   const [pictureUrl, setPictureUrl] = useState("");
+  //   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
+  //   const [staffID /* setStaffID */] = useState("");
+  //   const [videoType, setVideoType] = useState("");
 
-//   const handleChangeSeverity = (event) => {
-//     setAppropiatePHQSeverity(event.target.value);
-//   };
+  //   const handleChangeSeverity = (event) => {
+  //     setAppropiatePHQSeverity(event.target.value);
+  //   };
 
-//   const handleChangeCategory = (event) => {
-//     setVideoType(event.target.value);
-//   };
+  //   const handleChangeCategory = (event) => {
+  //     setVideoType(event.target.value);
+  //   };
 
-//   const [createVideo] = useMutation(CREATE_VIDEO, {
-//     refetchQueries: [{ query: GET_ALL_VIDEO }],
-//   });
+  //   const [createVideo] = useMutation(CREATE_VIDEO, {
+  //     refetchQueries: [{ query: GET_ALL_VIDEO }],
+  //   });
 
   const { data } = useQuery(GET_VIDEO, {
     variables: {
@@ -89,31 +75,36 @@ const EditVideo = (props) => {
     },
   });
 
-//   const submitHandler = (e) => {
-//     e.preventDefault();
-//     createVideo({
-//       variables: {
-//         title: title,
-//         videoUrl: videoUrl,
-//         pictureUrl: pictureUrl,
-//         appropiatePHQSeverity: appropiatePHQSeverity,
-//         staffID: staffID,
-//         videoType: videoType,
-//       },
-//     });
-//     history.push("/videos");
-//   };
+  //   const submitHandler = (e) => {
+  //     e.preventDefault();
+  //     createVideo({
+  //       variables: {
+  //         title: title,
+  //         videoUrl: videoUrl,
+  //         pictureUrl: pictureUrl,
+  //         appropiatePHQSeverity: appropiatePHQSeverity,
+  //         staffID: staffID,
+  //         videoType: videoType,
+  //       },
+  //     });
+  //     history.push("/videos");
+  //   };
 
   return (
     <div className={classes.root}>
       {data &&
         data.getVideo.map((video) => (
-          <>
+          <div key={video.videoID}>
             <Typography gutterBottom className={classes.title}>
               Edit Video
             </Typography>
-            <Card className={classes.card} elevation={0}>
-              <Paper className={classes.paper} elevation={0}>
+            <Grid
+              container
+              direction="row"
+              justifyContent="flex-start"
+              spacing={3}
+            >
+              <Grid item xs={8}>
                 <Typography gutterBottom className={classes.profileTitle}>
                   Title:
                 </Typography>
@@ -127,9 +118,9 @@ const EditVideo = (props) => {
                   required
                   id="Title"
                   defaultValue={video.title}
-                //   onChange={(e) => {
-                //     setTitle(e.target.value);
-                //   }}
+                  //   onChange={(e) => {
+                  //     setTitle(e.target.value);
+                  //   }}
                 />
                 <Typography gutterBottom className={classes.profileTitle}>
                   Video Url:
@@ -145,12 +136,12 @@ const EditVideo = (props) => {
                   multiline
                   rows={10}
                   defaultValue={video.videoUrl}
-                //   onChange={(e) => {
-                //     setVideoUrl(e.target.value);
-                //   }}
+                  //   onChange={(e) => {
+                  //     setVideoUrl(e.target.value);
+                  //   }}
                 />
                 <Typography gutterBottom className={classes.profileTitle}>
-                  Promotion Url:
+                Picture of Video's Url :
                 </Typography>
                 <TextField
                   className={classes.field}
@@ -162,48 +153,51 @@ const EditVideo = (props) => {
                   required
                   id="Url"
                   defaultValue={video.pictureUrl}
-  /*                 onChange={(e) => {
+                  /*                 onChange={(e) => {
                     setPictureUrl(e.target.value);
                   }} */
                 />
                 <Typography gutterBottom className={classes.profileTitle}>
-                  Promotion Picture:
+                  Or
                 </Typography>
                 <div className={classes.uploadCard}>
                   <UploadCard />
                 </div>
+              </Grid>
+              <Grid item xs={4}>
                 <SelectCategoryCard videoType={video.videoType} />
                 <SelectDepressionCard
                   appropiatePHQSeverity={video.appropiatePHQSeverity}
                 />
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  className={classes.buttonGroup}
-                >
-                  <Button
-                    color="secondary"
-                    size="large"
-                    onClick={() => {
-                      history.push("/videos");
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-    /*                 onClick={submitHandler} */
-                  >
-                    Edit
-                  </Button>
-                </Grid>
-              </Paper>
-            </Card>
-          </>
+              </Grid>
+            </Grid>
+
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              className={classes.buttonGroup}
+            >
+              <Button
+                color="secondary"
+                size="large"
+                onClick={() => {
+                  history.push("/videos");
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                /*                 onClick={submitHandler} */
+              >
+                Edit
+              </Button>
+            </Grid>
+          </div>
         ))}
     </div>
   );
