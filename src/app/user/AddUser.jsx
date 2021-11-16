@@ -198,12 +198,12 @@ const AddUser = () => {
               onChange={handleChangeRole}
             >
               <FormControlLabel
-                value="SystemAdministrator"
+                value="System Administrator"
                 control={<Radio color="primary" />}
                 label="System Administrator"
               />
               <FormControlLabel
-                value="moph"
+                value="Ministry of Public Health Staff"
                 control={<Radio color="primary" />}
                 label="Ministry of Public Health Staff"
               />
