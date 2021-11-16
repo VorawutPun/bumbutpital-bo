@@ -10,6 +10,7 @@ export const GET_ALL_USERS = gql`
       surname
       email
       phoneNumber
+      role
     }
   }
 `;
@@ -37,5 +38,20 @@ export const COUNT_USER = gql`
 export const TOTAL_PHQ9 = gql`
   query {
     totalPHQ9
+  }
+`
+
+export const GET_CURRENT_USER = gql`
+  query getCurrentUser {
+    getCurrentUser {
+      id
+      username
+      password
+      name
+      surname
+      email
+      phoneNumber
+      role
+    }
   }
 `
