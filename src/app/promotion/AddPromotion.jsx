@@ -8,11 +8,13 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import UploadCard from "../../components/addContentCard/UploadCard";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_PROMOTION } from "../../Graphql/Promotion/Mutation";
 import { GET_ALL_PROMOTION } from "../../Graphql/Promotion/Query";
 import { useHistory } from "react-router-dom";
+import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -61,23 +63,30 @@ const useStyles = makeStyles((theme) =>
 const AddPromotion = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [hospitalId /* setHospitalId */] = useState("");
   const [userId /* setUserId */] = useState("");
   const [couponCode /* setCouponCode */] = useState("");
   const [title, setTitle] = useState("");
   const [hospitalDetail, setHospitalDetail] = useState("");
   const [Url, setUrl] = useState("");
   const [expiredDate, setExpiredDate] = useState("");
+  const [currentHospital, setCurrentHospital] = useState("");
 
   const [createPromotion] = useMutation(CREATE_PROMOTION, {
     refetchQueries: [{ query: GET_ALL_PROMOTION }],
   });
 
+  const { data } = useQuery(GET_ALL_HOSPITAL);
+
   const submitHandler = (e) => {
     e.preventDefault();
     createPromotion({
       variables: {
-        hospitalId: hospitalId,
+        hospitalId: (
+          data &&
+            data.getAllHospital.find(
+              (hospital) => hospital.hospitalName === currentHospital
+            ).hospitalID
+        ),
         userId: userId,
         title: title,
         hospitalDetail: hospitalDetail,
@@ -130,6 +139,25 @@ const AddPromotion = () => {
             }}
           />
           <Typography gutterBottom className={classes.profileTitle}>
+            Select Hospital:
+          </Typography>
+          <Autocomplete
+            id="combo-box-demo"
+            options={data && data.getAllHospital}
+            getOptionLabel={(option) => option.hospitalName}
+            onInputChange={(event, newInputValue) => {
+              setCurrentHospital(newInputValue);
+            }}
+            style={{ width: 400 }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder="Hospital"
+                variant="outlined"
+              />
+            )}
+          />
+          <Typography gutterBottom className={classes.profileTitle}>
             Promotion Picture:
           </Typography>
           <div className={classes.uploadCard}>
@@ -158,7 +186,7 @@ const AddPromotion = () => {
             type="datetime-local"
             InputProps={{
               inputProps: {
-                min: new Date().toISOString().slice(0, -8),
+                min: new Date().toISOString().slice(0,-8),
               },
             }}
             className={classes.field}
