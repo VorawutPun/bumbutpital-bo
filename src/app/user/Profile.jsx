@@ -19,9 +19,9 @@ const useStyles = makeStyles((theme) =>
       fontWeight: 600,
     },
     name: {
-        fontSize: "30px",
-        fontWeight: 600,
-      },
+      fontSize: "30px",
+      fontWeight: 600,
+    },
     overview: {
       width: "100%",
       display: "flex",
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) =>
       backgroundColor: "#ecf2ff",
       borderRadius: "10px",
       marginRight: "24px",
-      boxShadow: "none"
+      boxShadow: "none",
     },
   })
 );
@@ -71,7 +71,7 @@ const Profile = (props) => {
                 <CardContent>
                   <Typography className={classes.name} gutterBottom>
                     {user.name} {user.surname}
-                    <Chip label={user.role}/>
+                    <Chip label={user.role} />
                   </Typography>
                   <Typography variant="h5" component="h2">
                     Email
@@ -94,7 +94,10 @@ const Profile = (props) => {
                 </CardContent>
               </Card>
               <TotalForumCard />
-              <Chart />
+              <Chart
+                appropiatePHQSeverityScore={user.appropiatePHQSeverityScore}
+                appropiatePHQSeverity={user.appropiatePHQSeverity}
+              />
             </div>
           </>
         ))}
