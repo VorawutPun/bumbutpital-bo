@@ -18,8 +18,8 @@ import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { menuItems } from "../../utils/util";
-import { useQuery } from "@apollo/client";
-import { GET_USER } from "../../Graphql/User/Queries";
+// import { useQuery } from "@apollo/client";
+// import { GET_USER } from "../../Graphql/User/Queries";
 import { ExitToApp } from "@material-ui/icons";
 
 const drawerWidth = 240;
@@ -114,7 +114,6 @@ const Sidebar = () => {
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
-  const { client, /* data */ } = useQuery(GET_USER);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -126,8 +125,7 @@ const Sidebar = () => {
 
   const logout = () => {
     window.localStorage.clear();
-    client.resetStore();
-    history.push("/");
+    history.push("/login");
   };
 
   return (

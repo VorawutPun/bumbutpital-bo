@@ -70,11 +70,11 @@ export const USER_LOGIN = gql`
 `;
 
 export const STAFF_LOGIN = gql`
-mutation userLogin(
+mutation staffLogin(
   $username: String!
   $password: String!
 ) {
-  userLogin(
+  staffLogin(
     username: $username
     password: $password
   ) {

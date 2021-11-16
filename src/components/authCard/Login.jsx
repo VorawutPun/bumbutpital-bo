@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import classes from "./AuthCard.module.css";
-import {
-  Button,
-  makeStyles,
-  TextField,
-} from "@material-ui/core";
+import { Button, makeStyles, TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { USER_LOGIN } from "../../Graphql/User/Mutation";
+import { STAFF_LOGIN } from "../../Graphql/User/Mutation";
 
 const useStyles = makeStyles({
   root: {
@@ -18,7 +14,7 @@ const useStyles = makeStyles({
     height: 52,
     padding: "0 30px",
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-    marginTop: "20px"
+    marginTop: "20px",
   },
 });
 
@@ -27,9 +23,9 @@ const Login = ({ onClick }) => {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [/* authError */, setAuthError] = useState(true);
 
-  const [userLogin, { error }] = useMutation(USER_LOGIN);
+  // const [userLogin, { error }] = useMutation(USER_LOGIN);
+  const [staffLogin, { error }] = useMutation(STAFF_LOGIN);
 
   if (error) {
     return <h1> {error} </h1>;
@@ -75,28 +71,18 @@ const Login = ({ onClick }) => {
           className={style.root}
           onClick={async (e) => {
             e.preventDefault();
-            setAuthError(false);
-            if (username === "") {
-              setAuthError(true);
-            }
-            if (password === "") {
-              setAuthError(true);
-            }
-            if (username && password) {
-              const result = await userLogin({
-                variables: {
-                  username: username,
-                  password: password,
-                },
-              });
-              localStorage.setItem("token", result.data.userLogin.accessToken);
-              history.push("/home");
-            }
+            const result = await staffLogin({
+              variables: {
+                username: username,
+                password: password,
+              },
+            });
+            localStorage.setItem("token", result.data.staffLogin.accessToken);
+            history.push("/home");
           }}
         >
           Login
         </Button>
-
       </div>
     </div>
   );
