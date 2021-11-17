@@ -47,7 +47,6 @@ const Authen = () => {
           direction="row"
           justifyContent="center"
           alignItems="center"
-          spacing={12}
         >
           <Grid item xs={12} sm={6}>
             <div className={classes.logoContainer}>
@@ -66,7 +65,7 @@ const Authen = () => {
             </div>
           </Grid>
         </Grid>
-        <AppBar position="static" color="white" elevation={0}>
+        <AppBar position="static" style={{ backgroundColor: "white", color: "black" }} elevation={0}>
           <Container maxWidth="md">
             <Toolbar>
               <Typography variant="body1" color="inherit">
