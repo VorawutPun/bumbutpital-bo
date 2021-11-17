@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import classes from "./AuthCard.module.css";
 import { Button, makeStyles, TextField } from "@material-ui/core";
+import { Alert, AlertTitle } from "@material-ui/lab";
 import { useHistory } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { gql, isApolloError, useMutation } from "@apollo/client";
 import { STAFF_LOGIN } from "../../Graphql/User/Mutation";
 
 const useStyles = makeStyles({
@@ -24,12 +25,11 @@ const Login = ({ onClick }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // const [userLogin, { error }] = useMutation(USER_LOGIN);
-  const [staffLogin, { error }] = useMutation(STAFF_LOGIN);
+  const [staffLogin, { error, loading }] = useMutation(STAFF_LOGIN);
 
-  if (error) {
-    return <h1> {error} </h1>;
-  }
+  if (loading) return "Submitting...";
+  if (error) return `Submission error! ${error.message}`;
+
   return (
     <div className={classes.authCard}>
       <h1 className={classes.authCardTitle}>Admin Login</h1>
@@ -45,10 +45,9 @@ const Login = ({ onClick }) => {
             onChange={(e) => {
               setUsername(e.target.value);
             }}
-            // error={authError}
-            // helperText="Incorrect entry."
           />
         </div>
+
         <div className={classes.authCardItem}>
           <label>Password</label>
           <TextField
@@ -60,8 +59,6 @@ const Login = ({ onClick }) => {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-            // error={authError}
-            // helperText="Incorrect entry."
           />
         </div>
         <Button

@@ -9,17 +9,18 @@ import {
   Typography,
 } from "@material-ui/core";
 import UploadCard from "../../components/addContentCard/UploadCard";
-import { useMutation } from "@apollo/client";
+import { gql, isApolloError, useMutation } from "@apollo/client";
 import { CREATE_HOSPITAL } from "../../Graphql/Hospital/Mutation";
 import { useHistory } from "react-router-dom";
 import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
+import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       flexGrow: 1,
       padding: "32px",
-      marginTop: "60px"
+      marginTop: "60px",
     },
     title: {
       fontSize: "34px",
@@ -59,6 +60,8 @@ const useStyles = makeStyles((theme) =>
 );
 
 const AddHospital = () => {
+  const { register, handleSubmit, formState, reset, errors, setError } =
+    useForm();
   const classes = useStyles();
   const history = useHistory();
   const [staffID /* setUserId */] = useState("");
@@ -66,21 +69,64 @@ const AddHospital = () => {
   const [hospitalDescription, setHospitalDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  const [createHospital] = useMutation(CREATE_HOSPITAL, {
+  const [createHospital, { error, loading }] = useMutation(CREATE_HOSPITAL, {
     refetchQueries: [{ query: GET_ALL_HOSPITAL }],
   });
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    createHospital({
-      variables: {
-        staffID: staffID,
-        hospitalName: hospitalName,
-        hospitalDescription: hospitalDescription,
-        imageUrl: imageUrl,
-      },
-    });
-    history.push("/hospitals");
+  // if (loading) return "Submitting...";
+  // if (error) return `Submission error! ${error.message}`;
+  let errorMessage;
+
+  // if (error) {
+  //   if (
+  //     error.networkError &&
+  //     typeof window !== "undefined" &&
+  //     !window.navigator.onLine
+  //   ) {
+  //     errorMessage = "Sorry, your browser is offline";
+  //   } else {
+  //     errorMessage = {error};
+  //   }
+  // }
+    
+  // const submitHandler = (event) => {
+  //   event.preventDefault();
+  //   createHospital({
+  //     variables: {
+  //       staffID: staffID,
+  //       hospitalName: hospitalName,
+  //       hospitalDescription: hospitalDescription,
+  //       imageUrl: imageUrl,
+  //     },
+  //   });
+  //   history.push("/hospitals");
+  // }
+
+  const submitHandler = () => {
+    try {
+      createHospital({
+        variables: {
+          staffID: staffID,
+          hospitalName: hospitalName,
+          hospitalDescription: hospitalDescription,
+          imageUrl: imageUrl,
+        },
+      });
+      history.push("/hospitals");
+    } catch (e) {
+      console.log({ e })
+      if (isApolloError(e)) {
+        for (const gqlError of e.graphQLErrors) {
+          if (gqlError.extensions?.code === 'BAD_USER_INPUT') {
+            if (Array.isArray(gqlError.extensions?.errors)) {
+              for (const fieldError of gqlError.extensions.errors) {
+                setError(fieldError.property, { message: fieldError.message });
+              }
+            }
+          }
+        }
+      }
+    }
   };
 
   return (
@@ -88,6 +134,7 @@ const AddHospital = () => {
       <Typography gutterBottom className={classes.title}>
         Add Hospital
       </Typography>
+      {errorMessage && <p>{error.message}</p>}
       <Card className={classes.card} elevation={0}>
         <Paper className={classes.paper} elevation={0}>
           <Typography gutterBottom className={classes.profileTitle}>
@@ -105,7 +152,10 @@ const AddHospital = () => {
             onChange={(e) => {
               setHospitalName(e.target.value);
             }}
+            // {...register('hospitalName', { required: true })}
           />
+          {/* {errors.hospitalName && <p>{errors.hospitalName.message}</p>} */}
+          {/* {console.log(errors)} */}
           <Typography gutterBottom className={classes.profileTitle}>
             Hospital Description:
           </Typography>
@@ -156,7 +206,7 @@ const AddHospital = () => {
               color="secondary"
               size="large"
               onClick={() => {
-                history.push("/promotions");
+                history.push("/hospitals");
               }}
             >
               Cancel
@@ -165,7 +215,8 @@ const AddHospital = () => {
               variant="contained"
               color="primary"
               size="large"
-              onClick={submitHandler}
+              // disabled={formState.isSubmitting}
+              onClick={submitHandler} 
             >
               Create
             </Button>
