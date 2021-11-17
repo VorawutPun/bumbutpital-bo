@@ -113,7 +113,7 @@ const ListOfUsers = () => {
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Surname</TableCell>
               <TableCell align="left">Email</TableCell>
-              <TableCell align="left">Phone Number</TableCell>
+              <TableCell align="left">Role</TableCell>
               <TableCell align="left">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -128,7 +128,7 @@ const ListOfUsers = () => {
                   <TableCell align="left">{user.name}</TableCell>
                   <TableCell align="left">{user.surname}</TableCell>
                   <TableCell align="left">{user.email}</TableCell>
-                  <TableCell align="left">{user.phoneNumber}</TableCell>
+                  <TableCell align="left">{user.role}</TableCell>
                   <TableCell align="left">
                     <Button
                       component={Link}
