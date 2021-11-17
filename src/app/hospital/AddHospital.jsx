@@ -9,11 +9,10 @@ import {
   Typography,
 } from "@material-ui/core";
 import UploadCard from "../../components/addContentCard/UploadCard";
-import { gql, isApolloError, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { CREATE_HOSPITAL } from "../../Graphql/Hospital/Mutation";
 import { useHistory } from "react-router-dom";
 import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
-import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -60,22 +59,19 @@ const useStyles = makeStyles((theme) =>
 );
 
 const AddHospital = () => {
-  const { register, handleSubmit, formState, reset, errors, setError } =
-    useForm();
   const classes = useStyles();
   const history = useHistory();
-  const [staffID /* setUserId */] = useState("");
   const [hospitalName, setHospitalName] = useState("");
   const [hospitalDescription, setHospitalDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  const [createHospital, { error, loading }] = useMutation(CREATE_HOSPITAL, {
+  const [createHospital] = useMutation(CREATE_HOSPITAL, {
     refetchQueries: [{ query: GET_ALL_HOSPITAL }],
   });
 
   // if (loading) return "Submitting...";
   // if (error) return `Submission error! ${error.message}`;
-  let errorMessage;
+  // let errorMessage;
 
   // if (error) {
   //   if (
@@ -88,7 +84,7 @@ const AddHospital = () => {
   //     errorMessage = {error};
   //   }
   // }
-    
+
   // const submitHandler = (event) => {
   //   event.preventDefault();
   //   createHospital({
@@ -102,31 +98,42 @@ const AddHospital = () => {
   //   history.push("/hospitals");
   // }
 
+  // const submitHandler = () => {
+  //   try {
+  //     createHospital({
+  //       variables: {
+  //         staffID: staffID,
+  //         hospitalName: hospitalName,
+  //         hospitalDescription: hospitalDescription,
+  //         imageUrl: imageUrl,
+  //       },
+  //     });
+  //     history.push("/hospitals");
+  //   } catch (e) {
+  //     console.log({ e })
+  //     if (isApolloError(e)) {
+  //       for (const gqlError of e.graphQLErrors) {
+  //         if (gqlError.extensions?.code === 'BAD_USER_INPUT') {
+  //           if (Array.isArray(gqlError.extensions?.errors)) {
+  //             for (const fieldError of gqlError.extensions.errors) {
+  //               setError(fieldError.property, { message: fieldError.message });
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // };
+
   const submitHandler = () => {
-    try {
-      createHospital({
-        variables: {
-          staffID: staffID,
-          hospitalName: hospitalName,
-          hospitalDescription: hospitalDescription,
-          imageUrl: imageUrl,
-        },
-      });
-      history.push("/hospitals");
-    } catch (e) {
-      console.log({ e })
-      if (isApolloError(e)) {
-        for (const gqlError of e.graphQLErrors) {
-          if (gqlError.extensions?.code === 'BAD_USER_INPUT') {
-            if (Array.isArray(gqlError.extensions?.errors)) {
-              for (const fieldError of gqlError.extensions.errors) {
-                setError(fieldError.property, { message: fieldError.message });
-              }
-            }
-          }
-        }
-      }
-    }
+    createHospital({
+      variables: {
+        hospitalName: hospitalName,
+        hospitalDescription: hospitalDescription,
+        imageUrl: imageUrl,
+      },
+    });
+    history.push("/hospitals");
   };
 
   return (
@@ -134,7 +141,7 @@ const AddHospital = () => {
       <Typography gutterBottom className={classes.title}>
         Add Hospital
       </Typography>
-      {errorMessage && <p>{error.message}</p>}
+      {/* {errorMessage && <p>{error.message}</p>} */}
       <Card className={classes.card} elevation={0}>
         <Paper className={classes.paper} elevation={0}>
           <Typography gutterBottom className={classes.profileTitle}>
@@ -174,12 +181,6 @@ const AddHospital = () => {
             }}
           />
           <Typography gutterBottom className={classes.profileTitle}>
-            Hospital Picture:
-          </Typography>
-          <div className={classes.uploadCard}>
-            <UploadCard />
-          </div>
-          <Typography gutterBottom className={classes.profileTitle}>
             Hospital Picture Url:
           </Typography>
           <TextField
@@ -216,7 +217,7 @@ const AddHospital = () => {
               color="primary"
               size="large"
               // disabled={formState.isSubmitting}
-              onClick={submitHandler} 
+              onClick={submitHandler}
             >
               Create
             </Button>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -8,9 +8,8 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import UploadCard from "../../components/addContentCard/UploadCard";
 import { useMutation } from "@apollo/client";
-import { CREATE_HOSPITAL } from "../../Graphql/Hospital/Mutation";
+import { UPDATE_HOSPITAL } from "../../Graphql/Hospital/Mutation";
 import { useHistory } from "react-router-dom";
 import { GET_ALL_HOSPITAL, GET_HOSPITAL } from "../../Graphql/Hospital/Quries";
 import { useQuery } from "@apollo/client";
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) =>
     root: {
       flexGrow: 1,
       padding: "32px",
-      marginTop: "60px"
+      marginTop: "60px",
     },
     title: {
       fontSize: "34px",
@@ -63,20 +62,25 @@ const EditHospital = (props) => {
   const hospitalID = props.match.params.hospitalID;
   const classes = useStyles();
   const history = useHistory();
-  const [staffID /* setUserId */] = useState("");
   const [hospitalName, setHospitalName] = useState("");
   const [hospitalDescription, setHospitalDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  const [createHospital] = useMutation(CREATE_HOSPITAL, {
+  const [updateHospital] = useMutation(UPDATE_HOSPITAL, {
     refetchQueries: [{ query: GET_ALL_HOSPITAL }],
+  });
+
+  const { data } = useQuery(GET_HOSPITAL, {
+    variables: {
+      hospitalID,
+    },
   });
 
   const submitHandler = (e) => {
     e.preventDefault();
-    createHospital({
+    updateHospital({
       variables: {
-        staffID: staffID,
+        hospitalID: hospitalID,
         hospitalName: hospitalName,
         hospitalDescription: hospitalDescription,
         imageUrl: imageUrl,
@@ -85,11 +89,13 @@ const EditHospital = (props) => {
     history.push("/hospitals");
   };
 
-  const { data } = useQuery(GET_HOSPITAL, {
-    variables: {
-      hospitalID,
-    },
-  });
+  useEffect(() => {
+    if (data) {
+      setHospitalName(data.getHospital[0].hospitalName);
+      setHospitalDescription(data.getHospital[0].hospitalDescription);
+      setImageUrl(data.getHospital[0].imageUrl);
+    }
+  }, [data]);
 
   return (
     <div className={classes.root}>
@@ -137,12 +143,6 @@ const EditHospital = (props) => {
                   }}
                 />
                 <Typography gutterBottom className={classes.profileTitle}>
-                  Hospital Picture:
-                </Typography>
-                <div className={classes.uploadCard}>
-                  <UploadCard />
-                </div>
-                <Typography gutterBottom className={classes.profileTitle}>
                   Hospital Picture Url:
                 </Typography>
                 <TextField
@@ -181,7 +181,7 @@ const EditHospital = (props) => {
                     size="large"
                     onClick={submitHandler}
                   >
-                    Create
+                    Edit
                   </Button>
                 </Grid>
               </Paper>
