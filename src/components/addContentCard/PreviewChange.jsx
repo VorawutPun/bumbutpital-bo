@@ -37,29 +37,29 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const PreviewChange = ({ onClick, title, description, file, pictureUrl }) => {
+const PreviewChange = (props) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
       <CardHeader title={<ArrowBack />} className={classes.header} />
       <CardContent>
-        <Typography variant="h5">{title}</Typography>
+        <Typography variant="h5">{props.title}</Typography>
         <CardMedia
           component="img"
           alt="No photo"
           height="auto"
           width="200px"
-          image={pictureUrl}
+          image={props.pictureUrl}
           title="No photo"
         />
-        <Typography className={classes.title}>{description}</Typography>
+        <Typography className={classes.title}>{props.description}</Typography>
       </CardContent>
       <CardActions className={classes.action}></CardActions>
       <Button
         variant="contained"
         size="small"
         color="primary"
-        onClick={onClick}
+        onClick={props.onClick}
       >
         Done
       </Button>

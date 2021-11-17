@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme) =>
 const AddContent = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const [createContent] = useMutation(CREATE_CONTENT, {
+  const [createContent, { error }] = useMutation(CREATE_CONTENT, {
     refetchQueries: [{ query: GET_ALL_CONTENT }],
   });
   const [title, setTitle] = useState("");
@@ -124,6 +124,11 @@ const AddContent = (props) => {
   const handleChangeSeverity = (event) => {
     setAppropiatePHQSeverity(event.target.value);
   };
+
+  let errorMessage;
+  if (error){
+    errorMessage = {error}
+  }
 
   return (
     <div className={classes.root}>
@@ -157,6 +162,7 @@ const AddContent = (props) => {
               setTitle(e.target.value);
             }}
           />
+          {errorMessage && <p>{errorMessage}</p>}
           <Typography
             variant="h2"
             component="h1"
