@@ -8,10 +8,8 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import UploadCard from "../../components/addContentCard/UploadCard";
 import { useMutation } from "@apollo/client";
 import {
-  CREATE_PROMOTION,
   UPDATE_PROMOTION,
 } from "../../Graphql/Promotion/Mutation";
 import {
