@@ -15,6 +15,7 @@ import { Link, useHistory } from "react-router-dom";
 import { GET_ALL_PROMOTION } from "../../Graphql/Promotion/Query";
 import { useMutation, useQuery } from "@apollo/client";
 import { DELETE_PROMOTION } from "../../Graphql/Promotion/Mutation";
+import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -71,6 +72,7 @@ const ManagePromotion = () => {
   const history = useHistory();
   const classes = useStyles();
   const { data } = useQuery(GET_ALL_PROMOTION);
+  const { data: queryHospital } = useQuery(GET_ALL_HOSPITAL);
   const [deletePromotion] = useMutation(DELETE_PROMOTION, {
     refetchQueries: [{ query: GET_ALL_PROMOTION }],
   });
@@ -119,7 +121,13 @@ const ManagePromotion = () => {
                     {promotion.promotionId}
                   </TableCell>
                   <TableCell align="left">{promotion.title}</TableCell>
-                  <TableCell align="left">{promotion.hospitalDetail}</TableCell>
+                  <TableCell align="left">
+                    {queryHospital &&
+                      queryHospital.getAllHospital.find(
+                        (hospital) =>
+                          hospital.hospitalID === promotion.hospitalId
+                      ).hospitalName}
+                  </TableCell>
                   <TableCell align="left">
                     {new Date(promotion.createAt).toLocaleDateString()}
                   </TableCell>

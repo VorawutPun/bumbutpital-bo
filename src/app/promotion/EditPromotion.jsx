@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -10,13 +10,18 @@ import {
 } from "@material-ui/core";
 import UploadCard from "../../components/addContentCard/UploadCard";
 import { useMutation } from "@apollo/client";
-import { CREATE_PROMOTION } from "../../Graphql/Promotion/Mutation";
+import {
+  CREATE_PROMOTION,
+  UPDATE_PROMOTION,
+} from "../../Graphql/Promotion/Mutation";
 import {
   GET_ALL_PROMOTION,
   GET_PROMOTION,
 } from "../../Graphql/Promotion/Query";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -66,16 +71,17 @@ const EditPromotion = (props) => {
   const promotionId = props.match.params.promotionId;
   const classes = useStyles();
   const history = useHistory();
-  const [hospitalId /* setHospitalId */] = useState("");
+  // const [hospitalId, setHospitalId] = useState("");
   const [userId /* setUserId */] = useState("");
   const [couponCode /* setCouponCode */] = useState("");
   const [title, setTitle] = useState("");
   const [hospitalDetail, setHospitalDetail] = useState("");
   const [Url, setUrl] = useState("");
   const [expiredDate, setExpiredDate] = useState("");
+  const [currentHospital, setCurrentHospital] = useState("");
 
-  const [createPromotion] = useMutation(CREATE_PROMOTION, {
-    refetchQueries: [{ query: GET_ALL_PROMOTION }],
+  const [updatePromotion] = useMutation(UPDATE_PROMOTION, {
+    refetchQueries: [GET_ALL_PROMOTION],
   });
 
   const { data } = useQuery(GET_PROMOTION, {
@@ -84,11 +90,18 @@ const EditPromotion = (props) => {
     },
   });
 
+  const { data: queryHospital } = useQuery(GET_ALL_HOSPITAL);
+
   const submitHandler = (e) => {
     e.preventDefault();
-    createPromotion({
+    updatePromotion({
       variables: {
-        hospitalId: hospitalId,
+        promotionId: promotionId,
+        hospitalId:
+          (queryHospital &&
+          queryHospital.getAllHospital.find(
+            (hospital) => hospital.hospitalName === currentHospital
+          ).hospitalID),
         userId: userId,
         title: title,
         hospitalDetail: hospitalDetail,
@@ -97,14 +110,27 @@ const EditPromotion = (props) => {
         expiredDate: expiredDate,
       },
     });
+    console.log(title);
     history.push("/promotions");
   };
+
+  useEffect(() => {
+    console.log(data, "DATA");
+    if (data) {
+      setTitle(data.getPromotion[0].title);
+      setHospitalDetail(data.getPromotion[0].hospitalDetail);
+      setUrl(data.getPromotion[0].url);
+      setExpiredDate(data.getPromotion[0].expiredDate);
+      // setHospitalId(data.getPromotion[0].hospitalId);
+    }
+  }, [data]);
+  console.log(data);
 
   return (
     <div className={classes.root}>
       {data &&
         data.getPromotion.map((promotion) => (
-          <>
+          <div key={promotion.promotionId}>
             <Typography gutterBottom className={classes.title}>
               Edit Promotion
             </Typography>
@@ -146,11 +172,36 @@ const EditPromotion = (props) => {
                   }}
                 />
                 <Typography gutterBottom className={classes.profileTitle}>
+                  Select Hospital:
+                </Typography>
+                <Autocomplete
+                  id="combo-box-demo"
+                  options={queryHospital && queryHospital.getAllHospital}
+                  getOptionLabel={(option) => option.hospitalName}
+                  onInputChange={(event, newInputValue) => {
+                    setCurrentHospital(newInputValue);
+                  }}
+                  style={{ width: 400 }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      placeholder={
+                        queryHospital &&
+                        queryHospital.getAllHospital.find(
+                          (hospital) =>
+                            hospital.hospitalID === promotion.hospitalId
+                        ).hospitalName
+                      }
+                      variant="outlined"
+                    />
+                  )}
+                />
+                {/* <Typography gutterBottom className={classes.profileTitle}>
                   Promotion Picture:
                 </Typography>
                 <div className={classes.uploadCard}>
                   <UploadCard />
-                </div>
+                </div> */}
                 <Typography gutterBottom className={classes.profileTitle}>
                   Promotion Url:
                 </Typography>
@@ -173,6 +224,11 @@ const EditPromotion = (props) => {
                 </Typography>
                 <TextField
                   type="datetime-local"
+                  InputProps={{
+                    inputProps: {
+                      min: new Date().toISOString().slice(0, -8),
+                    },
+                  }}
                   className={classes.field}
                   fullWidth
                   placeholder="Expired date"
@@ -213,7 +269,7 @@ const EditPromotion = (props) => {
                 </Grid>
               </Paper>
             </Card>
-          </>
+          </div>
         ))}
     </div>
   );

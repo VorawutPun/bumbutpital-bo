@@ -81,12 +81,11 @@ const AddPromotion = () => {
     e.preventDefault();
     createPromotion({
       variables: {
-        hospitalId: (
+        hospitalId:
           data &&
-            data.getAllHospital.find(
-              (hospital) => hospital.hospitalName === currentHospital
-            ).hospitalID
-        ),
+          data.getAllHospital.find(
+            (hospital) => hospital.hospitalName === currentHospital
+          ).hospitalID,
         userId: userId,
         title: title,
         hospitalDetail: hospitalDetail,
@@ -157,12 +156,12 @@ const AddPromotion = () => {
               />
             )}
           />
-          <Typography gutterBottom className={classes.profileTitle}>
+          {/* <Typography gutterBottom className={classes.profileTitle}>
             Promotion Picture:
           </Typography>
           <div className={classes.uploadCard}>
             <UploadCard />
-          </div>
+          </div> */}
           <Typography gutterBottom className={classes.profileTitle}>
             Promotion Url:
           </Typography>
@@ -186,7 +185,7 @@ const AddPromotion = () => {
             type="datetime-local"
             InputProps={{
               inputProps: {
-                min: new Date().toISOString().slice(0,-8),
+                min: new Date().toISOString().slice(0, -8),
               },
             }}
             className={classes.field}
