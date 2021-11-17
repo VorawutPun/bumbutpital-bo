@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import classes from "./AuthCard.module.css";
 import { Button, makeStyles, TextField } from "@material-ui/core";
-import { Alert, AlertTitle } from "@material-ui/lab";
+// import { Alert, AlertTitle } from "@material-ui/lab";
 import { useHistory } from "react-router-dom";
-import { gql, isApolloError, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { STAFF_LOGIN } from "../../Graphql/User/Mutation";
 
 const useStyles = makeStyles({

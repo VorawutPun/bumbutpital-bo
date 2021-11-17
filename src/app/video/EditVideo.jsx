@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Button,
-  Card,
   Grid,
-  Paper,
   TextField,
   Typography,
   FormControl,
@@ -25,7 +23,6 @@ const useStyles = makeStyles((theme) =>
       flexGrow: 1,
       padding: "32px",
       marginTop: "60px",
-      // maxWidth: "600px",
     },
     title: {
       fontSize: "34px",
