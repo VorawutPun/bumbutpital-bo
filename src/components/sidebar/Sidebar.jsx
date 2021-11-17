@@ -1,5 +1,4 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 import { useHistory, useLocation } from "react-router-dom";
 import {
   Drawer,
@@ -21,6 +20,8 @@ import { menuItems } from "../../utils/util";
 // import { useQuery } from "@apollo/client";
 // import { GET_USER } from "../../Graphql/User/Queries";
 import { ExitToApp } from "@material-ui/icons";
+import { useQuery } from "@apollo/client";
+import { GET_CURRENT_USER } from "../../Graphql/User/Queries";
 
 const drawerWidth = 240;
 
@@ -114,6 +115,9 @@ const Sidebar = () => {
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
+  const { data } = useQuery(GET_CURRENT_USER, {
+    fetchPolicy: "network-only",
+  });
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -159,6 +163,7 @@ const Sidebar = () => {
           <Typography variant="h6" noWrap>
             BUMBUTPITAL
           </Typography>
+          <div style={{marginLeft: "auto"}}>{data && data.getCurrentUser[0].username}</div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -196,7 +201,7 @@ const Sidebar = () => {
             <ListItemIcon className={classes.icon}>
               <ExitToApp />
             </ListItemIcon>
-            <ListItemText primary="test" />
+            <ListItemText primary="Logout" />
           </ListItem>
         </List>
       </Drawer>
