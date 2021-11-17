@@ -11,7 +11,7 @@ import Paper from "@material-ui/core/Paper";
 import { Button } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import { DELETE_USER } from "../../Graphql/User/Mutation";
-import { GET_ALL_USERS } from "../../Graphql/User/Queries";
+import { GET_ALL_USERS, GET_CURRENT_USER } from "../../Graphql/User/Queries";
 import { useMutation, useQuery } from "@apollo/client";
 
 const useStyles = makeStyles((theme) =>
@@ -70,6 +70,7 @@ const ListOfUsers = () => {
   const classes = useStyles();
   const history = useHistory();
   const { data } = useQuery(GET_ALL_USERS);
+  const { data: getUser } = useQuery(GET_CURRENT_USER);
   const [deleteUser] = useMutation(DELETE_USER, {
     refetchQueries: [{ query: GET_ALL_USERS }],
   });
@@ -77,6 +78,12 @@ const ListOfUsers = () => {
   const submitHandler = () => {
     history.push("/createUser");
   };
+
+  if(!(getUser && getUser.getCurrentUser.map((staff) => staff.role).includes("System Administrator"))){
+    return (
+      <div className={classes.root}><h1>You can't access this page</h1></div>
+    )
+  }
 
   return (
     <div className={classes.root}>
