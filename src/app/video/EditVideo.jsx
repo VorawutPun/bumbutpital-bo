@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { Button, Grid, TextField, Typography } from "@material-ui/core";
-import UploadCard from "../../components/addContentCard/UploadCard";
-// import { useMutation } from "@apollo/client";
-import { GET_VIDEO } from "../../Graphql/Video/Queries";
+import {
+  Button,
+  Card,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+} from "@material-ui/core";
+import { useMutation } from "@apollo/client";
+import { GET_ALL_VIDEO, GET_VIDEO } from "../../Graphql/Video/Queries";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import SelectCategoryCard from "../../components/addContentCard/SelectCategoryCard";
-import SelectDepressionCard from "../../components/addContentCard/SelectDepressionCard";
+import { depressionSeverity } from "../../utils/util";
+import { UPDATE_VIDEO } from "../../Graphql/Video/Mutation";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -47,27 +57,17 @@ const useStyles = makeStyles((theme) =>
 );
 
 const EditVideo = (props) => {
-  const classes = useStyles();
   const videoID = props.match.params.videoID;
+  const classes = useStyles();
   const history = useHistory();
-  //   const [title, setTitle] = useState("");
-  //   const [videoUrl, setVideoUrl] = useState("");
-  //   const [pictureUrl, setPictureUrl] = useState("");
-  //   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
-  //   const [staffID /* setStaffID */] = useState("");
-  //   const [videoType, setVideoType] = useState("");
+  const [title, setTitle] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
+  const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
 
-  //   const handleChangeSeverity = (event) => {
-  //     setAppropiatePHQSeverity(event.target.value);
-  //   };
-
-  //   const handleChangeCategory = (event) => {
-  //     setVideoType(event.target.value);
-  //   };
-
-  //   const [createVideo] = useMutation(CREATE_VIDEO, {
-  //     refetchQueries: [{ query: GET_ALL_VIDEO }],
-  //   });
+  const [updateVideo] = useMutation(UPDATE_VIDEO, {
+    refetchQueries: [GET_ALL_VIDEO, GET_VIDEO],
+  });
 
   const { data } = useQuery(GET_VIDEO, {
     variables: {
@@ -75,20 +75,29 @@ const EditVideo = (props) => {
     },
   });
 
-  //   const submitHandler = (e) => {
-  //     e.preventDefault();
-  //     createVideo({
-  //       variables: {
-  //         title: title,
-  //         videoUrl: videoUrl,
-  //         pictureUrl: pictureUrl,
-  //         appropiatePHQSeverity: appropiatePHQSeverity,
-  //         staffID: staffID,
-  //         videoType: videoType,
-  //       },
-  //     });
-  //     history.push("/videos");
-  //   };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    updateVideo({
+      variables: {
+        videoID: videoID,
+        title: title,
+        videoUrl: videoUrl,
+        pictureUrl: pictureUrl,
+        appropiatePHQSeverity: appropiatePHQSeverity,
+      },
+    });
+    console.log(appropiatePHQSeverity);
+    history.push("/videos");
+  };
+
+  useEffect(() => {
+    if (data) {
+      setTitle(data.getVideo[0].title);
+      setVideoUrl(data.getVideo[0].videoUrl);
+      setPictureUrl(data.getVideo[0].pictureUrl);
+      setAppropiatePHQSeverity(data.getVideo[0].appropiatePHQSeverity);
+    }
+  }, [data]);
 
   return (
     <div className={classes.root}>
@@ -118,9 +127,9 @@ const EditVideo = (props) => {
                   required
                   id="Title"
                   defaultValue={video.title}
-                  //   onChange={(e) => {
-                  //     setTitle(e.target.value);
-                  //   }}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
                 />
                 <Typography gutterBottom className={classes.profileTitle}>
                   Video Url:
@@ -136,12 +145,12 @@ const EditVideo = (props) => {
                   multiline
                   rows={10}
                   defaultValue={video.videoUrl}
-                  //   onChange={(e) => {
-                  //     setVideoUrl(e.target.value);
-                  //   }}
+                  onChange={(e) => {
+                    setVideoUrl(e.target.value);
+                  }}
                 />
                 <Typography gutterBottom className={classes.profileTitle}>
-                Picture of Video's Url :
+                  Picture of Video's Url :
                 </Typography>
                 <TextField
                   className={classes.field}
@@ -153,22 +162,35 @@ const EditVideo = (props) => {
                   required
                   id="Url"
                   defaultValue={video.pictureUrl}
-                  /*                 onChange={(e) => {
+                  onChange={(e) => {
                     setPictureUrl(e.target.value);
-                  }} */
+                  }}
                 />
-                <Typography gutterBottom className={classes.profileTitle}>
-                  Or
-                </Typography>
-                <div className={classes.uploadCard}>
-                  <UploadCard />
-                </div>
               </Grid>
               <Grid item xs={4}>
-                <SelectCategoryCard videoType={video.videoType} />
-                <SelectDepressionCard
+                {/* <SelectDepressionCard
                   appropiatePHQSeverity={video.appropiatePHQSeverity}
-                />
+                /> */}
+                <Typography className={classes.profileTitle}>
+                  Depression Severity
+                </Typography>
+                <FormControl component="fieldset">
+                  <RadioGroup
+                    aria-label="gender"
+                    name="gender1"
+                    value={appropiatePHQSeverity}
+                    onChange={(e) => {setAppropiatePHQSeverity(e.target.value)}}
+                  >
+                    {depressionSeverity.map((severity) => (
+                      <FormControlLabel
+                        key={severity}
+                        value={severity.severity}
+                        control={<Radio color="primary" />}
+                        label={severity.severity}
+                      />
+                    ))}
+                  </RadioGroup>
+                </FormControl>
               </Grid>
             </Grid>
 
@@ -192,7 +214,7 @@ const EditVideo = (props) => {
                 variant="contained"
                 color="primary"
                 size="large"
-                /*                 onClick={submitHandler} */
+                onClick={submitHandler}
               >
                 Edit
               </Button>

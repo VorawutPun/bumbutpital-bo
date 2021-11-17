@@ -12,12 +12,11 @@ import {
   FormControlLabel,
   Radio,
 } from "@material-ui/core";
-import UploadCard from "../../components/addContentCard/UploadCard";
 import { useMutation } from "@apollo/client";
 import { CREATE_VIDEO } from "../../Graphql/Video/Mutation";
 import { GET_ALL_VIDEO } from "../../Graphql/Video/Queries";
 import { useHistory } from "react-router-dom";
-import { depressionSeverity, categoryItems } from "../../utils/util";
+import { depressionSeverity } from "../../utils/util";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -71,14 +70,9 @@ const AddVideo = () => {
   const [pictureUrl, setPictureUrl] = useState("");
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
   const [staffID /* setStaffID */] = useState("");
-  const [videoType, setVideoType] = useState("");
 
   const handleChangeSeverity = (event) => {
     setAppropiatePHQSeverity(event.target.value);
-  };
-
-  const handleChangeCategory = (event) => {
-    setVideoType(event.target.value);
   };
 
   const [createVideo] = useMutation(CREATE_VIDEO, {
@@ -94,7 +88,6 @@ const AddVideo = () => {
         pictureUrl: pictureUrl,
         appropiatePHQSeverity: appropiatePHQSeverity,
         staffID: staffID,
-        videoType: videoType,
       },
     });
     history.push("/videos");
@@ -155,30 +148,6 @@ const AddVideo = () => {
               setPictureUrl(e.target.value);
             }}
           />
-          <Typography gutterBottom className={classes.profileTitle}>
-            Or
-          </Typography>
-          <div className={classes.uploadCard}>
-            <UploadCard />
-          </div>
-          <Typography className={classes.profileTitle}>Category</Typography>
-          <FormControl component="fieldset">
-            <RadioGroup
-              aria-label="category"
-              name="category"
-              value={videoType}
-              onChange={handleChangeCategory}
-            >
-              {categoryItems.map((item) => (
-                <FormControlLabel
-                  key={item}
-                  value={item.category}
-                  control={<Radio color="primary" />}
-                  label={item.category}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl>
           <Typography className={classes.profileTitle}>Depression Severity</Typography>
           <FormControl component="fieldset">
             <RadioGroup
