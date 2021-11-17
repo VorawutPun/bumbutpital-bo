@@ -21,7 +21,6 @@ export const GET_CONTENT = gql`
       description
       pictureUrl
       appropiatePHQSeverity
-      contenttype
     }
   }
 `;

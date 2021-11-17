@@ -5,36 +5,22 @@ import {
   Backdrop,
   Button,
   Card,
-  CardActionArea,
-  CardMedia,
   CardHeader,
   CardActions,
   CardContent,
   FormControl,
   FormControlLabel,
   Grid,
-  // InputLabel,
-  // MenuItem,
   Radio,
   RadioGroup,
-  // Select,
   TextField,
   Typography,
 } from "@material-ui/core";
-
-// import PublishCard from "../../components/addContentCard/PublishCard";
-// import SelectCategoryCard from "../../components/addContentCard/SelectCategoryCard";
-// import SelectDepressionCard from "../../components/addContentCard/SelectDepressionCard";
-// import UploadCard from "../../components/addContentCard/UploadCard";
 import PreviewChange from "../../components/addContentCard/PreviewChange";
-// import "filepond/dist/filepond.min.css";
-// import storage from "../../firebase";
-
 import { CREATE_CONTENT } from "../../Graphql/Content/Mutation";
-
 import { useMutation } from "@apollo/client";
 import { GET_ALL_CONTENT } from "../../Graphql/Content/Queries";
-import { depressionSeverity, categoryItems } from "../../utils/util";
+import { depressionSeverity } from "../../utils/util";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -119,8 +105,6 @@ const useStyles = makeStyles((theme) =>
 const AddContent = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  // const [image, setImage] = useState();
-
   const [createContent] = useMutation(CREATE_CONTENT, {
     refetchQueries: [{ query: GET_ALL_CONTENT }],
   });
@@ -128,41 +112,7 @@ const AddContent = (props) => {
   const [description, setDescription] = useState("");
   const [pictureUrl, setPictureUrl] = useState("");
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
-  const [contenttype, setContenttype] = useState("");
-
-  // const upload = () => {
-  //   if (image == null) return;
-  //   storage
-  //     .ref(`/images/${image.name}`)
-  //     .put(image)
-  //     .on("state_changed", alert("success"), alert);
-  //   console.log(storage);
-  // };
-
-  //Upload Card
-  const [file, setFile] = useState("");
-
-  const handleChange = (e) => {
-    let url = URL.createObjectURL(e.target.files[0]);
-    setFile(url);
-    console.log(url);
-  };
-
-  //Publish Card
-  // const [status, setStatus] = useState("");
-  // const [visibility, setVisibility] = useState("");
-  // const [publish, setPublish] = useState("");
-  const [open, setOpen] = React.useState(false);
-
-  // const handleStatusChange = (event) => {
-  //   setStatus(event.target.value);
-  // };
-  // const handleVisibilityChange = (event) => {
-  //   setVisibility(event.target.value);
-  // };
-  // const handlePublishChange = (event) => {
-  //   setPublish(event.target.value);
-  // };
+  const [open, setOpen] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -171,40 +121,8 @@ const AddContent = (props) => {
     setOpen(!open);
   };
 
-  //SelectDepressionCard
-  // const [value, setValue] = useState("Depression");
   const handleChangeSeverity = (event) => {
     setAppropiatePHQSeverity(event.target.value);
-  };
-
-  // const uploadImage = (e) => {
-  //   setImage(e.target.files[0]);
-  // };
-
-  // useEffect(() => {
-  //   const fetchImages = async () => {
-  //     let result = await storage
-  //       .ref()
-  //       .child("Name Of Your Files Map in storage")
-  //       .listAll();
-  //     let urlPromises = result.items.map((imageRef) =>
-  //       imageRef.getDownloadURL()
-  //     );
-
-  //     return Promise.all(urlPromises);
-  //   };
-
-  //   const loadImages = async () => {
-  //     const urls = await fetchImages();
-  //     setFiles(urls);
-  //   };
-  //   loadImages();
-  // }, []);
-
-  // console.log(files);
-
-  const handleChangeContentType = (event) => {
-    setContenttype(event.target.value);
   };
 
   return (
@@ -276,48 +194,13 @@ const AddContent = (props) => {
             color="primary"
             fullWidth
             required
-            id="title"
+            id="pictureUrl"
             onChange={(e) => {
               setPictureUrl(e.target.value);
             }}
           />
-          <Card className={classes.uploadRoot}>
-            <CardHeader
-              title={
-                <Typography className={classes.cardTitle}>Photo</Typography>
-              }
-              className={classes.header}
-            />
-            <TextField
-              className={classes.textField}
-              id="photo"
-              label="Image Upload"
-              name="upload-photo"
-              type="file"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="outlined"
-              onChange={handleChange}
-            />
-            {file.length > 0 && (
-              <Card className={classes.paperRoot}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    height="auto"
-                    image={file}
-                    title="Contemplative Reptile"
-                  />
-                </CardActionArea>
-              </Card>
-            )}
-            <Button>Upload</Button>
-          </Card>
         </Grid>
         <Grid item xs={3}>
-          {/* <PublishCard onClick={submitHandler} /> */}
           <Card className={classes.cardRoot}>
             <CardHeader
               title={
@@ -333,7 +216,6 @@ const AddContent = (props) => {
                 <PreviewChange
                   title={title}
                   description={description}
-                  file={file}
                   pictureUrl={pictureUrl}
                   onClick={handleClose}
                 />
@@ -362,7 +244,6 @@ const AddContent = (props) => {
                       description: description,
                       pictureUrl: pictureUrl,
                       appropiatePHQSeverity: appropiatePHQSeverity,
-                      contenttype: contenttype,
                     },
                   });
                   history.push("/contents");
@@ -371,35 +252,6 @@ const AddContent = (props) => {
                 Post
               </Button>
             </CardActions>
-          </Card>
-          <Card className={classes.cardRoot}>
-            <CardHeader
-              title={
-                <Typography className={classes.cardTitle}>
-                  Categories
-                </Typography>
-              }
-              className={classes.header}
-            />
-            <CardContent>
-              <FormControl component="fieldset">
-                <RadioGroup
-                  aria-label="category"
-                  name="category"
-                  value={contenttype}
-                  onChange={handleChangeContentType}
-                >
-                  {categoryItems.map((item) => (
-                    <FormControlLabel
-                      key={item.category}
-                      value={item.category}
-                      control={<Radio color="primary" />}
-                      label={item.category}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            </CardContent>
           </Card>
           <Card className={classes.cardRoot}>
             <CardHeader

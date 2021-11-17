@@ -24,15 +24,6 @@ export const depressionSeverity = [
   },
 ];
 
-export const categoryItems = [
-  {
-    category: "Depression",
-  },
-  {
-    category: "Health",
-  },
-];
-
 export const menuItems = [
   {
     text: "Dashboard",

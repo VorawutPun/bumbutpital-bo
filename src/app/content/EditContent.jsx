@@ -1,33 +1,26 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Backdrop,
   Button,
   Card,
-  CardActionArea,
-  CardMedia,
   CardHeader,
   CardActions,
   CardContent,
   FormControl,
   FormControlLabel,
   Grid,
-  InputLabel,
-  MenuItem,
   Radio,
   RadioGroup,
-  Select,
   TextField,
   Typography,
 } from "@material-ui/core";
-
-// import PublishCard from "../../components/addContentCard/PublishCard";
-// import SelectCategoryCard from "../../components/addContentCard/SelectCategoryCard";
-// import SelectDepressionCard from "../../components/addContentCard/SelectDepressionCard";
-// import UploadCard from "../../components/addContentCard/UploadCard";
 import PreviewChange from "../../components/addContentCard/PreviewChange";
-import { GET_CONTENT } from "../../Graphql/Content/Queries";
-import { useQuery } from "@apollo/client";
+import { UPDATE_CONTENT } from "../../Graphql/Content/Mutation";
+import { useMutation } from "@apollo/client";
+import { GET_ALL_CONTENT } from "../../Graphql/Content/Queries";
+import { depressionSeverity } from "../../utils/util";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -109,384 +102,192 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-function EditContent(props) {
-  const contentID = props.match.params.contentID;
+const EditContent = (props) => {
   const classes = useStyles();
+  const history = useHistory();
+  const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [file, setFile] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
+  const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
 
-  const handleChange = (e) => {
-    let url = URL.createObjectURL(e.target.files[0]);
-    setFile(url);
-    console.log(url);
-  };
-
-  //Publish Card
-  const [status, setStatus] = useState("");
-  const [visibility, setVisibility] = useState("");
-  const [publish, setPublish] = useState("");
-  const [open, setOpen] = useState(false);
-
-  const handleStatusChange = (event) => {
-    setStatus(event.target.value);
-  };
-  const handleVisibilityChange = (event) => {
-    setVisibility(event.target.value);
-  };
-  const handlePublishChange = (event) => {
-    setPublish(event.target.value);
-  };
-
+  const [updateContent] = useMutation(UPDATE_CONTENT, {
+    refetchQueries: [GET_ALL_CONTENT],
+  });
+  
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleToggle = () => {
     setOpen(!open);
   };
 
-  //SelectDepressionCard
-  const depressionSeverity = [
-    {
-      severity: "Minimal Depression",
-    },
-    {
-      severity: "Mild Depression",
-    },
-    {
-      severity: "Moderate Depression",
-    },
-    {
-      severity: "Moderately severe Depression",
-    },
-    {
-      severity: "Severe Depression",
-    },
-  ];
-
-  const { data } = useQuery(GET_CONTENT, {
-    variables: {
-      contentID,
-    },
-  });
+  const handleChangeSeverity = (event) => {
+    setAppropiatePHQSeverity(event.target.value);
+  };
 
   return (
     <div className={classes.root}>
-      {data &&
-        data.getContent.map((content) => (
-          <>
-            <Typography
-              variant="h1"
-              component="h1"
-              gutterBottom
-              className={classes.title}
-            >
-              Edit Content
-            </Typography>
-            <Grid
-              container
-              direction="row"
-              justifyContent="flex-start"
-              spacing={3}
-            >
-              <Grid item xs={9}>
-                <Typography
-                  variant="h2"
-                  component="h1"
-                  gutterBottom
-                  className={classes.textTitle}
-                >
-                  Title
-                </Typography>
-                <TextField
-                  className={classes.field}
-                  placeholder="Title"
-                  defaultValue={content.title}
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
-                  required
-                  id="title"
-                  onChange={(e) => {
-                    setTitle(e.target.value);
-                  }}
+      <Typography
+        variant="h1"
+        component="h1"
+        gutterBottom
+        className={classes.title}
+      >
+        Add Content
+      </Typography>
+      <Grid container direction="row" justifyContent="flex-start" spacing={3}>
+        <Grid item xs={9}>
+          <Typography
+            variant="h2"
+            component="h1"
+            gutterBottom
+            className={classes.textTitle}
+          >
+            Title
+          </Typography>
+          <TextField
+            className={classes.field}
+            placeholder="Title"
+            variant="outlined"
+            color="primary"
+            fullWidth
+            required
+            id="title"
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
+          <Typography
+            variant="h2"
+            component="h1"
+            gutterBottom
+            className={classes.textTitle}
+          >
+            Body
+          </Typography>
+          <TextField
+            className={classes.field}
+            placeholder="Description"
+            variant="outlined"
+            color="primary"
+            fullWidth
+            required
+            id="body"
+            multiline
+            rows={20}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+          />
+          <Typography
+            variant="h2"
+            component="h1"
+            gutterBottom
+            className={classes.textTitle}
+          >
+            Picture URL
+          </Typography>
+          <TextField
+            className={classes.field}
+            placeholder="Picture URL"
+            variant="outlined"
+            color="primary"
+            fullWidth
+            required
+            id="title"
+            onChange={(e) => {
+              setPictureUrl(e.target.value);
+            }}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <Card className={classes.cardRoot}>
+            <CardHeader
+              title={
+                <Typography className={classes.cardTitle}>Publish</Typography>
+              }
+              className={classes.header}
+            />
+            <CardContent className={classes.content}>
+              <Button size="medium" color="primary" onClick={handleToggle}>
+                Preview Changes
+              </Button>
+              <Backdrop className={classes.backdrop} open={open}>
+                <PreviewChange
+                  title={title}
+                  description={description}
+                  pictureUrl={pictureUrl}
+                  onClick={handleClose}
                 />
-                <Typography
-                  variant="h2"
-                  component="h1"
-                  gutterBottom
-                  className={classes.textTitle}
-                >
-                  Body
-                </Typography>
-                <TextField
-                  className={classes.field}
-                  // hiddenLabel
-                  placeholder="Description"
-                  defaultValue={content.description}
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
-                  required
-                  id="body"
-                  multiline
-                  rows={20}
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                  }}
-                />
-                <Typography
-                  variant="h2"
-                  component="h1"
-                  gutterBottom
-                  className={classes.textTitle}
-                >
-                  Picture URL
-                </Typography>
-                <TextField
-                  className={classes.field}
-                  placeholder="Picture Url"
-                  defaultValue={content.pictureUrl}
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
-                  required
-                  id="title"
-                />
-                <Card className={classes.uploadRoot}>
-                  <CardHeader
-                    title={
-                      <Typography className={classes.cardTitle}>
-                        Photo
-                      </Typography>
-                    }
-                    className={classes.header}
-                  />
-                  <TextField
-                    className={classes.textField}
-                    id="photo"
-                    label="Image Upload"
-                    name="upload-photo"
-                    type="file"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined"
-                    onChange={handleChange}
-                  />
-                  {file.length > 0 && (
-                    <Card className={classes.paperRoot}>
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          alt="Contemplative Reptile"
-                          height="auto"
-                          image={file}
-                          title="Contemplative Reptile"
-                        />
-                      </CardActionArea>
-                    </Card>
-                  )}
-                  <Button>Upload</Button>
-                </Card>
-                {/* <UploadCard
-               onChange={(e) => {
-                 setImage(e.target.files[0]);
-               }}
-               onClick={upload}
-              /> */}
-                {/* <input
-               type="file"
-               onChange={(e) => {
-                 setImage(e.target.files[0]);
+              </Backdrop>
+            </CardContent>
+            <CardActions className={classes.action}>
+              <Button
+                size="small"
+                color="secondary"
+                onClick={() => {
+                  history.push("/contents");
                 }}
-                />
-              <button onClick={upload}>Upload</button> */}
-                {/* <button>Upload</button> */}
-              </Grid>
-              <Grid item xs={3}>
-                {/* <PublishCard onClick={submitHandler} /> */}
-                <Card className={classes.cardRoot}>
-                  <CardHeader
-                    title={
-                      <Typography className={classes.cardTitle}>
-                        Publish
-                      </Typography>
-                    }
-                    className={classes.header}
-                  />
-                  <CardContent className={classes.content}>
-                    <Grid
-                      container
-                      direction="row"
-                      justifyContent="flex-start"
-                      alignItems="center"
-                    >
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Status:
-                      </Typography>
-                      <FormControl
-                        variant="outlined"
-                        className={classes.formControl}
-                        size="small"
-                      >
-                        <InputLabel id="status">Status</InputLabel>
-                        <Select
-                          labelId="status"
-                          id="status"
-                          onChange={handleStatusChange}
-                          value={status}
-                          label="Status"
-                        >
-                          <MenuItem value="">
-                            <em>None</em>
-                          </MenuItem>
-                          <MenuItem value={"Draft"}>Draft</MenuItem>
-                          <MenuItem value={"Sent"}>Sent</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid
-                      container
-                      direction="row"
-                      justifyContent="flex-start"
-                      alignItems="center"
-                    >
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Visibility:
-                      </Typography>
-                      <FormControl
-                        variant="outlined"
-                        className={classes.formControl}
-                        size="small"
-                      >
-                        <InputLabel id="visibility">Visibility</InputLabel>
-                        <Select
-                          labelId="visibility"
-                          id="visibility"
-                          onChange={handleVisibilityChange}
-                          value={visibility}
-                          label="visibility"
-                        >
-                          <MenuItem value="">
-                            <em>None</em>
-                          </MenuItem>
-                          <MenuItem value={"Private"}>Private</MenuItem>
-                          <MenuItem value={"Public"}>Public</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid
-                      container
-                      direction="row"
-                      justifyContent="flex-start"
-                      alignItems="center"
-                    >
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Publish:
-                      </Typography>
-                      <FormControl
-                        variant="outlined"
-                        className={classes.formControl}
-                        size="small"
-                      >
-                        <InputLabel id="publish">Publish</InputLabel>
-                        <Select
-                          labelId="publish"
-                          id="publish"
-                          onChange={handlePublishChange}
-                          value={publish}
-                          label="publish"
-                        >
-                          <MenuItem value="">
-                            <em>None</em>
-                          </MenuItem>
-                          <MenuItem value={"immediately"}>immediately</MenuItem>
-                          <MenuItem value={1}>in 1 hour</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Button
-                      size="medium"
-                      color="primary"
-                      onClick={handleToggle}
-                    >
-                      Preview Changes
-                    </Button>
-                    <Backdrop className={classes.backdrop} open={open}>
-                      <PreviewChange
-                        title={title}
-                        description={description}
-                        file={file}
-                        onClick={handleClose}
-                      />
-                    </Backdrop>
-                  </CardContent>
-                  <CardActions className={classes.action}>
-                    <Button size="small" color="secondary">
-                      Move to Trash
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      color="primary"
-                      type="submit"
-                    >
-                      Post
-                    </Button>
-                  </CardActions>
-                </Card>
-                {/* <SelectCategoryCard /> */}
-
-                {/* <SelectDepressionCard
-               onChange={(e) => {
-                 setAppropiatePHQSeverity(e.target.value);
-               }}
-             /> */}
-                <Card className={classes.cardRoot}>
-                  <CardHeader
-                    title={
-                      <Typography className={classes.cardTitle}>
-                        Depression Severity
-                      </Typography>
-                    }
-                    className={classes.header}
-                  />
-                  <CardContent>
-                    <FormControl component="fieldset">
-                      <RadioGroup aria-label="gender" name="gender1">
-                        {depressionSeverity.map((item) => (
-                          <FormControlLabel
-                            key={item.severity}
-                            value={item.severity}
-                            control={<Radio color="primary" />}
-                            label={item.severity}
-                          />
-                        ))}
-                      </RadioGroup>
-                    </FormControl>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-          </>
-        ))}
+              >
+                cancel
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                color="primary"
+                type="submit"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  createContent({
+                    variables: {
+                      title: title,
+                      description: description,
+                      pictureUrl: pictureUrl,
+                      appropiatePHQSeverity: appropiatePHQSeverity,
+                    },
+                  });
+                  history.push("/contents");
+                }}
+              >
+                Post
+              </Button>
+            </CardActions>
+          </Card>
+          <Card className={classes.cardRoot}>
+            <CardHeader
+              title={
+                <Typography className={classes.cardTitle}>
+                  Depression Severity
+                </Typography>
+              }
+              className={classes.header}
+            />
+            <CardContent>
+              <FormControl component="fieldset">
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value={appropiatePHQSeverity}
+                  onChange={handleChangeSeverity}
+                >
+                  {depressionSeverity.map((item) => (
+                    <FormControlLabel
+                      key={item.severity}
+                      value={item.severity}
+                      control={<Radio color="primary" />}
+                      label={item.severity}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </div>
   );
-  // }
-  // return viewContent;
-}
+};
 
 export default EditContent;
