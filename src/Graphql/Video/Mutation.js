@@ -6,24 +6,18 @@ export const CREATE_VIDEO = gql`
     $videoUrl: String!
     $pictureUrl: String!
     $appropiatePHQSeverity: String!
-    $staffID: String!
-    $videoType: String!
   ) {
     createVideo(
       title: $title
       videoUrl: $videoUrl
       pictureUrl: $pictureUrl
       appropiatePHQSeverity: $appropiatePHQSeverity
-      staffID: $staffID
-      videoType: $videoType
     ) {
       videoID
       title
       videoUrl
       pictureUrl
       appropiatePHQSeverity
-      staffID
-      videoType
     }
   }
 `;
@@ -32,6 +26,30 @@ export const DELETE_VIDEO = gql`
   mutation deleteVideo($videoID: ID!) {
     deleteVideo(videoID: $videoID) {
       message
+    }
+  }
+`;
+
+export const UPDATE_VIDEO = gql`
+  mutation updateVideo(
+    $videoID: ID!
+    $title: String!
+    $videoUrl: String!
+    $pictureUrl: String!
+    $appropiatePHQSeverity: String!
+  ) {
+    updateVideo(
+      videoID: $videoID
+      title: $title
+      videoUrl: $videoUrl
+      pictureUrl: $pictureUrl
+      appropiatePHQSeverity: $appropiatePHQSeverity
+    ) {
+      videoID
+      title
+      videoUrl
+      pictureUrl
+      appropiatePHQSeverity
     }
   }
 `;

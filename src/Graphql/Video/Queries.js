@@ -9,7 +9,6 @@ query getAllVideo {
     pictureUrl
     createAt
     appropiatePHQSeverity
-    staffID
   }
 }
 `;
@@ -22,8 +21,6 @@ query getVideo($videoID: ID!) {
     pictureUrl
     createAt
     appropiatePHQSeverity
-    staffID
-    videoType
   }
 }
 `;
