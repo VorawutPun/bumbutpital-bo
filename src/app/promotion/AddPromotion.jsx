@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import UploadCard from "../../components/addContentCard/UploadCard";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_PROMOTION } from "../../Graphql/Promotion/Mutation";
 import { GET_ALL_PROMOTION } from "../../Graphql/Promotion/Query";
