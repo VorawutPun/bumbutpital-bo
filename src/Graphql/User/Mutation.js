@@ -79,6 +79,7 @@ mutation staffLogin(
     password: $password
   ) {
     accessToken
+    message
   }
 }
 `;
