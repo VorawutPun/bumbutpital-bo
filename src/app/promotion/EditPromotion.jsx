@@ -108,21 +108,19 @@ const EditPromotion = (props) => {
         expiredDate: expiredDate,
       },
     });
-    console.log(title);
     history.push("/promotions");
   };
 
   useEffect(() => {
-    console.log(data, "DATA");
+    // console.log(data, "DATA");
     if (data) {
       setTitle(data.getPromotion[0].title);
       setHospitalDetail(data.getPromotion[0].hospitalDetail);
       setUrl(data.getPromotion[0].url);
       setExpiredDate(data.getPromotion[0].expiredDate);
-      // setHospitalId(data.getPromotion[0].hospitalId);
     }
   }, [data]);
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className={classes.root}>
