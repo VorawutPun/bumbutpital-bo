@@ -34,10 +34,10 @@ const useStyles = makeStyles((theme) =>
 
 const SelectDepressionCard = (props) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(props.appropiatePHQSeverity);
+  const [appropiatePHQSeverity, setAppropiatePHQSeverity] = React.useState(props.appropiatePHQSeverity);
 
   const handleChange = (event) => {
-    setValue(event.target.value);
+    setAppropiatePHQSeverity(event.target.value);
   };
   return (
     <Card className={classes.root}>
@@ -52,7 +52,7 @@ const SelectDepressionCard = (props) => {
           <RadioGroup
             aria-label="depressionSeverity"
             name="depressionSeverity"
-            value={value}
+            value={appropiatePHQSeverity}
             onChange={handleChange}
           >
             {depressionSeverity.map((item) => (
