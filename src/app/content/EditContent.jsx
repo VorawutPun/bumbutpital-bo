@@ -146,7 +146,7 @@ const EditContent = (props) => {
   };
 
   useEffect(() => {
-    console.log(data, "DATA");
+    // console.log(data, "DATA");
     if (data) {
       setTitle(data.getContent[0].title);
       setDescription(data.getContent[0].description);
@@ -154,7 +154,7 @@ const EditContent = (props) => {
       setAppropiatePHQSeverity(data.getContent[0].appropiatePHQSeverity);
     }
   }, [data]);
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className={classes.root}>
@@ -167,7 +167,7 @@ const EditContent = (props) => {
               gutterBottom
               className={classes.title}
             >
-              Add Content
+              Edit Content
             </Typography>
             <Grid
               container
