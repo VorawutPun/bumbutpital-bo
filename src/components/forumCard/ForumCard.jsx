@@ -43,6 +43,11 @@ const useStyles = makeStyles((theme) =>
       fontSize: "16px",
       fontWeight: 300,
     },
+    adminAnswer: {
+      fontSize: "14px",
+      fontWeight: 300,
+      padding: "16px 16px 0px 16px",
+    },
     user: {
       display: "flex",
       alignItems: "center",
@@ -87,11 +92,6 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-    },
-    adminAnswer: {
-      fontSize: "24px",
-      fontWeight: 300,
-      padding: "16px 16px 0px 16px",
     },
   })
 );
