@@ -14,8 +14,9 @@ import {
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import UrgentCard from "./UrgentCard";
 import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
+import { GET_ALL_USERS } from "../../Graphql/User/Queries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -103,6 +104,8 @@ const ForumCard = (props) => {
     refetchQueries: [{ query: GET_ALL_FORUM }],
   });
 
+  const { data: queryUser } = useQuery(GET_ALL_USERS);
+
   const handleUrgentBackdrop = () => {
     setOpenUrgent(false);
   };
@@ -118,8 +121,12 @@ const ForumCard = (props) => {
           <CardContent className={classes.content}>
             <div className={classes.user}>
               <Typography variant="subtitle1" color="textSecondary">
-                User: Wisa Asked on{" "}
-                {new Date(props.forum.createAt).toLocaleDateString()}
+                User:
+                {queryUser &&
+                  queryUser.getAllUsers.find(
+                    (user) => user.id === props.forum.userID
+                  ).name}{" "}
+                Asked on {new Date(props.forum.createAt).toLocaleDateString()}
               </Typography>
             </div>
             <Typography className={classes.question} gutterBottom>
