@@ -1,15 +1,8 @@
 import React from "react";
-import {
-  Avatar,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardContent, CardHeader, Typography } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { Person } from "@material-ui/icons";
+import { GET_ALL_USERS } from "../../Graphql/User/Queries";
+import { useQuery } from "@apollo/client";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -39,8 +32,10 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const UrgentCard = ({ onClick }) => {
+const UrgentCard = (props) => {
   const classes = useStyles();
+  const { data: queryUser } = useQuery(GET_ALL_USERS);
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -51,39 +46,21 @@ const UrgentCard = ({ onClick }) => {
       />
       <CardContent>
         <Typography className={classes.title}>Username:</Typography>
-        <TextField
-          label="Help our Patient :)"
-          variant="outlined"
-          color="primary"
-          fullWidth
-          required
-          id="answer"
-          className={classes.field}
-        />
+        <Typography className={classes.title}>
+          {queryUser &&
+            queryUser.getAllUsers.find((user) => user.id === props.userID)
+              .username}
+        </Typography>
+        <Typography className={classes.title}>Name:</Typography>
+        <Typography className={classes.title}> </Typography>
         <Typography className={classes.title}>Phone Number:</Typography>
-        <TextField
-          label="Phone number"
-          variant="outlined"
-          color="primary"
-          fullWidth
-          required
-          id="answer"
-          className={classes.field}
-        />
-        <Avatar><Person/></Avatar>
-        <TextField
-          label="Help our Patient :)"
-          variant="outlined"
-          color="primary"
-          fullWidth
-          required
-          id="answer"
-          className={classes.field}
-        />
+        <Typography className={classes.title}> </Typography>
+        <Typography className={classes.title}>Email:</Typography>
+        <Typography className={classes.title}> </Typography>
       </CardContent>
-      <CardActions className={classes.action}>
+      {/* <CardActions className={classes.action}>
 
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 };

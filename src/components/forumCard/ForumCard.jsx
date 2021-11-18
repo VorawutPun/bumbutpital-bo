@@ -125,7 +125,7 @@ const ForumCard = (props) => {
                 {queryUser &&
                   queryUser.getAllUsers.find(
                     (user) => user.id === props.forum.userID
-                  ).name}{" "}
+                  ).name}
                 Asked on {new Date(props.forum.createAt).toLocaleDateString()}
               </Typography>
             </div>
@@ -207,7 +207,10 @@ const ForumCard = (props) => {
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
             >
-              <UrgentCard onClick={handleUrgentBackdrop} />
+              <UrgentCard
+                onClick={handleUrgentBackdrop}
+                userID={props.forum.userID}
+              />
             </Modal>
           </Grid>
         </CardActions>

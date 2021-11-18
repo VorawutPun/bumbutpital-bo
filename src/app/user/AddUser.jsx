@@ -250,6 +250,7 @@ const AddUser = () => {
             size="medium"
             required
             id="password"
+            
           />
           <Grid
             container
