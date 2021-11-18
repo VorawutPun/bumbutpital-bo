@@ -170,7 +170,6 @@ const ForumCard = (props) => {
               }
               title={
                 <TextField
-                  className={classes.field}
                   color="primary"
                   fullWidth
                   placeholder="Hospital Description"

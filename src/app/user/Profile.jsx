@@ -6,6 +6,7 @@ import Chart from "../../components/userProfile/Chart";
 import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import TotalForumCard from "../../components/dashboardCard/TotalForumCard";
+import ForumUserCard from "../../components/userProfile/ForumUserCard";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -98,6 +99,7 @@ const Profile = (props) => {
                 appropiatePHQSeverityScore={user.appropiatePHQSeverityScore}
                 appropiatePHQSeverity={user.appropiatePHQSeverity}
               />
+              <ForumUserCard userId={id}/>
             </div>
           </>
         ))}
