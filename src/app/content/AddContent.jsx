@@ -126,8 +126,8 @@ const AddContent = (props) => {
   };
 
   let errorMessage;
-  if (error){
-    errorMessage = {error}
+  if (error) {
+    errorMessage = { error };
   }
 
   return (
@@ -242,17 +242,29 @@ const AddContent = (props) => {
                 size="small"
                 color="primary"
                 type="submit"
-                onClick={async (e) => {
-                  e.preventDefault();
-                  createContent({
-                    variables: {
-                      title: title,
-                      description: description,
-                      pictureUrl: pictureUrl,
-                      appropiatePHQSeverity: appropiatePHQSeverity,
-                    },
-                  });
-                  history.push("/contents");
+                disabled={
+                  !title ||
+                  !description ||
+                  !pictureUrl ||
+                  !appropiatePHQSeverity
+                }
+                onClick={() => {
+                  if (
+                    title &&
+                    description &&
+                    pictureUrl &&
+                    appropiatePHQSeverity
+                  ) {
+                    createContent({
+                      variables: {
+                        title: title,
+                        description: description,
+                        pictureUrl: pictureUrl,
+                        appropiatePHQSeverity: appropiatePHQSeverity,
+                      },
+                    });
+                    history.push("/contents");
+                  }
                 }}
               >
                 Post

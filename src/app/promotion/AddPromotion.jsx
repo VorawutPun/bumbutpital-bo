@@ -76,24 +76,25 @@ const AddPromotion = () => {
 
   const { data } = useQuery(GET_ALL_HOSPITAL);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    createPromotion({
-      variables: {
-        hospitalId:
-          data &&
-          data.getAllHospital.find(
-            (hospital) => hospital.hospitalName === currentHospital
-          ).hospitalID,
-        userId: userId,
-        title: title,
-        hospitalDetail: hospitalDetail,
-        couponCode: couponCode,
-        Url: Url,
-        expiredDate: expiredDate,
-      },
-    });
-    history.push("/promotions");
+  const submitHandler = () => {
+    if (currentHospital && title && hospitalDetail && Url && expiredDate) {
+      createPromotion({
+        variables: {
+          hospitalId:
+            data &&
+            data.getAllHospital.find(
+              (hospital) => hospital.hospitalName === currentHospital
+            ).hospitalID,
+          userId: userId,
+          title: title,
+          hospitalDetail: hospitalDetail,
+          couponCode: couponCode,
+          Url: Url,
+          expiredDate: expiredDate,
+        },
+      });
+      history.push("/promotions");
+    }
   };
 
   return (
@@ -219,6 +220,13 @@ const AddPromotion = () => {
               variant="contained"
               color="primary"
               size="large"
+              disabled={
+                !currentHospital ||
+                !title ||
+                !hospitalDetail ||
+                !Url ||
+                !expiredDate
+              }
               onClick={submitHandler}
             >
               Create

@@ -79,18 +79,19 @@ const AddVideo = () => {
     refetchQueries: [{ query: GET_ALL_VIDEO }],
   });
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    createVideo({
-      variables: {
-        title: title,
-        videoUrl: videoUrl,
-        pictureUrl: pictureUrl,
-        appropiatePHQSeverity: appropiatePHQSeverity,
-        staffID: staffID,
-      },
-    });
-    history.push("/videos");
+  const submitHandler = () => {
+    if (title && videoUrl && pictureUrl && appropiatePHQSeverity) {
+      createVideo({
+        variables: {
+          title: title,
+          videoUrl: videoUrl,
+          pictureUrl: pictureUrl,
+          appropiatePHQSeverity: appropiatePHQSeverity,
+          staffID: staffID,
+        },
+      });
+      history.push("/videos");
+    }
   };
 
   return (
@@ -148,7 +149,9 @@ const AddVideo = () => {
               setPictureUrl(e.target.value);
             }}
           />
-          <Typography className={classes.profileTitle}>Depression Severity</Typography>
+          <Typography className={classes.profileTitle}>
+            Depression Severity
+          </Typography>
           <FormControl component="fieldset">
             <RadioGroup
               aria-label="gender"
@@ -186,6 +189,9 @@ const AddVideo = () => {
               variant="contained"
               color="primary"
               size="large"
+              disabled={
+                !title || !videoUrl || !pictureUrl || !appropiatePHQSeverity
+              }
               onClick={submitHandler}
             >
               Create

@@ -68,61 +68,6 @@ const AddHospital = () => {
     refetchQueries: [{ query: GET_ALL_HOSPITAL }],
   });
 
-  // if (loading) return "Submitting...";
-  // if (error) return `Submission error! ${error.message}`;
-  // let errorMessage;
-
-  // if (error) {
-  //   if (
-  //     error.networkError &&
-  //     typeof window !== "undefined" &&
-  //     !window.navigator.onLine
-  //   ) {
-  //     errorMessage = "Sorry, your browser is offline";
-  //   } else {
-  //     errorMessage = {error};
-  //   }
-  // }
-
-  // const submitHandler = (event) => {
-  //   event.preventDefault();
-  //   createHospital({
-  //     variables: {
-  //       staffID: staffID,
-  //       hospitalName: hospitalName,
-  //       hospitalDescription: hospitalDescription,
-  //       imageUrl: imageUrl,
-  //     },
-  //   });
-  //   history.push("/hospitals");
-  // }
-
-  // const submitHandler = () => {
-  //   try {
-  //     createHospital({
-  //       variables: {
-  //         staffID: staffID,
-  //         hospitalName: hospitalName,
-  //         hospitalDescription: hospitalDescription,
-  //         imageUrl: imageUrl,
-  //       },
-  //     });
-  //     history.push("/hospitals");
-  //   } catch (e) {
-  //     console.log({ e })
-  //     if (isApolloError(e)) {
-  //       for (const gqlError of e.graphQLErrors) {
-  //         if (gqlError.extensions?.code === 'BAD_USER_INPUT') {
-  //           if (Array.isArray(gqlError.extensions?.errors)) {
-  //             for (const fieldError of gqlError.extensions.errors) {
-  //               setError(fieldError.property, { message: fieldError.message });
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // };
   const submitHandler = () => {
     if (hospitalName && hospitalDescription && imageUrl) {
       createHospital({
@@ -159,10 +104,7 @@ const AddHospital = () => {
             onChange={(e) => {
               setHospitalName(e.target.value);
             }}
-            // {...register('hospitalName', { required: true })}
           />
-          {/* {errors.hospitalName && <p>{errors.hospitalName.message}</p>} */}
-          {/* {console.log(errors)} */}
           <Typography gutterBottom className={classes.profileTitle}>
             Hospital Description:
           </Typography>

@@ -76,20 +76,29 @@ const AddUser = () => {
     refetchQueries: [{ query: GET_ALL_USERS }],
   });
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    createUser({
-      variables: {
-        name: name,
-        surname: surname,
-        username: username,
-        password: password,
-        email: email,
-        phoneNumber: phoneNumber,
-        role: role,
-      },
-    });
-    history.push("/users");
+  const submitHandler = () => {
+    if (
+      name &&
+      surname &&
+      username &&
+      password &&
+      email &&
+      phoneNumber &&
+      role
+    ) {
+      createUser({
+        variables: {
+          name: name,
+          surname: surname,
+          username: username,
+          password: password,
+          email: email,
+          phoneNumber: phoneNumber,
+          role: role,
+        },
+      });
+      history.push("/users");
+    }
   };
 
   const cancelSubmitHandler = () => {
@@ -187,7 +196,7 @@ const AddUser = () => {
             }}
           />
           <Typography gutterBottom className={classes.profileTitle}>
-          User Type Role:
+            User Type Role:
           </Typography>
           <FormControl component="fieldset">
             <RadioGroup
@@ -261,6 +270,15 @@ const AddUser = () => {
               color="primary"
               size="large"
               type="submit"
+              disabled={
+                !name ||
+                !surname ||
+                !username ||
+                !password ||
+                !email ||
+                !phoneNumber ||
+                !role
+              }
               onClick={submitHandler}
             >
               Create

@@ -66,9 +66,9 @@ const Login = ({ onClick }) => {
           color="primary"
           size="large"
           className={style.root}
-          onClick={async (e) => {
-            e.preventDefault();
-            const result = await staffLogin({
+          disabled={!username || !password}
+          onClick={() => {
+            const result = staffLogin({
               variables: {
                 username: username,
                 password: password,
