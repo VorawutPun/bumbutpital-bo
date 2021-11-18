@@ -45,18 +45,28 @@ const UrgentCard = (props) => {
         className={classes.header}
       />
       <CardContent>
-        <Typography className={classes.title}>Username:</Typography>
         <Typography className={classes.title}>
+          Username:{" "}
           {queryUser &&
             queryUser.getAllUsers.find((user) => user.id === props.userID)
               .username}
         </Typography>
-        <Typography className={classes.title}>Name:</Typography>
-        <Typography className={classes.title}> </Typography>
-        <Typography className={classes.title}>Phone Number:</Typography>
-        <Typography className={classes.title}> </Typography>
-        <Typography className={classes.title}>Email:</Typography>
-        <Typography className={classes.title}> </Typography>
+        <Typography className={classes.title}>
+          Name:{" "}
+          {queryUser &&
+            queryUser.getAllUsers.find((user) => user.id === props.userID).name}
+        </Typography>
+        <Typography className={classes.title}>
+          Phone Number:{" "}
+          {queryUser &&
+            queryUser.getAllUsers.find((user) => user.id === props.userID)
+              .phoneNumber}
+        </Typography>
+        <Typography className={classes.title}>
+          Email:{" "}
+          {queryUser &&
+            queryUser.getAllUsers.find((user) => user.id === props.userID).email}
+        </Typography>
       </CardContent>
       {/* <CardActions className={classes.action}>
 

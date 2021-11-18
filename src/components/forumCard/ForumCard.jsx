@@ -121,11 +121,11 @@ const ForumCard = (props) => {
           <CardContent className={classes.content}>
             <div className={classes.user}>
               <Typography variant="subtitle1" color="textSecondary">
-                User:
+                User:{" "}
                 {queryUser &&
                   queryUser.getAllUsers.find(
                     (user) => user.id === props.forum.userID
-                  ).name}
+                  ).name}{" "}
                 Asked on {new Date(props.forum.createAt).toLocaleDateString()}
               </Typography>
             </div>
