@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
@@ -38,7 +38,10 @@ function App() {
             <div className="container">
               <Switch>
                 <Route exact path="/login" component={Authen} />
-                <Route path="/" component={Layout} />
+                {localStorage.getItem("token") && (
+                  <Route path="/" component={Layout} />
+                )}
+                <Redirect to="/login" />
               </Switch>
             </div>
           </div>

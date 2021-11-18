@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Sidebar from "../components/sidebar/Sidebar";
 import AddContent from "./content/AddContent";
 import AddPromotion from "./promotion/AddPromotion";
@@ -42,7 +42,9 @@ const Layout = () => {
         <Route path="/hospitals" component={ManageHospital} />
         <Route path="/hospital/add" component={AddHospital} />
         <Route path="/hospital/:hospitalID" component={EditHospital} />
+        <Redirect to="/home"/>
       </Switch>
+
     </>
   );
 };
