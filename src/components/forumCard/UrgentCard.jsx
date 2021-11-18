@@ -40,7 +40,7 @@ const UrgentCard = (props) => {
     <Card className={classes.root}>
       <CardHeader
         title={
-          <Typography className={classes.title}>Answer To Username</Typography>
+          <Typography className={classes.title}>Urgent Information</Typography>
         }
         className={classes.header}
       />
