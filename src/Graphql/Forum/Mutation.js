@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const ANSWER_FORUM = gql`
-  mutation answerForum($forumID: String!, $adminAnswer: String!) {
-    answerForum(forumID: $forumID, adminAnswer: $adminAnswer) {
+  mutation answerForum($forumID: ID!, $answer: String!) {
+    answerForum(forumID: $forumID, answer: $answer) {
       message
     }
   }
