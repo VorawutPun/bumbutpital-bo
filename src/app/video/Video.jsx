@@ -101,11 +101,11 @@ const ManageVideo = (props) => {
           <TableHead>
             <TableRow>
               <TableCell>No.</TableCell>
-              <TableCell align="left">title</TableCell>
-              <TableCell align="left">videoUrl</TableCell>
-              <TableCell align="left">picture</TableCell>
-              <TableCell align="left">createAt</TableCell>
-              <TableCell align="left">AppropiatePHQSeverity</TableCell>
+              <TableCell align="left">Title</TableCell>
+              <TableCell align="left">Video URL</TableCell>
+              <TableCell align="left">Picture</TableCell>
+              <TableCell align="left">Created At</TableCell>
+              <TableCell align="left">Appropiate PHQ Severity</TableCell>
               <TableCell align="left">Action</TableCell>
             </TableRow>
           </TableHead>

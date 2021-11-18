@@ -67,14 +67,14 @@ const Login = ({ onClick }) => {
           size="large"
           className={style.root}
           disabled={!username || !password}
-          onClick={() => {
+          onClick={async() =>  {
             const result = staffLogin({
               variables: {
                 username: username,
                 password: password,
               },
             });
-            localStorage.setItem("token", result.data.staffLogin.accessToken);
+            localStorage.setItem("token",(await result).data.staffLogin.accessToken);
             history.push("/home");
           }}
         >
