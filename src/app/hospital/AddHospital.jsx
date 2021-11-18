@@ -8,7 +8,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import UploadCard from "../../components/addContentCard/UploadCard";
 import { useMutation } from "@apollo/client";
 import { CREATE_HOSPITAL } from "../../Graphql/Hospital/Mutation";
 import { useHistory } from "react-router-dom";
@@ -124,16 +123,17 @@ const AddHospital = () => {
   //     }
   //   }
   // };
-
   const submitHandler = () => {
-    createHospital({
-      variables: {
-        hospitalName: hospitalName,
-        hospitalDescription: hospitalDescription,
-        imageUrl: imageUrl,
-      },
-    });
-    history.push("/hospitals");
+    if (hospitalName && hospitalDescription && imageUrl) {
+      createHospital({
+        variables: {
+          hospitalName: hospitalName,
+          hospitalDescription: hospitalDescription,
+          imageUrl: imageUrl,
+        },
+      });
+      history.push("/hospitals");
+    }
   };
 
   return (
@@ -216,7 +216,7 @@ const AddHospital = () => {
               variant="contained"
               color="primary"
               size="large"
-              // disabled={formState.isSubmitting}
+              disabled={!hospitalName || !hospitalDescription || !imageUrl}
               onClick={submitHandler}
             >
               Create
