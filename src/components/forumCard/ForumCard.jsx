@@ -159,7 +159,7 @@ const ForumCard = (props) => {
                       answerForum({
                         variables: {
                           forumID: props.forum.forumID,
-                          adminAnswer: answer,
+                          answer: answer,
                         },
                       });
                     }}
