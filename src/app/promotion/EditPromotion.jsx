@@ -92,6 +92,20 @@ const EditPromotion = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log({
+      promotionId: promotionId,
+      hospitalId:
+        (queryHospital &&
+        queryHospital.getAllHospital.find(
+          (hospital) => hospital.hospitalName === currentHospital
+        ).hospitalID),
+      userId: userId,
+      title: title,
+      hospitalDetail: hospitalDetail,
+      couponCode: couponCode,
+      Url: Url,
+      expiredDate: expiredDate,
+    })
     updatePromotion({
       variables: {
         promotionId: promotionId,
@@ -116,7 +130,7 @@ const EditPromotion = (props) => {
     if (data) {
       setTitle(data.getPromotion[0].title);
       setHospitalDetail(data.getPromotion[0].hospitalDetail);
-      setUrl(data.getPromotion[0].url);
+      setUrl(data.getPromotion[0].Url);
       setExpiredDate(data.getPromotion[0].expiredDate);
     }
   }, [data]);
