@@ -65,7 +65,7 @@ export const menuItems = [
     path: "/hospitals",
   },
   {
-    text: "Forum",
+    text: "Q&A",
     icon: <ForumIcon color="primary" />,
     path: "/forum",
   },

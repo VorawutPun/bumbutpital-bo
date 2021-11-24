@@ -71,7 +71,7 @@ const Forum = () => {
             gutterBottom
             className={classes.title}
           >
-            Forum
+            Question & Answer
           </Typography>
         </Grid>
 
@@ -107,12 +107,6 @@ const Forum = () => {
         justifyContent="flex-start"
         alignItems="flex-start"
       >
-        {/* <Grid item>
-          <Link className={classes.selectionItem}>Lastest</Link>
-        </Grid>
-        <Grid item>
-          <Link className={classes.selectionItem}>Pinned</Link>
-        </Grid> */}
       </Grid>
       {data &&
         data.getAllForum.map((forum) => (
