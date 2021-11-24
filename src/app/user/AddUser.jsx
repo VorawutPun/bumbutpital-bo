@@ -17,7 +17,7 @@ import { USER_REGISTER } from "../../Graphql/User/Mutation";
 import { GET_ALL_USERS, GET_ONLY_USER } from "../../Graphql/User/Queries";
 import { useHistory } from "react-router-dom";
 import generator from "generate-password";
-import emailjs from 'emailjs-com';
+// import emailjs from 'emailjs-com';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -95,19 +95,19 @@ const AddUser = () => {
     errorPolicy: "all",
   });
 
-  const sendEmail = (e) => {
-    e.preventDefault();
-    emailjs.sendForm(
-        "service_pby8rs7",
-        "template_hl8wgtz",
-        e.target,
-        "user_LBr8505JcZq5mjQ9mvWAM"
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-  };
+  // const sendEmail = (e) => {
+  //   e.preventDefault();
+  //   emailjs.sendForm(
+  //       "service_pby8rs7",
+  //       "template_hl8wgtz",
+  //       e.target,
+  //       "user_LBr8505JcZq5mjQ9mvWAM"
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   const submitHandler = (e) => {
     e.preventDefault();
