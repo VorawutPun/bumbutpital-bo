@@ -146,7 +146,7 @@ const AddUser = () => {
       <Typography gutterBottom className={classes.title}>
         Create Account
       </Typography>
-      <form className={classes.card} ref={form} onSubmit={sendEmail}>
+      <form className={classes.card} ref={form} >
         <Typography gutterBottom className={classes.profileTitle}>
           First Name:
         </Typography>
