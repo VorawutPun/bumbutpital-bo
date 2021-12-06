@@ -16,14 +16,13 @@ import firebase from "../../firebase/firebase";
 import { v4 as uuidv4 } from "uuid";
 
 const profileImg =
-  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+  "https://cdn.icon-icons.com/icons2/1993/PNG/512/frame_gallery_image_images_photo_picture_pictures_icon_123209.png";
 
 const AddHospital = () => {
   const classes = useStyles();
   const history = useHistory();
   const [hospitalName, setHospitalName] = useState("");
   const [hospitalDescription, setHospitalDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
 
   // Image For Render, Image for Upload
   const [image, setImage] = useState({
@@ -38,25 +37,19 @@ const AddHospital = () => {
   });
 
   const submitHandler = async () => {
-    if (
-      hospitalName &&
-      hospitalDescription &&
-      imageUrl &&
-      image.forUpload.length > 0
-    ) {
+    if (hospitalName && hospitalDescription && image.forUpload.length > 0) {
       const storage = firebase.storage();
       const storageRef = storage.ref().child(`/hospital/${uuidv4()}.jpg`);
       const result = await storageRef.put(image.forUpload[0].fileForUpload);
       const url = await result.ref.getDownloadURL();
-
-      // createHospital({
-      //   variables: {
-      //     hospitalName: hospitalName,
-      //     hospitalDescription: hospitalDescription,
-      //     imageUrl: imageUrl,
-      //   },
-      // });
-      // history.push("/hospitals");
+      createHospital({
+        variables: {
+          hospitalName: hospitalName,
+          hospitalDescription: hospitalDescription,
+          imageUrl: url,
+        },
+      });
+      history.push("/hospitals");
     }
   };
 
@@ -86,7 +79,7 @@ const AddHospital = () => {
     if (image.forRender.length > 0) {
       return image.forRender[0].file;
     }
-    return profileImg;
+    /* return profileImg; */
   };
 
   return (
@@ -94,7 +87,6 @@ const AddHospital = () => {
       <Typography gutterBottom className={classes.title}>
         Add Hospital
       </Typography>
-      {/* {errorMessage && <p>{error.message}</p>} */}
       <Card className={classes.card} elevation={0}>
         <Paper className={classes.paper} elevation={0}>
           <Typography gutterBottom className={classes.profileTitle}>
@@ -131,35 +123,30 @@ const AddHospital = () => {
             }}
           />
           <Typography gutterBottom className={classes.profileTitle}>
-            Hospital Picture Url:
-          </Typography>
-          <TextField
-            className={classes.field}
-            fullWidth
-            placeholder="Promotion Url"
-            variant="outlined"
-            color="primary"
-            size="medium"
-            required
-            id="Url"
-            onChange={(e) => {
-              setImageUrl(e.target.value);
-            }}
-          />
-          <Typography gutterBottom className={classes.profileTitle}>
             Hospital Picture:
           </Typography>
           <div>
-            <input
-              hidden
-              type="file"
-              id="image"
-              ref={imageInput}
-              onChange={() => handleImageChange()}
-            />
-            <label for="image">
-              <img src={getRenderImage()} />
-            </label>
+            <Button variant="contained" component="label">
+              Upload Picture
+              <input
+                hidden
+                type="file"
+                accept="image/png, image/jpeg" 
+                id="image"
+                ref={imageInput}
+                onChange={() => handleImageChange()}
+              />
+            </Button>
+            <div className={classes.pictureUrl}>
+              {image.forUpload.length > 0 && (
+                <img
+                  src={getRenderImage()}
+                  width="200px"
+                  height="200px"
+                  alt="hospitalPic"
+                />
+              )}
+            </div>
           </div>
           <Grid
             container
@@ -181,7 +168,7 @@ const AddHospital = () => {
               variant="contained"
               color="primary"
               size="large"
-              disabled={!hospitalName || !hospitalDescription || !imageUrl}
+              disabled={!hospitalName || !hospitalDescription || !image}
               onClick={submitHandler}
             >
               Create
@@ -233,6 +220,9 @@ const useStyles = makeStyles((theme) =>
     uploadCard: {
       marginTop: "-40px",
       marginBottom: "-30px",
+    },
+    pictureUrl: {
+      marginTop: "30px",
     },
   })
 );
