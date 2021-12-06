@@ -176,7 +176,9 @@ const EditVideo = (props) => {
                     aria-label="gender"
                     name="gender1"
                     value={appropiatePHQSeverity}
-                    onChange={(e) => {setAppropiatePHQSeverity(e.target.value)}}
+                    onChange={(e) => {
+                      setAppropiatePHQSeverity(e.target.value);
+                    }}
                   >
                     {depressionSeverity.map((severity) => (
                       <FormControlLabel
@@ -190,7 +192,6 @@ const EditVideo = (props) => {
                 </FormControl>
               </Grid>
             </Grid>
-
             <Grid
               container
               direction="row"

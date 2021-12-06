@@ -15,9 +15,6 @@ import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
 import firebase from "../../firebase/firebase";
 import { v4 as uuidv4 } from "uuid";
 
-const profileImg =
-  "https://cdn.icon-icons.com/icons2/1993/PNG/512/frame_gallery_image_images_photo_picture_pictures_icon_123209.png";
-
 const AddHospital = () => {
   const classes = useStyles();
   const history = useHistory();

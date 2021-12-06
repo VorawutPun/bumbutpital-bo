@@ -3,7 +3,6 @@ import { gql } from "@apollo/client";
 export const CREATE_PROMOTION = gql`
   mutation createPromotion(
     $hospitalId: String!
-    $userId: String!
     $title: String!
     $hospitalDetail: String!
     $Url: String!
@@ -12,7 +11,6 @@ export const CREATE_PROMOTION = gql`
   ) {
     createPromotion(
       hospitalId: $hospitalId
-      userId: $userId
       title: $title
       hospitalDetail: $hospitalDetail
       Url: $Url
@@ -20,7 +18,6 @@ export const CREATE_PROMOTION = gql`
       expiredDate: $expiredDate
     ) {
       hospitalId
-      userId
       title
       hospitalDetail
       Url

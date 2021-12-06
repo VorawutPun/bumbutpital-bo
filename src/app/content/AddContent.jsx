@@ -45,7 +45,7 @@ const AddContent = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   const handleToggle = () => {
     setOpen(!open);
   };
@@ -196,18 +196,6 @@ const AddContent = (props) => {
               />
             </Button>
           </div>
-          {/* <TextField
-            className={classes.field}
-            placeholder="Picture URL"
-            variant="outlined"
-            color="primary"
-            fullWidth
-            required
-            id="pictureUrl"
-            onChange={(e) => {
-              setPictureUrl(e.target.value);
-            }}
-          /> */}
         </Grid>
         <Grid item xs={3}>
           <Card className={classes.cardRoot}>
@@ -323,6 +311,13 @@ const useStyles = makeStyles((theme) =>
       marginBottom: "40px",
       marginTop: "40px",
     },
+    cardRoot: {
+      border: "solid",
+      borderWidth: "1px",
+      borderColor: "#D1D1D1",
+      borderRadius: "8px",
+      marginBottom: "40px",
+    },
     header: {
       backgroundColor: "#F8F8F8",
       padding: "16px",
@@ -330,6 +325,11 @@ const useStyles = makeStyles((theme) =>
     cardTitle: {
       fontSize: "16px",
       fontWeight: 600,
+    },
+    action: {
+      backgroundColor: "#F8F8F8",
+      justifyContent: "space-between",
+      padding: "16px",
     },
     textField: {
       margin: "20px",
@@ -343,13 +343,6 @@ const useStyles = makeStyles((theme) =>
       maxWidth: 345,
       padding: "30px",
     },
-    cardRoot: {
-      border: "solid",
-      borderWidth: "1px",
-      borderColor: "#D1D1D1",
-      borderRadius: "8px",
-      marginBottom: "40px",
-    },
     formControl: {
       margin: theme.spacing(1),
       minWidth: 100,
@@ -357,11 +350,7 @@ const useStyles = makeStyles((theme) =>
     content: {
       alignItems: "center",
     },
-    action: {
-      backgroundColor: "#F8F8F8",
-      justifyContent: "space-between",
-      padding: "16px",
-    },
+
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,
       color: "#fff",
