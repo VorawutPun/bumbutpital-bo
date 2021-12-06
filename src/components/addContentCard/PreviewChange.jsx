@@ -4,12 +4,10 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
   Typography,
 } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { ArrowBack } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -17,7 +15,7 @@ const useStyles = makeStyles((theme) =>
       borderRadius: "14px",
       width: "360px",
       height: "640px",
-      overflowY:"scroll",
+      overflowY: "scroll",
     },
     header: {
       padding: "16px",
@@ -41,7 +39,6 @@ const PreviewChange = (props) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-      <CardHeader title={<ArrowBack />} className={classes.header} />
       <CardContent>
         <Typography variant="h5">{props.title}</Typography>
         <CardMedia
@@ -49,20 +46,21 @@ const PreviewChange = (props) => {
           alt="No photo"
           height="auto"
           width="200px"
-          image={props.pictureUrl}
+          image={props.getRenderImage()}
           title="No photo"
         />
         <Typography className={classes.title}>{props.description}</Typography>
       </CardContent>
-      <CardActions className={classes.action}></CardActions>
-      <Button
-        variant="contained"
-        size="small"
-        color="primary"
-        onClick={props.onClick}
-      >
-        Done
-      </Button>
+      <CardActions className={classes.action}>
+        <Button
+          variant="contained"
+          size="small"
+          color="primary"
+          onClick={props.onClick}
+        >
+          Close
+        </Button>
+      </CardActions>
     </Card>
   );
 };

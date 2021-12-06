@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import classes from "./AuthCard.module.css";
-import { Button, makeStyles, TextField } from "@material-ui/core";
+import {
+  Button,
+  CircularProgress,
+  makeStyles,
+  TextField,
+} from "@material-ui/core";
 // import { Alert, AlertTitle } from "@material-ui/lab";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
@@ -24,11 +29,14 @@ const Login = ({ onClick }) => {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  // const [error, setError] = useState("")
 
-  const [staffLogin, { error, loading }] = useMutation(STAFF_LOGIN);
+  const [staffLogin, { error, loading }] = useMutation(STAFF_LOGIN, {
+    errorPolicy: "all",
+  });
 
-  if (loading) return "Submitting...";
-  if (error) return `Submission error! ${error.message}`;
+  if (loading) return <CircularProgress />;
+  // if (error) return `${error.message}`;
 
   return (
     <div className={classes.authCard}>
@@ -61,20 +69,24 @@ const Login = ({ onClick }) => {
             }}
           />
         </div>
+        {error && <p>{error.message}</p>}
         <Button
           variant="contained"
           color="primary"
           size="large"
           className={style.root}
           disabled={!username || !password}
-          onClick={async() =>  {
+          onClick={async () => {
             const result = staffLogin({
               variables: {
                 username: username,
                 password: password,
               },
             });
-            localStorage.setItem("token",(await result).data.staffLogin.accessToken);
+            localStorage.setItem(
+              "token",
+              (await result).data.staffLogin.accessToken
+            );
             history.push("/home");
           }}
         >
