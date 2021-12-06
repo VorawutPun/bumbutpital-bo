@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) =>
       marginTop: "60px",
     },
     title: {
-      fontSize: "34px",
+      fontSize: "32px",
       fontWeight: 600,
     },
     name: {
@@ -37,6 +37,14 @@ const useStyles = makeStyles((theme) =>
       borderRadius: "10px",
       marginRight: "24px",
       boxShadow: "none",
+    },
+    titleButton: {
+      background: "#6367EA",
+      borderRadius: 5,
+      border: 0,
+      color: "white",
+      height: 36,
+      float: "right",
     },
   })
 );
@@ -63,6 +71,7 @@ const Profile = (props) => {
                 onClick={() => {
                   history.push("/users");
                 }}
+                className={classes.titleButton}
               >
                 Done
               </Button>

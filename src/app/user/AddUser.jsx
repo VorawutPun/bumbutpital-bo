@@ -2,9 +2,7 @@ import React, { useState, useRef } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Button,
-  Card,
   Grid,
-  Paper,
   TextField,
   Typography,
   FormControl,
@@ -94,20 +92,6 @@ const AddUser = () => {
     refetchQueries: [{ query: GET_ALL_USERS }],
     errorPolicy: "all",
   });
-
-  // const sendEmail = (e) => {
-  //   e.preventDefault();
-  //   emailjs.sendForm(
-  //       "service_pby8rs7",
-  //       "template_hl8wgtz",
-  //       e.target,
-  //       "user_LBr8505JcZq5mjQ9mvWAM"
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
 
   const submitHandler = (e) => {
     e.preventDefault();
