@@ -23,7 +23,6 @@ const AddPromotion = () => {
   const [couponCode /* setCouponCode */] = useState("");
   const [title, setTitle] = useState("");
   const [hospitalDetail, setHospitalDetail] = useState("");
-  const [Url, setUrl] = useState("");
   const [expiredDate, setExpiredDate] = useState("");
   const [currentHospital, setCurrentHospital] = useState("");
   const [image, setImage] = useState({
