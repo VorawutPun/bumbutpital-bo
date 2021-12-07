@@ -60,7 +60,7 @@ const EditContent = (props) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    let url = data.getContent[0].pictureUrl;
+    let url = pictureUrl;
     if (image.forUpload.length > 0) {
       const storage = firebase.storage();
       const storageRef = storage.ref().child(`/content/${uuidv4()}.jpg`);
@@ -109,8 +109,6 @@ const EditContent = (props) => {
       setAppropiatePHQSeverity(data.getContent[0].appropiatePHQSeverity);
     }
   }, [data]);
-
-  console.log(data && data.getContent[0].pictureUrl);
 
   const getRenderImage = () => {
     if (image.forRender.length > 0) {
