@@ -25,7 +25,7 @@ const Home = () => {
         .map((user) => user.appropiatePHQSeverityScore)
         .filter((x) => x !== null)
         .map((i) => Number(i))
-        .reduce((result, number) => result + number);
+        .reduce((result, number) => result + number, 0);
       setTotalScore(sumScore/count);
     }
   }, [allUser]);
