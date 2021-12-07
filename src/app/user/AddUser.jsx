@@ -5,57 +5,12 @@ import {
   Grid,
   TextField,
   Typography,
-  FormControl,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
 } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
 import { USER_REGISTER } from "../../Graphql/User/Mutation";
 import { GET_ALL_USERS, GET_ONLY_USER } from "../../Graphql/User/Queries";
 import { useHistory } from "react-router-dom";
 import generator from "generate-password";
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      padding: "32px",
-      marginTop: "60px",
-    },
-    title: {
-      fontSize: "34px",
-      fontWeight: 600,
-    },
-    card: {
-      margin: "20px 48px",
-      maxWidth: "600px",
-    },
-    addUserTitle: {
-      fontSize: "24px",
-      fontWeight: 500,
-    },
-    paper: {
-      alignItems: "center",
-      margin: "20px 48px",
-      width: "600px",
-    },
-    profileTitle: {
-      margin: "8px 0px",
-      fontSize: "20px",
-      fontWeight: 600,
-    },
-    field: {
-      display: "block",
-      marginRight: "10px",
-      marginTop: "10px",
-      minWidth: "400px",
-    },
-    buttonGroup: {
-      marginTop: "20px",
-    },
-  })
-);
 
 const AddUser = () => {
   const classes = useStyles();
@@ -67,7 +22,7 @@ const AddUser = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [role, setRole] = useState("");
+  // const [role, setRole] = useState("");
   const [errors, setErrors] = useState();
   const [phoneErrors, setPhoneErrors] = useState();
   const [emailErrors, setEmailErrors] = useState();
@@ -80,12 +35,11 @@ const AddUser = () => {
     setPassword(pwd);
   };
 
-  const handleChangeRole = (event) => {
-    setRole(event.target.value);
-  };
+  // const handleChangeRole = (event) => {
+  //   setRole(event.target.value);
+  // };
 
   const { data } = useQuery(GET_ONLY_USER);
-  // console.log(data.getAllUsers[0].username);
 
   const [createUser, { error }] = useMutation(USER_REGISTER, {
     refetchQueries: [{ query: GET_ALL_USERS }],
@@ -94,15 +48,7 @@ const AddUser = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (
-      name &&
-      surname &&
-      username &&
-      password &&
-      email &&
-      phoneNumber &&
-      role
-    ) {
+    if (name && surname && username && password && email && phoneNumber) {
       createUser({
         variables: {
           name: name,
@@ -111,7 +57,7 @@ const AddUser = () => {
           password: password,
           email: email,
           phoneNumber: phoneNumber,
-          role: role,
+          role: "Ministry of Public Health Staff",
         },
       });
     }
@@ -129,7 +75,7 @@ const AddUser = () => {
       <Typography gutterBottom className={classes.title}>
         Create Account
       </Typography>
-      <form className={classes.card} ref={form} >
+      <form className={classes.card} ref={form}>
         <Typography gutterBottom className={classes.profileTitle}>
           First Name:
         </Typography>
@@ -180,9 +126,6 @@ const AddUser = () => {
           size="medium"
           required
           id="Username"
-          // onChange={(e) => {
-          //   setUsername(e.target.value);
-          // }}
           onChange={(event) => {
             const {
               target: { value },
@@ -221,9 +164,6 @@ const AddUser = () => {
           size="medium"
           required
           id="email"
-          // onChange={(e) => {
-          //   setEmail(e.target.value);
-          // }}
           onChange={(event) => {
             const {
               target: { value },
@@ -274,7 +214,7 @@ const AddUser = () => {
           error={Boolean(phoneErrors?.phoneNumber)}
           helperText={phoneErrors?.phoneNumber}
         />
-        <Typography gutterBottom className={classes.profileTitle}>
+        {/* <Typography gutterBottom className={classes.profileTitle}>
           User Type Role:
         </Typography>
         <FormControl component="fieldset">
@@ -297,7 +237,7 @@ const AddUser = () => {
               label="Ministry of Public Health Staff"
             />
           </RadioGroup>
-        </FormControl>
+        </FormControl> */}
         <Typography gutterBottom className={classes.profileTitle}>
           Password:{" "}
           <Button
@@ -311,7 +251,6 @@ const AddUser = () => {
         </Typography>
         <TextField
           name="password"
-          type="text"
           className={classes.field}
           type="password"
           fullWidth
@@ -346,7 +285,6 @@ const AddUser = () => {
               !password ||
               !email ||
               !phoneNumber ||
-              !role ||
               errors.errorBool === true ||
               phoneErrors.errorBool === true ||
               emailErrors.errorBool === true
@@ -357,17 +295,49 @@ const AddUser = () => {
           </Button>
         </Grid>
       </form>
-      {/* <form ref={form} onSubmit={sendEmail}>
-        <label>Name</label>
-        <input type="text" name="name" />
-        <label>Email</label>
-        <input type="email" name="email" />
-        <label>Message</label>
-        <textarea name="message" />
-        <input type="submit" value="Send" />
-      </form> */}
     </div>
   );
 };
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      padding: "32px",
+      marginTop: "60px",
+    },
+    title: {
+      fontSize: "34px",
+      fontWeight: 600,
+    },
+    card: {
+      margin: "20px 48px",
+      maxWidth: "600px",
+    },
+    addUserTitle: {
+      fontSize: "24px",
+      fontWeight: 500,
+    },
+    paper: {
+      alignItems: "center",
+      margin: "20px 48px",
+      width: "600px",
+    },
+    profileTitle: {
+      margin: "8px 0px",
+      fontSize: "20px",
+      fontWeight: 600,
+    },
+    field: {
+      display: "block",
+      marginRight: "10px",
+      marginTop: "10px",
+      minWidth: "400px",
+    },
+    buttonGroup: {
+      marginTop: "20px",
+    },
+  })
+);
 
 export default AddUser;
