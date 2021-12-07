@@ -109,7 +109,7 @@ const EditVideo = (props) => {
     if (image.forRender.length > 0) {
       return image.forRender[0].file;
     }
-    return data && data.getVideo[0].pictureUrl;
+    return pictureUrl;
   };
 
   return (
