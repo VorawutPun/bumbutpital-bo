@@ -41,14 +41,26 @@ const PreviewChange = (props) => {
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5">{props.title}</Typography>
-        <CardMedia
-          component="img"
-          alt="No photo"
-          height="auto"
-          width="200px"
-          image={props.getRenderImage()}
-          title="No photo"
-        />
+        {props.pictureUrl ? (
+          <CardMedia
+            component="img"
+            alt="No photo"
+            height="auto"
+            width="200px"
+            image={props.pictureUrl}
+            title="No photo"
+          />
+        ) : (
+          <CardMedia
+            component="img"
+            alt="No photo"
+            height="auto"
+            width="200px"
+            image={props.getRenderImage()}
+            title="No photo"
+          />
+        )}
+
         <Typography className={classes.title}>{props.description}</Typography>
       </CardContent>
       <CardActions className={classes.action}>
