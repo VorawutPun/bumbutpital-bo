@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
@@ -21,16 +21,24 @@ import { UPDATE_CONTENT } from "../../Graphql/Content/Mutation";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_CONTENT, GET_CONTENT } from "../../Graphql/Content/Queries";
 import { depressionSeverity } from "../../utils/util";
+import firebase from "../../firebase/firebase";
+import { v4 as uuidv4 } from "uuid";
 
 const EditContent = (props) => {
   const contentID = props.match.params.contentID;
   const classes = useStyles();
   const history = useHistory();
-  const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [pictureUrl, setPictureUrl] = useState("");
   const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
+  const [open, setOpen] = useState(false);
+  const [image, setImage] = useState({
+    forRender: [],
+    forUpload: [],
+  });
+
+  const imageInput = useRef();
 
   const [updateContent] = useMutation(UPDATE_CONTENT, {
     refetchQueries: [GET_ALL_CONTENT, GET_CONTENT],
@@ -50,23 +58,47 @@ const EditContent = (props) => {
     setOpen(!open);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+    const storage = firebase.storage();
+    const storageRef = storage.ref().child(`/content/${uuidv4()}.jpg`);
+    const result = await storageRef.put(image.forUpload[0].fileForUpload);
+    const url = await result.ref.getDownloadURL();
     updateContent({
       variables: {
         contentID: contentID,
         title: title,
         description: description,
-        pictureUrl: pictureUrl,
+        pictureUrl: url,
         appropiatePHQSeverity: appropiatePHQSeverity,
       },
     });
-    console.log(appropiatePHQSeverity);
     history.push("/contents");
   };
 
+  const handleImageChange = () => {
+    const tempFiles = imageInput.current.files;
+
+    if (tempFiles) {
+      const filesArray = Array.from(tempFiles).map((file) => {
+        const currentId = uuidv4();
+        return {
+          render: { id: currentId, file: URL.createObjectURL(file) },
+          upload: { id: currentId, fileForUpload: file },
+        };
+      });
+
+      const newImage = {
+        forRender: filesArray.map((obj) => obj.render),
+        forUpload: filesArray.map((obj) => obj.upload),
+      };
+
+      setImage(newImage);
+      imageInput.current.value = null;
+    }
+  };
+
   useEffect(() => {
-    // console.log(data, "DATA");
     if (data) {
       setTitle(data.getContent[0].title);
       setDescription(data.getContent[0].description);
@@ -74,7 +106,15 @@ const EditContent = (props) => {
       setAppropiatePHQSeverity(data.getContent[0].appropiatePHQSeverity);
     }
   }, [data]);
-  // console.log(data);
+
+  console.log(data && data.getContent[0].pictureUrl);
+
+  const getRenderImage = () => {
+    if (image.forRender.length > 0) {
+      return image.forRender[0].file;
+    }
+    return data && data.getContent[0].pictureUrl;
+  };
 
   if (error) {
     return <div>{error.message}</div>;
@@ -144,39 +184,40 @@ const EditContent = (props) => {
                     setDescription(e.target.value);
                   }}
                 />
-                <Typography
-                  variant="h2"
-                  component="h1"
-                  gutterBottom
-                  className={classes.textTitle}
-                >
-                  Picture URL
-                </Typography>
-                <div className={classes.pictureUrl}>
-                 {/*  {image.forUpload.length > 0 && ( */}
-                    <img
-                      src={pictureUrl}
-                      width="200px"
-                      height="200px"
-                      alt="hospitalPic"
-                    />
-                  {/* )} */}
-                </div>
-                {/* <TextField
-                  className={classes.field}
-                  color="primary"
-                  defaultValue={content.pictureUrl}
-                  placeholder="Picture URL"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  id="title"
-                  onChange={(e) => {
-                    setPictureUrl(e.target.value);
-                  }}
-                /> */}
               </Grid>
               <Grid item xs={3}>
+                <Card className={classes.cardRoot}>
+                  <CardHeader
+                    title={
+                      <Typography className={classes.cardTitle}>
+                        Upload photo
+                      </Typography>
+                    }
+                    className={classes.header}
+                  />
+                  <CardContent className={classes.content}>
+                    <div>
+                      <Button variant="contained" component="label">
+                        Choose Photo
+                        <input
+                          hidden
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          id="image"
+                          ref={imageInput}
+                          onChange={() => handleImageChange()}
+                        />
+                      </Button>
+                      <div className={classes.pictureUrl}>
+                        <img
+                          className={classes.imageStyle}
+                          src={getRenderImage()}
+                          alt="ContentPic"
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
                 <Card className={classes.cardRoot}>
                   <CardHeader
                     title={
@@ -217,7 +258,7 @@ const EditContent = (props) => {
                     }
                     className={classes.header}
                   />
-                  {/* <CardContent className={classes.content}>
+                  <CardContent className={classes.content}>
                     <Button
                       size="medium"
                       color="primary"
@@ -229,11 +270,11 @@ const EditContent = (props) => {
                       <PreviewChange
                         title={title}
                         description={description}
-                        pictureUrl={pictureUrl}
+                        pictureUrl={getRenderImage()}
                         onClick={handleClose}
                       />
                     </Backdrop>
-                  </CardContent> */}
+                  </CardContent>
                   <CardActions className={classes.action}>
                     <Button
                       size="small"
@@ -322,7 +363,7 @@ const useStyles = makeStyles((theme) =>
       borderWidth: "1px",
       borderColor: "#D1D1D1",
       borderRadius: "8px",
-      marginBottom: "40px",
+      marginBottom: "10px",
     },
     formControl: {
       margin: theme.spacing(1),
@@ -339,6 +380,13 @@ const useStyles = makeStyles((theme) =>
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,
       color: "#fff",
+    },
+    pictureUrl: {
+      marginTop: "10px",
+    },
+    imageStyle: {
+      width: "100%",
+      maxWidth: "200px",
     },
   })
 );

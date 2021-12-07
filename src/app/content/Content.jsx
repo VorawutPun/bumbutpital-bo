@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import { GET_ALL_CONTENT } from "../../Graphql/Content/Queries";
@@ -146,17 +146,6 @@ const ManageContent = () => {
                         title={open.title}
                       />
                     )}
-                    {/* <DeleteDialog
-                      open={open}
-                      onClose={handleClose}
-                      onClick={() => {
-                        deleteContent({
-                          variables: { contentID: content.contentID },
-                        });
-                        setOpen(false);
-                      }}
-                      title={content.title}
-                    /> */}
                   </TableCell>
                 </TableRow>
               ))}

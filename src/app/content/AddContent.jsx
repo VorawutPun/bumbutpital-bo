@@ -160,44 +160,48 @@ const AddContent = (props) => {
             required
             id="body"
             multiline
-            rows={15}
+            rows={20}
             onChange={(e) => {
               setDescription(e.target.value);
             }}
           />
-          <Typography
-            variant="h2"
-            component="h1"
-            gutterBottom
-            className={classes.textTitle}
-          >
-            Upload Picture
-          </Typography>
-          <div>
-            <div className={classes.pictureUrl}>
-              {image.forUpload.length > 0 && (
-                <img
-                  src={getRenderImage()}
-                  width="200px"
-                  height="200px"
-                  alt="hospitalPic"
-                />
-              )}
-            </div>
-            <Button variant="contained" component="label">
-              Upload Picture
-              <input
-                hidden
-                type="file"
-                accept="image/png, image/jpeg"
-                id="image"
-                ref={imageInput}
-                onChange={() => handleImageChange()}
-              />
-            </Button>
-          </div>
         </Grid>
         <Grid item xs={3}>
+          <Card className={classes.cardRoot}>
+            <CardHeader
+              title={
+                <Typography className={classes.cardTitle}>
+                  Upload photo
+                </Typography>
+              }
+              className={classes.header}
+            />
+            <CardContent className={classes.content}>
+              <div>
+                <Button variant="contained" component="label">
+                  Choose Photo
+                  <input
+                    hidden
+                    type="file"
+                    accept="image/png, image/jpeg"
+                    id="image"
+                    ref={imageInput}
+                    onChange={() => handleImageChange()}
+                  />
+                </Button>
+                <div className={classes.pictureUrl}>
+                  {image.forUpload.length > 0 && (
+                    <img
+                      className={classes.imageStyle}
+                      src={getRenderImage()}
+                      width="100%"
+                      alt="ContentPic"
+                    />
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
           <Card className={classes.cardRoot}>
             <CardHeader
               title={
@@ -243,7 +247,7 @@ const AddContent = (props) => {
                   title={title}
                   description={description}
                   onClick={handleClose}
-                  getRenderImage={getRenderImage}
+                  getRenderImage={getRenderImage()}
                 />
               </Backdrop>
             </CardContent>
@@ -263,7 +267,10 @@ const AddContent = (props) => {
                 color="primary"
                 type="submit"
                 disabled={
-                  !title || !description || !appropiatePHQSeverity || !image.forUpload.length > 0
+                  !title ||
+                  !description ||
+                  !appropiatePHQSeverity ||
+                  !image.forUpload.length > 0
                 }
                 onClick={submitHandler}
               >
@@ -316,7 +323,7 @@ const useStyles = makeStyles((theme) =>
       borderWidth: "1px",
       borderColor: "#D1D1D1",
       borderRadius: "8px",
-      marginBottom: "40px",
+      marginBottom: "10px",
     },
     header: {
       backgroundColor: "#F8F8F8",
@@ -350,13 +357,16 @@ const useStyles = makeStyles((theme) =>
     content: {
       alignItems: "center",
     },
-
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,
       color: "#fff",
     },
     pictureUrl: {
-      marginTop: "30px",
+      marginTop: "10px",
+    },
+    imageStyle: {
+      width: "100%",
+      maxWidth: "200px",
     },
   })
 );
