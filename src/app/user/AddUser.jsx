@@ -15,7 +15,6 @@ import { USER_REGISTER } from "../../Graphql/User/Mutation";
 import { GET_ALL_USERS, GET_ONLY_USER } from "../../Graphql/User/Queries";
 import { useHistory } from "react-router-dom";
 import generator from "generate-password";
-// import emailjs from 'emailjs-com';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -314,7 +313,7 @@ const AddUser = () => {
           name="password"
           type="text"
           className={classes.field}
-          // type="password"
+          type="password"
           fullWidth
           value={password}
           variant="outlined"

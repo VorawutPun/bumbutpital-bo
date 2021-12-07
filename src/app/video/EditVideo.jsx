@@ -54,7 +54,7 @@ const EditVideo = (props) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    let url = data.getVideo[0].pictureUrl;
+    let url = pictureUrl;
     if (image.forUpload.length > 0) {
       const storage = firebase.storage();
       const storageRef = storage.ref().child(`/content/${uuidv4()}.jpg`);
