@@ -170,7 +170,7 @@ const EditHospital = (props) => {
                     color="secondary"
                     size="large"
                     onClick={() => {
-                      history.push("/promotions");
+                      history.push("/hospitals");
                     }}
                   >
                     Cancel
