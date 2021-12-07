@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -9,9 +9,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
-import {
-  UPDATE_PROMOTION,
-} from "../../Graphql/Promotion/Mutation";
+import { UPDATE_PROMOTION } from "../../Graphql/Promotion/Mutation";
 import {
   GET_ALL_PROMOTION,
   GET_PROMOTION,
@@ -20,63 +18,26 @@ import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      padding: "32px",
-      marginTop: "60px",
-    },
-    title: {
-      fontSize: "34px",
-      fontWeight: 600,
-    },
-    card: {
-      margin: "20px 48px",
-    },
-    addUserTitle: {
-      fontSize: "24px",
-      fontWeight: 500,
-    },
-    paper: {
-      alignItems: "center",
-      margin: "20px 48px",
-      width: "600px",
-    },
-    profileTitle: {
-      margin: "8px 0px",
-      fontSize: "20px",
-      fontWeight: 600,
-    },
-    field: {
-      display: "block",
-      marginRight: "10px",
-      marginTop: "10px",
-      minWidth: "400px",
-    },
-    buttonGroup: {
-      marginTop: "20px",
-    },
-    uploadCard: {
-      marginTop: "-40px",
-      marginBottom: "-30px",
-    },
-  })
-);
+import firebase from "../../firebase/firebase";
+import { v4 as uuidv4 } from "uuid";
+import generator from "generate-password";
 
 const EditPromotion = (props) => {
   const promotionId = props.match.params.promotionId;
   const classes = useStyles();
   const history = useHistory();
   // const [hospitalId, setHospitalId] = useState("");
-  const [userId /* setUserId */] = useState("");
-  const [couponCode /* setCouponCode */] = useState("");
   const [title, setTitle] = useState("");
   const [hospitalDetail, setHospitalDetail] = useState("");
   const [Url, setUrl] = useState("");
   const [expiredDate, setExpiredDate] = useState("");
   const [currentHospital, setCurrentHospital] = useState("");
+  const [image, setImage] = useState({
+    forRender: [],
+    forUpload: [],
+  });
+
+  const imageInput = useRef();
 
   const [updatePromotion] = useMutation(UPDATE_PROMOTION, {
     refetchQueries: [GET_ALL_PROMOTION],
@@ -90,39 +51,52 @@ const EditPromotion = (props) => {
 
   const { data: queryHospital } = useQuery(GET_ALL_HOSPITAL);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log({
-      promotionId: promotionId,
-      hospitalId:
-        (queryHospital &&
-        queryHospital.getAllHospital.find(
-          (hospital) => hospital.hospitalName === currentHospital
-        ).hospitalID),
-      userId: userId,
-      title: title,
-      hospitalDetail: hospitalDetail,
-      couponCode: couponCode,
-      Url: Url,
-      expiredDate: expiredDate,
-    })
+    let url = Url;
+    if (image.forUpload.length > 0) {
+      const storage = firebase.storage();
+      const storageRef = storage.ref().child(`/content/${uuidv4()}.jpg`);
+      const result = await storageRef.put(image.forUpload[0].fileForUpload);
+      url = await result.ref.getDownloadURL();
+    }
     updatePromotion({
       variables: {
         promotionId: promotionId,
         hospitalId:
-          (queryHospital &&
+          queryHospital &&
           queryHospital.getAllHospital.find(
             (hospital) => hospital.hospitalName === currentHospital
-          ).hospitalID),
-        userId: userId,
+          ).hospitalID,
         title: title,
         hospitalDetail: hospitalDetail,
-        couponCode: couponCode,
         Url: Url,
         expiredDate: expiredDate,
       },
     });
     history.push("/promotions");
+  };
+
+  const handleImageChange = () => {
+    const tempFiles = imageInput.current.files;
+
+    if (tempFiles) {
+      const filesArray = Array.from(tempFiles).map((file) => {
+        const currentId = uuidv4();
+        return {
+          render: { id: currentId, file: URL.createObjectURL(file) },
+          upload: { id: currentId, fileForUpload: file },
+        };
+      });
+
+      const newImage = {
+        forRender: filesArray.map((obj) => obj.render),
+        forUpload: filesArray.map((obj) => obj.upload),
+      };
+
+      setImage(newImage);
+      imageInput.current.value = null;
+    }
   };
 
   useEffect(() => {
@@ -134,7 +108,13 @@ const EditPromotion = (props) => {
       setExpiredDate(data.getPromotion[0].expiredDate);
     }
   }, [data]);
-  // console.log(data);
+
+  const getRenderImage = () => {
+    if (image.forRender.length > 0) {
+      return image.forRender[0].file;
+    }
+    return Url;
+  };
 
   return (
     <div className={classes.root}>
@@ -163,6 +143,9 @@ const EditPromotion = (props) => {
                     setTitle(e.target.value);
                   }}
                 />
+                <Typography gutterBottom className={classes.profileTitle}>
+                  Coupon Code: {promotion.couponCode}
+                </Typography>
                 <Typography gutterBottom className={classes.profileTitle}>
                   Condition:
                 </Typography>
@@ -206,29 +189,29 @@ const EditPromotion = (props) => {
                     />
                   )}
                 />
-                {/* <Typography gutterBottom className={classes.profileTitle}>
-                  Promotion Picture:
-                </Typography>
-                <div className={classes.uploadCard}>
-                  <UploadCard />
-                </div> */}
                 <Typography gutterBottom className={classes.profileTitle}>
-                  Promotion Url:
+                  Change Picture:
                 </Typography>
-                <TextField
-                  className={classes.field}
-                  fullWidth
-                  placeholder="Promotion Url"
-                  variant="outlined"
-                  color="primary"
-                  size="medium"
-                  required
-                  id="Url"
-                  defaultValue={promotion.Url}
-                  onChange={(e) => {
-                    setUrl(e.target.value);
-                  }}
-                />
+                <div>
+                  <Button variant="contained" component="label">
+                    Choose Photo
+                    <input
+                      hidden
+                      type="file"
+                      accept="image/png, image/jpeg"
+                      id="image"
+                      ref={imageInput}
+                      onChange={() => handleImageChange()}
+                    />
+                  </Button>
+                  <div className={classes.pictureUrl}>
+                    <img
+                      className={classes.imageStyle}
+                      src={getRenderImage()}
+                      alt="ContentPic"
+                    />
+                  </div>
+                </div>
                 <Typography gutterBottom className={classes.profileTitle}>
                   Expired Date:
                 </Typography>
@@ -284,5 +267,56 @@ const EditPromotion = (props) => {
     </div>
   );
 };
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      padding: "32px",
+      marginTop: "60px",
+    },
+    title: {
+      fontSize: "34px",
+      fontWeight: 600,
+    },
+    card: {
+      margin: "20px 48px",
+    },
+    addUserTitle: {
+      fontSize: "24px",
+      fontWeight: 500,
+    },
+    paper: {
+      alignItems: "center",
+      margin: "20px 48px",
+      width: "600px",
+    },
+    profileTitle: {
+      margin: "8px 0px",
+      fontSize: "20px",
+      fontWeight: 600,
+    },
+    field: {
+      display: "block",
+      marginRight: "10px",
+      marginTop: "10px",
+      minWidth: "400px",
+    },
+    buttonGroup: {
+      marginTop: "20px",
+    },
+    uploadCard: {
+      marginTop: "-40px",
+      marginBottom: "-30px",
+    },
+    pictureUrl: {
+      marginTop: "10px",
+    },
+    imageStyle: {
+      width: "100%",
+      maxWidth: "200px",
+    },
+  })
+);
 
 export default EditPromotion;

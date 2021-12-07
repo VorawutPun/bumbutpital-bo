@@ -16,11 +16,12 @@ import { useHistory } from "react-router-dom";
 import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
 import firebase from "../../firebase/firebase";
 import { v4 as uuidv4 } from "uuid";
+import generator from "generate-password";
 
 const AddPromotion = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [couponCode /* setCouponCode */] = useState("");
+  const [couponCode, setCouponCode] = useState("");
   const [title, setTitle] = useState("");
   const [hospitalDetail, setHospitalDetail] = useState("");
   const [expiredDate, setExpiredDate] = useState("");
@@ -31,6 +32,14 @@ const AddPromotion = () => {
   });
 
   const imageInput = useRef();
+
+  const generateCoupon = () => {
+    const pwd = generator.generate({
+      length: 10,
+      numbers: true,
+    });
+    setCouponCode(pwd);
+  };
 
   const [createPromotion] = useMutation(CREATE_PROMOTION, {
     refetchQueries: [{ query: GET_ALL_PROMOTION }],
@@ -133,6 +142,31 @@ const AddPromotion = () => {
             onChange={(e) => {
               setHospitalDetail(e.target.value);
             }}
+          />
+          <Typography gutterBottom className={classes.profileTitle}>
+            Coupon Code:
+            <Button
+              color="primary"
+              size="large"
+              variant="outlined"
+              onClick={generateCoupon}
+            >
+              Generate Password
+            </Button>
+          </Typography>
+          <TextField
+            name="CouponCode"
+            type="text"
+            className={classes.field}
+            // type="password"
+            fullWidth
+            value={couponCode}
+            variant="outlined"
+            color="primary"
+            size="medium"
+            required
+            id="CouponCode"
+            disabled
           />
           <Typography gutterBottom className={classes.profileTitle}>
             Title:
