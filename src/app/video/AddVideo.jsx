@@ -141,8 +141,7 @@ const AddVideo = () => {
               {image.forUpload.length > 0 && (
                 <img
                   src={getRenderImage()}
-                  width="200px"
-                  height="200px"
+                  className={classes.imageStyle}
                   alt="hospitalPic"
                 />
               )}
@@ -212,7 +211,7 @@ const AddVideo = () => {
                 color="primary"
                 size="small"
                 disabled={
-                  !title || !videoUrl || !image || !appropiatePHQSeverity
+                  !title || !videoUrl || !image.forUpload.length > 0 || !appropiatePHQSeverity
                 }
                 onClick={submitHandler}
               >
@@ -286,6 +285,13 @@ const useStyles = makeStyles((theme) =>
       backgroundColor: "#F8F8F8",
       justifyContent: "space-between",
       padding: "16px",
+    },
+    pictureUrl: {
+      marginTop: "10px",
+    },
+    imageStyle: {
+      width: "100%",
+      maxWidth: "200px",
     },
   })
 );

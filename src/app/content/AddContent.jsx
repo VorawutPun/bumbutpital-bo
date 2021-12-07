@@ -194,7 +194,6 @@ const AddContent = (props) => {
                     <img
                       className={classes.imageStyle}
                       src={getRenderImage()}
-                      width="100%"
                       alt="ContentPic"
                     />
                   )}

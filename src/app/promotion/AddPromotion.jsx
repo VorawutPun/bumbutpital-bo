@@ -275,7 +275,7 @@ const AddPromotion = () => {
                 !currentHospital ||
                 !title ||
                 !hospitalDetail ||
-                !image ||
+                !image.forUpload.length > 0 ||
                 !expiredDate
               }
               onClick={submitHandler}

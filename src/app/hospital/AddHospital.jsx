@@ -128,7 +128,7 @@ const AddHospital = () => {
               <input
                 hidden
                 type="file"
-                accept="image/png, image/jpeg" 
+                accept="image/png, image/jpeg"
                 id="image"
                 ref={imageInput}
                 onChange={() => handleImageChange()}
@@ -165,7 +165,11 @@ const AddHospital = () => {
               variant="contained"
               color="primary"
               size="large"
-              disabled={!hospitalName || !hospitalDescription || !image}
+              disabled={
+                !hospitalName ||
+                !hospitalDescription ||
+                !image.forUpload.length > 0
+              }
               onClick={submitHandler}
             >
               Create
