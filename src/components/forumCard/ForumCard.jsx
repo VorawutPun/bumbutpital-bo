@@ -172,7 +172,7 @@ const ForumCard = (props) => {
                 <TextField
                   color="primary"
                   fullWidth
-                  placeholder="Hospital Description"
+                  placeholder="Answer"
                   required
                   variant="outlined"
                   multiline
