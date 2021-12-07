@@ -99,7 +99,7 @@ const Profile = (props) => {
                     Registeration Time
                   </Typography>
                   <Typography variant="h6" component="h2" gutterBottom>
-                    {user.createdAt}
+                    {user.createdAt}{user.appropiatePHQSeverityScore}
                   </Typography>
                 </CardContent>
               </Card>

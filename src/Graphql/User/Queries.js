@@ -11,6 +11,7 @@ export const GET_ALL_USERS = gql`
       email
       phoneNumber
       role
+      appropiatePHQSeverityScore
     }
   }
 `;

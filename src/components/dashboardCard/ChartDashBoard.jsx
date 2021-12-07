@@ -2,33 +2,34 @@ import React from "react";
 import classes from "./Chart.module.css";
 import GaugeChart from "react-gauge-chart";
 import { useQuery } from "@apollo/client";
-import { TOTAL_PHQ9 } from "../../Graphql/User/Queries";
+import { TOTAL_PHQ9, COUNT_USER } from "../../Graphql/User/Queries";
 
-const ChartDashBoard = () => {
+const ChartDashBoard = (props) => {
   const chartStyle = {
     height: 243,
     width: 540,
   };
   const { data } = useQuery(TOTAL_PHQ9);
+  const { data: countUser } = useQuery(COUNT_USER);
 
   return (
     <div className={classes.chart}>
       <h3 className={classes.chartTitle}>
-        Average PHQ-9 score {data && data.totalPHQ9.toFixed(2)}
+        Average PHQ-9 score {props.totalScore}
       </h3>
-      {data && data.totalPHQ9 >= 0 && data.totalPHQ9 <= 4 && (
+      {props.totalScore >= 0 && props.totalScore <= 4 && (
         <h3 className={classes.chartPHQ}>Minimal Depression</h3>
       )}
-      {data && data.totalPHQ9 > 4 && data.totalPHQ9 <= 9 && (
+      {props.totalScore > 4 && props.totalScore<= 9 && (
         <h3 className={classes.chartPHQ}>Mild Depression</h3>
       )}
-      {data && data.totalPHQ9 > 9 && data.totalPHQ9 <= 14 && (
+      {props.totalScore > 9 && props.totalScore <= 14 && (
         <h3 className={classes.chartPHQ}>Moderate Depression</h3>
       )}
-      {data && data.totalPHQ9 > 14 && data.totalPHQ9 <= 19 && (
+      {props.totalScore > 14 && props.totalScore<= 19 && (
         <h3 className={classes.chartPHQ}>Moderately severe Depression</h3>
       )}
-      {data && data.totalPHQ9 > 19 && data.totalPHQ9 <= 27 && (
+      {props.totalScore > 19 && props.totalScore <= 27 && (
         <h3 className={classes.chartPHQ}>Severe Depression</h3>
       )}
       <GaugeChart
