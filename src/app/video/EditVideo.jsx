@@ -70,7 +70,7 @@ const EditVideo = (props) => {
         appropiatePHQSeverity: appropiatePHQSeverity,
       },
     });
-    console.log(appropiatePHQSeverity);
+    refetch();
     history.push("/videos");
   };
 
@@ -102,7 +102,6 @@ const EditVideo = (props) => {
       setVideoUrl(data.getVideo[0].videoUrl);
       setPictureUrl(data.getVideo[0].pictureUrl);
       setAppropiatePHQSeverity(data.getVideo[0].appropiatePHQSeverity);
-      refetch();
     }
   }, [data]);
 

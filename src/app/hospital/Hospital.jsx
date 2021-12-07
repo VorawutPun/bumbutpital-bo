@@ -18,7 +18,7 @@ import { DELETE_HOSPITAL } from "../../Graphql/Hospital/Mutation";
 const ManageHospital = () => {
   const history = useHistory();
   const classes = useStyles();
-  const { data } = useQuery(GET_ALL_HOSPITAL);
+  const { data, refetch } = useQuery(GET_ALL_HOSPITAL);
   const [deleteHospital] = useMutation(DELETE_HOSPITAL, {
     refetchQueries: [{ query: GET_ALL_HOSPITAL }],
     pollInterval: 500,
@@ -74,6 +74,7 @@ const ManageHospital = () => {
                   <TableCell align="left">{hospital.hospitalName}</TableCell>
                   <TableCell align="left">
                     <Button
+                      onClick={() => refetch()}
                       component={Link}
                       to={"/hospital/" + hospital.hospitalID}
                       className={classes.manageListDetail}

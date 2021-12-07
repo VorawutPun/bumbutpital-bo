@@ -58,6 +58,7 @@ const EditHospital = (props) => {
         imageUrl: url,
       },
     });
+    refetch();
     history.push("/hospitals");
   };
 
@@ -88,7 +89,6 @@ const EditHospital = (props) => {
       setHospitalName(data.getHospital[0].hospitalName);
       setHospitalDescription(data.getHospital[0].hospitalDescription);
       setImageUrl(data.getHospital[0].imageUrl);
-      refetch();
     }
   }, [data]);
 
@@ -98,7 +98,7 @@ const EditHospital = (props) => {
     }
     return imageUrl;
   };
-  
+
   return (
     <div className={classes.root}>
       {data &&
