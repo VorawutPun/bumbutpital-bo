@@ -129,6 +129,7 @@ const ManageHospital = () => {
                       component={Link}
                       to={"/hospital/" + hospital.hospitalID}
                       className={classes.manageListDetail}
+                      
                     >
                       View Detail
                     </Button>
