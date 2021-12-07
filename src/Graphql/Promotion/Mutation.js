@@ -39,7 +39,6 @@ export const UPDATE_PROMOTION = gql`
   mutation updatePromotion(
     $promotionId: ID!
     $hospitalId: String!
-    $userId: String!
     $title: String!
     $hospitalDetail: String!
     $Url: String!
@@ -48,7 +47,6 @@ export const UPDATE_PROMOTION = gql`
     updatePromotion(
       promotionId: $promotionId
       hospitalId: $hospitalId
-      userId: $userId
       title: $title
       hospitalDetail: $hospitalDetail
       Url: $Url
@@ -56,7 +54,6 @@ export const UPDATE_PROMOTION = gql`
     ) {
       promotionId
       hospitalId
-      userId
       title
       hospitalDetail
       Url

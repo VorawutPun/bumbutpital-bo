@@ -20,13 +20,12 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
 import firebase from "../../firebase/firebase";
 import { v4 as uuidv4 } from "uuid";
-import generator from "generate-password";
 
 const EditPromotion = (props) => {
   const promotionId = props.match.params.promotionId;
   const classes = useStyles();
   const history = useHistory();
-  // const [hospitalId, setHospitalId] = useState("");
+  const [hospitalId, setHospitalId] = useState("");
   const [title, setTitle] = useState("");
   const [hospitalDetail, setHospitalDetail] = useState("");
   const [Url, setUrl] = useState("");
@@ -43,7 +42,7 @@ const EditPromotion = (props) => {
     refetchQueries: [GET_ALL_PROMOTION],
   });
 
-  const { data, refetch} = useQuery(GET_PROMOTION, {
+  const { data, refetch } = useQuery(GET_PROMOTION, {
     variables: {
       promotionId,
     },
@@ -54,26 +53,32 @@ const EditPromotion = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     let url = Url;
+    let hospitalIdOfHospital = hospitalId;
     if (image.forUpload.length > 0) {
       const storage = firebase.storage();
       const storageRef = storage.ref().child(`/content/${uuidv4()}.jpg`);
       const result = await storageRef.put(image.forUpload[0].fileForUpload);
       url = await result.ref.getDownloadURL();
     }
+    if (currentHospital) {
+      console.log(hospitalIdOfHospital, "sdf")
+      hospitalIdOfHospital =
+        queryHospital &&
+        queryHospital.getAllHospital.find(
+          (hospital) => hospital.hospitalName === currentHospital
+        ).hospitalID;
+    }
     updatePromotion({
       variables: {
         promotionId: promotionId,
-        hospitalId:
-          queryHospital &&
-          queryHospital.getAllHospital.find(
-            (hospital) => hospital.hospitalName === currentHospital
-          ).hospitalID,
+        hospitalId: hospitalIdOfHospital,
         title: title,
         hospitalDetail: hospitalDetail,
-        Url: Url,
+        Url: url,
         expiredDate: expiredDate,
       },
     });
+    refetch();
     history.push("/promotions");
   };
 
@@ -100,13 +105,12 @@ const EditPromotion = (props) => {
   };
 
   useEffect(() => {
-    // console.log(data, "DATA");
     if (data) {
       setTitle(data.getPromotion[0].title);
       setHospitalDetail(data.getPromotion[0].hospitalDetail);
       setUrl(data.getPromotion[0].Url);
       setExpiredDate(data.getPromotion[0].expiredDate);
-      refetch()
+      setHospitalId(data.getPromotion[0].hospitalId);
     }
   }, [data]);
 
