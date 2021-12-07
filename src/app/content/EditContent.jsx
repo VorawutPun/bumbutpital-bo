@@ -60,10 +60,13 @@ const EditContent = (props) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const storage = firebase.storage();
-    const storageRef = storage.ref().child(`/content/${uuidv4()}.jpg`);
-    const result = await storageRef.put(image.forUpload[0].fileForUpload);
-    const url = await result.ref.getDownloadURL();
+    let url = data.getContent[0].pictureUrl;
+    if (image.forUpload.length > 0) {
+      const storage = firebase.storage();
+      const storageRef = storage.ref().child(`/content/${uuidv4()}.jpg`);
+      const result = await storageRef.put(image.forUpload[0].fileForUpload);
+      url = await result.ref.getDownloadURL();
+    }
     updateContent({
       variables: {
         contentID: contentID,
