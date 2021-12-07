@@ -16,14 +16,148 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import { menuItems } from "../../utils/util";
-// import { useQuery } from "@apollo/client";
-// import { GET_USER } from "../../Graphql/User/Queries";
+import { menuItem, menuItems } from "../../utils/util";
 import { ExitToApp } from "@material-ui/icons";
 import { useQuery } from "@apollo/client";
 import { GET_CURRENT_USER } from "../../Graphql/User/Queries";
 
 const drawerWidth = 240;
+
+const Sidebar = () => {
+  const classes = useStyles();
+  const history = useHistory();
+  const location = useLocation();
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const { data } = useQuery(GET_CURRENT_USER, {
+    fetchPolicy: "network-only",
+  });
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const logout = () => {
+    window.localStorage.clear();
+    history.push("/login");
+  };
+
+  return (
+    <div className={classes.root}>
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <img
+            src="/assets/images/mophLogo.png"
+            alt="test"
+            className={classes.navLogo}
+          />
+          <img
+            src="/assets/images/BPTLogo.png"
+            alt="test"
+            className={classes.navLogo}
+          />
+          <Typography variant="h6" noWrap>
+            BUMBUTPITAL
+          </Typography>
+          <div style={{ marginLeft: "auto" }}>
+            {data && data.getCurrentUser[0].username}
+          </div>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        open={open}
+        classes={{ paper: classes.drawerPaper }}
+        anchor="left"
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        {data && data.getCurrentUser[0].role !== "System Administrator" ? (
+          <List>
+            {menuItem.map((sidebar) => (
+              <ListItem
+                button
+                key={sidebar.text}
+                onClick={() => history.push(sidebar.path)}
+                className={
+                  location.pathname === sidebar.path ? classes.active : null
+                }
+              >
+                <ListItemIcon className={classes.icon}>
+                  {sidebar.icon}
+                </ListItemIcon>
+                <ListItemText primary={sidebar.text} />
+              </ListItem>
+            ))}
+            <ListItem button onClick={logout}>
+              <ListItemIcon className={classes.icon}>
+                <ExitToApp />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItem>
+          </List>
+        ) : (
+          <List>
+            {menuItems.map((item) => (
+              <ListItem
+                button
+                key={item.text}
+                onClick={() => history.push(item.path)}
+                className={
+                  location.pathname === item.path ? classes.active : null
+                }
+              >
+                <ListItemIcon className={classes.icon}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItem>
+            ))}
+            <ListItem button onClick={logout}>
+              <ListItemIcon className={classes.icon}>
+                <ExitToApp />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItem>
+          </List>
+        )}
+      </Drawer>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+        <div className={classes.drawerHeader} />
+      </main>
+    </div>
+  );
+};
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -108,112 +242,5 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-
-const Sidebar = () => {
-  const classes = useStyles();
-  const history = useHistory();
-  const location = useLocation();
-  const [open, setOpen] = React.useState(false);
-  const theme = useTheme();
-  const { data } = useQuery(GET_CURRENT_USER, {
-    fetchPolicy: "network-only",
-  });
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const logout = () => {
-    window.localStorage.clear();
-    history.push("/login");
-  };
-
-  return (
-    <div className={classes.root}>
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <img
-            src="/assets/images/mophLogo.png"
-            alt="test"
-            className={classes.navLogo}
-          />
-          <img
-            src="/assets/images/BPTLogo.png"
-            alt="test"
-            className={classes.navLogo}
-          />
-          <Typography variant="h6" noWrap>
-            BUMBUTPITAL
-          </Typography>
-          <div style={{marginLeft: "auto"}}>{data && data.getCurrentUser[0].username}</div>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        open={open}
-        classes={{ paper: classes.drawerPaper }}
-        anchor="left"
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-
-        <List>
-          {menuItems.map((item) => (
-            <ListItem
-              button
-              key={item.text}
-              onClick={() => history.push(item.path)}
-              className={
-                location.pathname === item.path ? classes.active : null
-              }
-            >
-              <ListItemIcon className={classes.icon}>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItem>
-          ))}
-          <ListItem button onClick={logout}>
-            <ListItemIcon className={classes.icon}>
-              <ExitToApp />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItem>
-        </List>
-      </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-      </main>
-    </div>
-  );
-};
 
 export default Sidebar;
