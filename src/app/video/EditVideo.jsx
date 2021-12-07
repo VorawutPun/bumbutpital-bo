@@ -42,7 +42,7 @@ const EditVideo = (props) => {
     refetchQueries: [GET_ALL_VIDEO, GET_VIDEO],
   });
 
-  const { data } = useQuery(GET_VIDEO, {
+  const { data, refetch } = useQuery(GET_VIDEO, {
     variables: {
       videoID,
     },
@@ -102,6 +102,7 @@ const EditVideo = (props) => {
       setVideoUrl(data.getVideo[0].videoUrl);
       setPictureUrl(data.getVideo[0].pictureUrl);
       setAppropiatePHQSeverity(data.getVideo[0].appropiatePHQSeverity);
+      refetch();
     }
   }, [data]);
 

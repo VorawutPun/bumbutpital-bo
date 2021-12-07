@@ -32,9 +32,10 @@ const EditHospital = (props) => {
 
   const [updateHospital] = useMutation(UPDATE_HOSPITAL, {
     refetchQueries: [GET_ALL_HOSPITAL, GET_HOSPITAL],
+    pollInterval: 500,
   });
 
-  const { data } = useQuery(GET_HOSPITAL, {
+  const { data, refetch } = useQuery(GET_HOSPITAL, {
     variables: {
       hospitalID,
     },
@@ -87,6 +88,7 @@ const EditHospital = (props) => {
       setHospitalName(data.getHospital[0].hospitalName);
       setHospitalDescription(data.getHospital[0].hospitalDescription);
       setImageUrl(data.getHospital[0].imageUrl);
+      refetch();
     }
   }, [data]);
 
@@ -96,7 +98,7 @@ const EditHospital = (props) => {
     }
     return imageUrl;
   };
-
+  
   return (
     <div className={classes.root}>
       {data &&

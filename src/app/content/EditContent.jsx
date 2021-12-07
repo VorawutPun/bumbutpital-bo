@@ -44,7 +44,7 @@ const EditContent = (props) => {
     refetchQueries: [GET_ALL_CONTENT, GET_CONTENT],
   });
 
-  const { data, error } = useQuery(GET_CONTENT, {
+  const { data, error, refetch } = useQuery(GET_CONTENT, {
     variables: {
       contentID,
     },
@@ -107,6 +107,7 @@ const EditContent = (props) => {
       setDescription(data.getContent[0].description);
       setPictureUrl(data.getContent[0].pictureUrl);
       setAppropiatePHQSeverity(data.getContent[0].appropiatePHQSeverity);
+      refetch();
     }
   }, [data]);
 

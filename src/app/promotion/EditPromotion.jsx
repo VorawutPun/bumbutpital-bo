@@ -43,7 +43,7 @@ const EditPromotion = (props) => {
     refetchQueries: [GET_ALL_PROMOTION],
   });
 
-  const { data } = useQuery(GET_PROMOTION, {
+  const { data, refetch} = useQuery(GET_PROMOTION, {
     variables: {
       promotionId,
     },
@@ -106,6 +106,7 @@ const EditPromotion = (props) => {
       setHospitalDetail(data.getPromotion[0].hospitalDetail);
       setUrl(data.getPromotion[0].Url);
       setExpiredDate(data.getPromotion[0].expiredDate);
+      refetch()
     }
   }, [data]);
 
