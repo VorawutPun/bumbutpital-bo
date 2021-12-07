@@ -23,6 +23,7 @@ query getPromotion($promotionId: ID!) {
     hospitalDetail
     Url
     expiredDate
+    couponCode
   }
 }
 `;

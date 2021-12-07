@@ -43,7 +43,6 @@ export const UPDATE_PROMOTION = gql`
     $title: String!
     $hospitalDetail: String!
     $Url: String!
-    $couponCode: String!
     $expiredDate: String!
   ) {
     updatePromotion(
@@ -53,7 +52,6 @@ export const UPDATE_PROMOTION = gql`
       title: $title
       hospitalDetail: $hospitalDetail
       Url: $Url
-      couponCode: $couponCode
       expiredDate: $expiredDate
     ) {
       promotionId
@@ -62,7 +60,6 @@ export const UPDATE_PROMOTION = gql`
       title
       hospitalDetail
       Url
-      couponCode
       expiredDate
     }
   }
