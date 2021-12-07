@@ -11,62 +11,9 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Avatar } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
-
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
 import { DELETE_HOSPITAL } from "../../Graphql/Hospital/Mutation";
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      flex: "4",
-      padding: "30px",
-      marginTop: "60px",
-    },
-    addTitle: {
-      fontSize: "32px",
-      fontWeight: 600,
-    },
-    paper: {
-      width: "100%",
-      marginBottom: theme.spacing(2),
-    },
-    table: {
-      minWidth: 750,
-    },
-    manageListDetail: {
-      padding: "5px 10px",
-      color: "#6367ea",
-      cursor: "pointer",
-      marginRight: "20px",
-      textDecoration: "none",
-      fontSize: "16px",
-    },
-    manageListDelete: {
-      padding: "5px 10px",
-      color: "#ea6363",
-      cursor: "pointer",
-      marginRight: "20px",
-      textDecoration: "none",
-      fontSize: "16px",
-    },
-    titleButton: {
-      background: "#6367EA",
-      borderRadius: 5,
-      border: 0,
-      color: "white",
-      height: 36,
-      float: "right",
-    },
-    navLogo: {
-      width: "50px",
-      height: "50px",
-    },
-    paperpong: {
-      textAlign: "center",
-    },
-  })
-);
 
 const ManageHospital = () => {
   const history = useHistory();
@@ -74,6 +21,7 @@ const ManageHospital = () => {
   const { data } = useQuery(GET_ALL_HOSPITAL);
   const [deleteHospital] = useMutation(DELETE_HOSPITAL, {
     refetchQueries: [{ query: GET_ALL_HOSPITAL }],
+    pollInterval: 500,
   });
 
   const submitHandler = () => {
@@ -129,7 +77,6 @@ const ManageHospital = () => {
                       component={Link}
                       to={"/hospital/" + hospital.hospitalID}
                       className={classes.manageListDetail}
-                      
                     >
                       View Detail
                     </Button>
@@ -152,5 +99,57 @@ const ManageHospital = () => {
     </div>
   );
 };
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      flex: "4",
+      padding: "30px",
+      marginTop: "60px",
+    },
+    addTitle: {
+      fontSize: "32px",
+      fontWeight: 600,
+    },
+    paper: {
+      width: "100%",
+      marginBottom: theme.spacing(2),
+    },
+    table: {
+      minWidth: 750,
+    },
+    manageListDetail: {
+      padding: "5px 10px",
+      color: "#6367ea",
+      cursor: "pointer",
+      marginRight: "20px",
+      textDecoration: "none",
+      fontSize: "16px",
+    },
+    manageListDelete: {
+      padding: "5px 10px",
+      color: "#ea6363",
+      cursor: "pointer",
+      marginRight: "20px",
+      textDecoration: "none",
+      fontSize: "16px",
+    },
+    titleButton: {
+      background: "#6367EA",
+      borderRadius: 5,
+      border: 0,
+      color: "white",
+      height: 36,
+      float: "right",
+    },
+    navLogo: {
+      width: "50px",
+      height: "50px",
+    },
+    paperpong: {
+      textAlign: "center",
+    },
+  })
+);
 
 export default ManageHospital;
