@@ -263,7 +263,7 @@ const AddContent = (props) => {
                 color="primary"
                 type="submit"
                 disabled={
-                  !title || !description || !appropiatePHQSeverity || !image
+                  !title || !description || !appropiatePHQSeverity || !image.forUpload.length > 0
                 }
                 onClick={submitHandler}
               >

@@ -22,6 +22,247 @@ import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_CONTENT, GET_CONTENT } from "../../Graphql/Content/Queries";
 import { depressionSeverity } from "../../utils/util";
 
+const EditContent = (props) => {
+  const contentID = props.match.params.contentID;
+  const classes = useStyles();
+  const history = useHistory();
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
+  const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
+
+  const [updateContent] = useMutation(UPDATE_CONTENT, {
+    refetchQueries: [GET_ALL_CONTENT, GET_CONTENT],
+  });
+
+  const { data, error } = useQuery(GET_CONTENT, {
+    variables: {
+      contentID,
+    },
+  });
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    updateContent({
+      variables: {
+        contentID: contentID,
+        title: title,
+        description: description,
+        pictureUrl: pictureUrl,
+        appropiatePHQSeverity: appropiatePHQSeverity,
+      },
+    });
+    console.log(appropiatePHQSeverity);
+    history.push("/contents");
+  };
+
+  useEffect(() => {
+    // console.log(data, "DATA");
+    if (data) {
+      setTitle(data.getContent[0].title);
+      setDescription(data.getContent[0].description);
+      setPictureUrl(data.getContent[0].pictureUrl);
+      setAppropiatePHQSeverity(data.getContent[0].appropiatePHQSeverity);
+    }
+  }, [data]);
+  // console.log(data);
+
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+
+  return (
+    <div className={classes.root}>
+      {data &&
+        data.getContent.map((content) => (
+          <div key={content.contetID}>
+            <Typography
+              variant="h1"
+              component="h1"
+              gutterBottom
+              className={classes.title}
+            >
+              Edit Content
+            </Typography>
+            <Grid
+              container
+              direction="row"
+              justifyContent="flex-start"
+              spacing={3}
+            >
+              <Grid item xs={9}>
+                <Typography
+                  variant="h2"
+                  component="h1"
+                  gutterBottom
+                  className={classes.textTitle}
+                >
+                  Title
+                </Typography>
+                <TextField
+                  className={classes.field}
+                  color="primary"
+                  defaultValue={content.title}
+                  fullWidth
+                  id="title"
+                  placeholder="Title"
+                  required
+                  variant="outlined"
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
+                />
+                <Typography
+                  variant="h2"
+                  component="h1"
+                  gutterBottom
+                  className={classes.textTitle}
+                >
+                  Body
+                </Typography>
+                <TextField
+                  className={classes.field}
+                  color="primary"
+                  defaultValue={content.description}
+                  placeholder="Description"
+                  variant="outlined"
+                  fullWidth
+                  required
+                  id="body"
+                  multiline
+                  rows={20}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
+                />
+                <Typography
+                  variant="h2"
+                  component="h1"
+                  gutterBottom
+                  className={classes.textTitle}
+                >
+                  Picture URL
+                </Typography>
+                <div className={classes.pictureUrl}>
+                 {/*  {image.forUpload.length > 0 && ( */}
+                    <img
+                      src={pictureUrl}
+                      width="200px"
+                      height="200px"
+                      alt="hospitalPic"
+                    />
+                  {/* )} */}
+                </div>
+                {/* <TextField
+                  className={classes.field}
+                  color="primary"
+                  defaultValue={content.pictureUrl}
+                  placeholder="Picture URL"
+                  variant="outlined"
+                  fullWidth
+                  required
+                  id="title"
+                  onChange={(e) => {
+                    setPictureUrl(e.target.value);
+                  }}
+                /> */}
+              </Grid>
+              <Grid item xs={3}>
+                <Card className={classes.cardRoot}>
+                  <CardHeader
+                    title={
+                      <Typography className={classes.cardTitle}>
+                        Depression Severity
+                      </Typography>
+                    }
+                    className={classes.header}
+                  />
+                  <CardContent>
+                    <FormControl component="fieldset">
+                      <RadioGroup
+                        aria-label="Depression Severity"
+                        name="DepressionSeverity"
+                        value={appropiatePHQSeverity}
+                        onChange={(e) => {
+                          setAppropiatePHQSeverity(e.target.value);
+                        }}
+                      >
+                        {depressionSeverity.map((item) => (
+                          <FormControlLabel
+                            key={item.severity}
+                            value={item.severity}
+                            control={<Radio color="primary" />}
+                            label={item.severity}
+                          />
+                        ))}
+                      </RadioGroup>
+                    </FormControl>
+                  </CardContent>
+                </Card>
+                <Card className={classes.cardRoot}>
+                  <CardHeader
+                    title={
+                      <Typography className={classes.cardTitle}>
+                        Publish
+                      </Typography>
+                    }
+                    className={classes.header}
+                  />
+                  {/* <CardContent className={classes.content}>
+                    <Button
+                      size="medium"
+                      color="primary"
+                      onClick={handleToggle}
+                    >
+                      Preview Changes
+                    </Button>
+                    <Backdrop className={classes.backdrop} open={open}>
+                      <PreviewChange
+                        title={title}
+                        description={description}
+                        pictureUrl={pictureUrl}
+                        onClick={handleClose}
+                      />
+                    </Backdrop>
+                  </CardContent> */}
+                  <CardActions className={classes.action}>
+                    <Button
+                      size="small"
+                      color="secondary"
+                      onClick={() => {
+                        history.push("/contents");
+                      }}
+                    >
+                      cancel
+                    </Button>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="primary"
+                      type="submit"
+                      onClick={submitHandler}
+                    >
+                      Edit
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            </Grid>
+          </div>
+        ))}
+    </div>
+  );
+};
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -101,230 +342,5 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
-const EditContent = (props) => {
-  const contentID = props.match.params.contentID;
-  const classes = useStyles();
-  const history = useHistory();
-  const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [pictureUrl, setPictureUrl] = useState("");
-  const [appropiatePHQSeverity, setAppropiatePHQSeverity] = useState("");
-
-  const [updateContent] = useMutation(UPDATE_CONTENT, {
-    refetchQueries: [GET_ALL_CONTENT, GET_CONTENT],
-  });
-
-  const { data } = useQuery(GET_CONTENT, {
-    variables: {
-      contentID,
-    },
-  });
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleToggle = () => {
-    setOpen(!open);
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    updateContent({
-      variables: {
-        contentID: contentID,
-        title: title,
-        description: description,
-        pictureUrl: pictureUrl,
-        appropiatePHQSeverity: appropiatePHQSeverity,
-      },
-    });
-    console.log(appropiatePHQSeverity)
-    history.push("/contents");
-  };
-
-  useEffect(() => {
-    // console.log(data, "DATA");
-    if (data) {
-      setTitle(data.getContent[0].title);
-      setDescription(data.getContent[0].description);
-      setPictureUrl(data.getContent[0].pictureUrl);
-      setAppropiatePHQSeverity(data.getContent[0].appropiatePHQSeverity);
-    }
-  }, [data]);
-  // console.log(data);
-
-  return (
-    <div className={classes.root}>
-      {data &&
-        data.getContent.map((content) => (
-          <div key={content.contetID}>
-            <Typography
-              variant="h1"
-              component="h1"
-              gutterBottom
-              className={classes.title}
-            >
-              Edit Content
-            </Typography>
-            <Grid
-              container
-              direction="row"
-              justifyContent="flex-start"
-              spacing={3}
-            >
-              <Grid item xs={9}>
-                <Typography
-                  variant="h2"
-                  component="h1"
-                  gutterBottom
-                  className={classes.textTitle}
-                >
-                  Title
-                </Typography>
-                <TextField
-                  className={classes.field}
-                  color="primary"
-                  defaultValue={content.title}
-                  fullWidth
-                  id="title"
-                  placeholder="Title"
-                  required
-                  variant="outlined"
-                  onChange={(e) => {
-                    setTitle(e.target.value);
-                  }}
-                />
-                <Typography
-                  variant="h2"
-                  component="h1"
-                  gutterBottom
-                  className={classes.textTitle}
-                >
-                  Body
-                </Typography>
-                <TextField
-                  className={classes.field}
-                  color="primary"
-                  defaultValue={content.description}
-                  placeholder="Description"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  id="body"
-                  multiline
-                  rows={20}
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                  }}
-                />
-                <Typography
-                  variant="h2"
-                  component="h1"
-                  gutterBottom
-                  className={classes.textTitle}
-                >
-                  Picture URL
-                </Typography>
-                <TextField
-                  className={classes.field}
-                  color="primary"
-                  defaultValue={content.pictureUrl}
-                  placeholder="Picture URL"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  id="title"
-                  onChange={(e) => {
-                    setPictureUrl(e.target.value);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <Card className={classes.cardRoot}>
-                  <CardHeader
-                    title={
-                      <Typography className={classes.cardTitle}>
-                        Publish
-                      </Typography>
-                    }
-                    className={classes.header}
-                  />
-                  <CardContent className={classes.content}>
-                    <Button
-                      size="medium"
-                      color="primary"
-                      onClick={handleToggle}
-                    >
-                      Preview Changes
-                    </Button>
-                    <Backdrop className={classes.backdrop} open={open}>
-                      <PreviewChange
-                        title={title}
-                        description={description}
-                        pictureUrl={pictureUrl}
-                        onClick={handleClose}
-                      />
-                    </Backdrop>
-                  </CardContent>
-                  <CardActions className={classes.action}>
-                    <Button
-                      size="small"
-                      color="secondary"
-                      onClick={() => {
-                        history.push("/contents");
-                      }}
-                    >
-                      cancel
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      color="primary"
-                      type="submit"
-                      onClick={submitHandler}
-                    >
-                      Post
-                    </Button>
-                  </CardActions>
-                </Card>
-                <Card className={classes.cardRoot}>
-                  <CardHeader
-                    title={
-                      <Typography className={classes.cardTitle}>
-                        Depression Severity
-                      </Typography>
-                    }
-                    className={classes.header}
-                  />
-                  <CardContent>
-                    <FormControl component="fieldset">
-                      <RadioGroup
-                        aria-label="gender"
-                        name="gender1"
-                        value={appropiatePHQSeverity}
-                        onChange={(e) => {setAppropiatePHQSeverity(e.target.value)}}
-                      >
-                        {depressionSeverity.map((item) => (
-                          <FormControlLabel
-                            key={item.severity}
-                            value={item.severity}
-                            control={<Radio color="primary" />}
-                            label={item.severity}
-                          />
-                        ))}
-                      </RadioGroup>
-                    </FormControl>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-          </div>
-        ))}
-    </div>
-  );
-};
 
 export default EditContent;
