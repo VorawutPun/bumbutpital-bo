@@ -216,7 +216,7 @@ const AddVideo = () => {
                 }
                 onClick={submitHandler}
               >
-                Create
+                Publish
               </Button>
             </CardActions>
           </Card>
@@ -272,7 +272,7 @@ const useStyles = makeStyles((theme) =>
       borderWidth: "1px",
       borderColor: "#D1D1D1",
       borderRadius: "8px",
-      marginBottom: "40px",
+      marginBottom: "10px",
     },
     header: {
       backgroundColor: "#F8F8F8",
