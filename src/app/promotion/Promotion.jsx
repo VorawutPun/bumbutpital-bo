@@ -61,12 +61,6 @@ const ManagePromotion = () => {
     history.push("/promotion/add");
   };
 
-  let hospitalID =
-    queryHospital &&
-    queryHospital.getAllHospital.find((hospital) => hospital.hospitalID);
-
-  console.log(hospitalID);
-
   return (
     <div className={classes.root}>
       <Typography
@@ -90,9 +84,8 @@ const ManagePromotion = () => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>No.</TableCell>
               <TableCell align="left">Title</TableCell>
-              <TableCell align="left">Hospital </TableCell>
+              <TableCell align="left">Hospital Name</TableCell>
               <TableCell align="left">Create At</TableCell>
               <TableCell align="left">Expired Date</TableCell>
               <TableCell align="left">Picture</TableCell>
@@ -103,20 +96,9 @@ const ManagePromotion = () => {
             {data &&
               data.getAllPromotion.map((promotion) => (
                 <TableRow key={promotion.promotionId}>
-                  <TableCell component="th" scope="row">
-                    {promotion.promotionId}
-                  </TableCell>
                   <TableCell align="left">{promotion.title}</TableCell>
                   <TableCell align="left">
-                    {hospitalID !== promotion.hospitalId
-                      ? (hospitalID = "")
-                      : queryHospital &&
-                        queryHospital.getAllHospital.find(
-                          (hospital) =>
-                            hospital.hospitalID === promotion.hospitalId
-                        ).hospitalName}
-                    {/* 
-                    {queryHospital &&
+                    {/* {queryHospital &&
                       queryHospital.getAllHospital.find(
                         (hospital) =>
                           hospital.hospitalID === promotion.hospitalId

@@ -35,7 +35,6 @@ const Home = () => {
       <h1 className={classes.dashboardTitle}>Overview</h1>
       <OverviewInfo />
       <ChartDashBoard totalScore={totalScore} />
-      {/* <div className={classes.cards}> */}
       <div className={classes.cards}>
         <Grid
           container

@@ -83,27 +83,19 @@ const ManageContent = () => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>No.</TableCell>
               <TableCell align="left">Title</TableCell>
-              {/* <TableCell align="left">Description</TableCell> */}
-              <TableCell align="left">UpdateTime</TableCell>
-              <TableCell align="left">PictureUrl</TableCell>
-              <TableCell align="left">CreateAt</TableCell>
-              <TableCell align="left">AppropiatePHQSeverity</TableCell>
-              <TableCell align="left">Action</TableCell>
+              <TableCell align="left">Picture</TableCell>
+              <TableCell align="left">Create At</TableCell>
+              <TableCell align="left">Update At</TableCell>
+              <TableCell align="left">Appropiate PHQ-9 Severity</TableCell>
+              <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data &&
               data.getAllContent.map((content) => (
                 <TableRow key={content.contentID}>
-                  <TableCell component="th" scope="row">
-                    {content.contentID}
-                  </TableCell>
                   <TableCell align="left">{content.title}</TableCell>
-                  <TableCell align="left">
-                    {new Date(content.updateTime).toLocaleDateString()}
-                  </TableCell>
                   <TableCell align="left">
                     <Avatar
                       alt="Remy Sharp"
@@ -113,6 +105,9 @@ const ManageContent = () => {
                   </TableCell>
                   <TableCell align="left">
                     {new Date(content.createAt).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell align="left">
+                    {new Date(content.updateTime).toLocaleDateString()}
                   </TableCell>
                   <TableCell align="left">
                     {content.appropiatePHQSeverity}
@@ -127,7 +122,9 @@ const ManageContent = () => {
                     </Button>
                     <Button
                       className={classes.manageListDelete}
-                      onClick={() => handleDelete(content.contentID, content.title)}
+                      onClick={() =>
+                        handleDelete(content.contentID, content.title)
+                      }
                     >
                       Delete
                     </Button>

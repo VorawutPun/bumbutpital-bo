@@ -26,6 +26,7 @@ const ManageVideo = (props) => {
   const { data } = useQuery(GET_ALL_VIDEO);
   const [deleteVideo] = useMutation(DELETE_VIDEO, {
     refetchQueries: [{ query: GET_ALL_VIDEO }],
+    fetchPolicy: "no-cache"
   });
 
   const [open, setOpen] = React.useState({
@@ -86,12 +87,11 @@ const ManageVideo = (props) => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>No.</TableCell>
               <TableCell align="left">Title</TableCell>
               <TableCell align="left">Video URL</TableCell>
               <TableCell align="left">Picture</TableCell>
               <TableCell align="left">Created At</TableCell>
-              <TableCell align="left">Appropiate PHQ Severity</TableCell>
+              <TableCell align="left">Appropiate PHQ-9 Severity</TableCell>
               <TableCell align="left">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -99,9 +99,6 @@ const ManageVideo = (props) => {
             {data &&
               data.getAllVideo.map((video) => (
                 <TableRow key={video.videoID}>
-                  <TableCell component="th" scope="row">
-                    {video.videoID}
-                  </TableCell>
                   <TableCell align="left">{video.title}</TableCell>
                   <TableCell align="left">
                     <div className={classes.tableCell}>

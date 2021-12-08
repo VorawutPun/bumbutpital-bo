@@ -82,9 +82,8 @@ const ManageHospital = () => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>No.</TableCell>
               <TableCell align="left">Picture</TableCell>
-              <TableCell align="left">Hospital </TableCell>
+              <TableCell align="left">Hospital Name</TableCell>
               <TableCell align="left">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -92,9 +91,6 @@ const ManageHospital = () => {
             {data &&
               data.getAllHospital.map((hospital) => (
                 <TableRow key={hospital.hospitalID}>
-                  <TableCell component="th" scope="row">
-                    {hospital.hospitalID}
-                  </TableCell>
                   <TableCell align="left">
                     <Avatar
                       alt="Remy Sharp"
