@@ -1,11 +1,6 @@
 import React, { useState, useRef } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import {
-  Button,
-  Grid,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Button, CircularProgress, Grid, TextField, Typography } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
 import { USER_REGISTER } from "../../Graphql/User/Mutation";
 import { GET_ALL_USERS, GET_ONLY_USER } from "../../Graphql/User/Queries";
@@ -41,7 +36,7 @@ const AddUser = () => {
 
   const { data } = useQuery(GET_ONLY_USER);
 
-  const [createUser, { error }] = useMutation(USER_REGISTER, {
+  const [createUser, { error, loading }] = useMutation(USER_REGISTER, {
     refetchQueries: [{ query: GET_ALL_USERS }],
     errorPolicy: "all",
   });
@@ -69,6 +64,7 @@ const AddUser = () => {
   };
 
   if (error) return `${error.message}`;
+  if (loading) return <CircularProgress />;
 
   return (
     <div className={classes.root}>

@@ -3,8 +3,7 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Grid, Typography } from "@material-ui/core";
 import ForumCard from "../../components/forumCard/ForumCard";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_FORUM, COUNT_FORUM } from "../../Graphql/Forum/Queries";
-import { COUNT_USER } from "../../Graphql/User/Queries";
+import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -58,8 +57,6 @@ const useStyles = makeStyles((theme) =>
 const Forum = () => {
   const classes = useStyles();
   const { data } = useQuery(GET_ALL_FORUM);
-  const { data: countForum } = useQuery(COUNT_FORUM);
-  const { data: countUser } = useQuery(COUNT_USER);
 
   return (
     <div className={classes.root}>
@@ -74,32 +71,6 @@ const Forum = () => {
             Question & Answer
           </Typography>
         </Grid>
-
-        <div className={classes.rectangleQuestion} />
-        <div className={classes.question}>
-          Question
-          <Typography
-            variant="h1"
-            component="h1"
-            gutterBottom
-            className={classes.stat}
-          >
-            {countForum && countForum.countForum}
-          </Typography>
-        </div>
-
-        <div className={classes.rectangleUser} />
-        <div>
-          User
-          <Typography
-            variant="h1"
-            component="h1"
-            gutterBottom
-            className={classes.stat}
-          >
-            {countUser && countUser.countUser}
-          </Typography>
-        </div>
       </Grid>
       <Grid
         container

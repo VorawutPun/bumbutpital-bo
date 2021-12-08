@@ -151,7 +151,7 @@ const AddPromotion = () => {
               variant="outlined"
               onClick={generateCoupon}
             >
-              Generate Password
+              Generate Coupoon
             </Button>
           </Typography>
           <TextField

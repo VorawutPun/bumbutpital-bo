@@ -1,5 +1,4 @@
 import React from "react";
-// import classes from "./Authen.module.css";
 import Login from "../../components/authCard/Login";
 import {
   Grid,
@@ -9,7 +8,6 @@ import {
   Typography,
   Toolbar,
 } from "@material-ui/core";
-// import Register from "../../components/authCard/Register";
 
 const useStyles = makeStyles((theme) => ({
   root: {
