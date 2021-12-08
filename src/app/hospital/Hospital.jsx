@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -15,13 +15,14 @@ import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_HOSPITAL, GET_HOSPITAL } from "../../Graphql/Hospital/Quries";
 import { DELETE_HOSPITAL } from "../../Graphql/Hospital/Mutation";
 import DeleteDialog from "../../components/dialog/DeleteDialog";
+import { GET_ALL_PROMOTION } from "../../Graphql/Promotion/Query";
 
 const ManageHospital = () => {
   const history = useHistory();
   const classes = useStyles();
-  const { data, refetch } = useQuery(GET_ALL_HOSPITAL);
+  const { data, error, refetch } = useQuery(GET_ALL_HOSPITAL);
   const [deleteHospital] = useMutation(DELETE_HOSPITAL, {
-    refetchQueries: [GET_ALL_HOSPITAL, GET_HOSPITAL],
+    refetchQueries: [GET_ALL_HOSPITAL, GET_HOSPITAL, GET_ALL_PROMOTION],
   });
 
   const [open, setOpen] = React.useState({
@@ -58,6 +59,11 @@ const ManageHospital = () => {
   const submitHandler = () => {
     history.push("/hospital/add");
   };
+
+  useEffect(() => {
+    refetch();
+    //eslint-disable-next-line
+  }, []);
 
   return (
     <div className={classes.root}>

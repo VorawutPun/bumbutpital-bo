@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -20,8 +20,8 @@ import DeleteDialog from "../../components/dialog/DeleteDialog";
 const ManagePromotion = () => {
   const history = useHistory();
   const classes = useStyles();
-  const { data } = useQuery(GET_ALL_PROMOTION);
-  const { data: queryHospital } = useQuery(GET_ALL_HOSPITAL);
+  const { data, error } = useQuery(GET_ALL_PROMOTION);
+  const { data: queryHospital, refetch } = useQuery(GET_ALL_HOSPITAL);
   const [deletePromotion] = useMutation(DELETE_PROMOTION, {
     refetchQueries: [{ query: GET_ALL_PROMOTION }],
   });
@@ -61,6 +61,11 @@ const ManagePromotion = () => {
     history.push("/promotion/add");
   };
 
+  useEffect(() => {
+    refetch();
+    //eslint-disable-next-line
+  }, []);
+
   return (
     <div className={classes.root}>
       <Typography
@@ -99,10 +104,21 @@ const ManagePromotion = () => {
                   <TableCell align="left">{promotion.title}</TableCell>
                   <TableCell align="left">
                     {queryHospital &&
+                    queryHospital.getAllHospital.find(
+                      (hospital) => hospital.hospitalID === promotion.hospitalId
+                    )
+                      ? queryHospital &&
+                        queryHospital.getAllHospital.find(
+                          (hospital) =>
+                            hospital.hospitalID === promotion.hospitalId
+                        ).hospitalName
+                      : "error"}
+
+                    {/* {queryHospital &&
                       queryHospital.getAllHospital.find(
                         (hospital) =>
                           hospital.hospitalID === promotion.hospitalId
-                      ).hospitalName}
+                      ).hospitalName} */}
                   </TableCell>
                   <TableCell align="left">
                     {new Date(promotion.createAt).toLocaleDateString()}
