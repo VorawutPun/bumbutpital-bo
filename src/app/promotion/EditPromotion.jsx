@@ -105,6 +105,11 @@ const EditPromotion = (props) => {
   };
 
   useEffect(() => {
+    refetch()
+    //eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
     if (data) {
       setTitle(data.getPromotion[0].title);
       setHospitalDetail(data.getPromotion[0].hospitalDetail);

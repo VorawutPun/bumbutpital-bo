@@ -103,6 +103,11 @@ const EditContent = (props) => {
   };
 
   useEffect(() => {
+    refetch()
+    //eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
     if (data) {
       setTitle(data.getContent[0].title);
       setDescription(data.getContent[0].description);

@@ -12,9 +12,7 @@ import { GET_USER } from "../../Graphql/User/Queries";
 import Chart from "../../components/userProfile/Chart";
 import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import TotalForumCard from "../../components/dashboardCard/TotalForumCard";
 import { GET_FORUM } from "../../Graphql/Forum/Queries";
-import ForumUserCard from "../../components/userProfile/ForumUserCard";
 import ForumCard from "../../components/forumCard/ForumCard";
 
 const Profile = (props) => {

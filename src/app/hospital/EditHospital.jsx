@@ -57,7 +57,6 @@ const EditHospital = (props) => {
         imageUrl: url,
       },
     });
-    refetch();
     history.push("/hospitals");
   };
 
@@ -82,6 +81,11 @@ const EditHospital = (props) => {
       imageInput.current.value = null;
     }
   };
+
+  useEffect(() => {
+    refetch()
+    //eslint-disable-next-line
+  }, [])
 
   useEffect(() => {
     if (data) {

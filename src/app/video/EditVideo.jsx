@@ -40,6 +40,7 @@ const EditVideo = (props) => {
 
   const [updateVideo] = useMutation(UPDATE_VIDEO, {
     refetchQueries: [GET_ALL_VIDEO, GET_VIDEO],
+    // fetchPolicy: "no-cache"
   });
 
   const { data, refetch } = useQuery(GET_VIDEO, {
@@ -95,6 +96,11 @@ const EditVideo = (props) => {
       imageInput.current.value = null;
     }
   };
+
+  useEffect(() => {
+    refetch()
+    //eslint-disable-next-line
+  }, [])
 
   useEffect(() => {
     if (data) {
