@@ -3,7 +3,7 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Button, CircularProgress, Grid, TextField, Typography } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
 import { USER_REGISTER } from "../../Graphql/User/Mutation";
-import { GET_ALL_USERS, GET_ONLY_USER } from "../../Graphql/User/Queries";
+import { GET_ALL_USERS, GET_ONLY_USER, GET_CURRENT_USER  } from "../../Graphql/User/Queries";
 import { useHistory } from "react-router-dom";
 import generator from "generate-password";
 
@@ -21,6 +21,7 @@ const AddUser = () => {
   const [errors, setErrors] = useState();
   const [phoneErrors, setPhoneErrors] = useState();
   const [emailErrors, setEmailErrors] = useState();
+  const { data: getUser } = useQuery(GET_CURRENT_USER);
 
   const generatePassword = () => {
     const pwd = generator.generate({
@@ -62,6 +63,12 @@ const AddUser = () => {
   const cancelSubmitHandler = () => {
     history.push("/users");
   };
+
+  if(!(getUser && getUser.getCurrentUser.map((staff) => staff.role).includes("System Administrator"))){
+    return (
+      <div className={classes.root}><h1>You can't access this page</h1></div>
+    )
+  }
 
   if (error) return `${error.message}`;
   if (loading) return <CircularProgress />;

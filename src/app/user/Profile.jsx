@@ -8,7 +8,7 @@ import {
   Typography,
   Grid,
 } from "@material-ui/core";
-import { GET_USER } from "../../Graphql/User/Queries";
+import { GET_USER, GET_CURRENT_USER  } from "../../Graphql/User/Queries";
 import Chart from "../../components/userProfile/Chart";
 import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
@@ -19,6 +19,7 @@ const Profile = (props) => {
   const id = props.match.params.id;
   const classes = useStyles();
   const history = useHistory();
+  const { data: getUser } = useQuery(GET_CURRENT_USER);
   const { data } = useQuery(GET_USER, {
     variables: {
       id,
@@ -31,6 +32,12 @@ const Profile = (props) => {
     },
   });
 
+  if(!(getUser && getUser.getCurrentUser.map((staff) => staff.role).includes("System Administrator"))){
+    return (
+      <div className={classes.root}><h1>You can't access this page</h1></div>
+    )
+  }
+  
   return (
     <div className={classes.root}>
       <Typography gutterBottom className={classes.title}>
@@ -46,8 +53,8 @@ const Profile = (props) => {
         </Button>
       </Typography>
       {data &&
-        data.getUser.map((user) => (
-          <Grid container spacing={2}>
+        data.getUser.map((user, id) => (
+          <Grid container spacing={2} key={id}>
             <Grid item xs={4}>
               <Card className={classes.card}>
                 <CardContent>
