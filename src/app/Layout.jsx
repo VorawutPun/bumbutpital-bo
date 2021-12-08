@@ -19,29 +19,32 @@ import EditPromotion from "./promotion/EditPromotion";
 import EditHospital from "./hospital/EditHospital";
 import EditVideo from "./video/EditVideo";
 import Profile from "./user/Profile";
+import PrivateRoute from '../components/PrivateRoute'
 
 const Layout = () => {
+  
+
   return (
     <>
       <Sidebar />
       <Switch>
-        <Route path="/home" component={Home} />
-        <Route path="/forum" component={Forum} />
-        <Route path="/contents" component={ManageContent} />
-        <Route path="/content/:contentID" component={EditContent} />
-        <Route path="/createContent" component={AddContent} />
-        <Route path="/videos" component={ManageVideo} />
-        <Route path="/createVideo" component={AddVideo} />
-        <Route path="/video/:videoID" component={EditVideo} />
-        <Route path="/users" component={ListOfUsers} />
-        <Route path="/user/:id" component={Profile} />
-        <Route path="/createUser" component={AddUser} />
-        <Route path="/promotions" component={ManagePromotion} />
-        <Route path="/promotion/add" component={AddPromotion} />
-        <Route path="/promotion/:promotionId" component={EditPromotion} />
-        <Route path="/hospitals" component={ManageHospital} />
-        <Route path="/hospital/add" component={AddHospital} />
-        <Route path="/hospital/:hospitalID" component={EditHospital} />
+        <PrivateRoute path="/home" component={Home} />
+        <PrivateRoute path="/forum" component={Forum} />
+        <PrivateRoute path="/contents" component={ManageContent} />
+        <PrivateRoute path="/content/:contentID" component={EditContent} />
+        <PrivateRoute path="/createContent" component={AddContent} />
+        <PrivateRoute path="/videos" component={ManageVideo} />
+        <PrivateRoute path="/createVideo" component={AddVideo} />
+        <PrivateRoute path="/video/:videoID" component={EditVideo} />
+        <PrivateRoute path="/users" component={ListOfUsers} />
+        <PrivateRoute path="/user/:id" component={Profile} />
+        <PrivateRoute path="/createUser" component={AddUser} />
+        <PrivateRoute path="/promotions" component={ManagePromotion} />
+        <PrivateRoute path="/promotion/add" component={AddPromotion} />
+        <PrivateRoute path="/promotion/:promotionId" component={EditPromotion} />
+        <PrivateRoute path="/hospitals" component={ManageHospital} />
+        <PrivateRoute path="/hospital/add" component={AddHospital} />
+        <PrivateRoute path="/hospital/:hospitalID" component={EditHospital} />
         <Redirect to="/home"/>
       </Switch>
 

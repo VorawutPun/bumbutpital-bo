@@ -13,9 +13,7 @@ const ChartDashBoard = (props) => {
       <h3 className={classes.chartTitle}>
         Average PHQ-9 score of All User in the System is {props.totalScore.toFixed(2)}
       </h3>
-      <h3 className={classes.chartTitle}>
-
-      </h3>
+      
       <GaugeChart
         nrOfLevels={5}
         colors={["#20CBFE", "#32D475", "#FFBC17", "#E76849", "#F14949"]}
