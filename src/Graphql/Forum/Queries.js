@@ -15,8 +15,8 @@ export const GET_ALL_FORUM = gql`
 `;
 
 export const GET_FORUM = gql`
-  query getForum($userID: ID!) {
-    getContent(userID: $userID){
+  query getForum($id: ID!) {
+    getForum(id: $id){
       staffID
       userID
       title
