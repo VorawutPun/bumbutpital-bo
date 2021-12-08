@@ -169,22 +169,6 @@ const AddPromotion = () => {
             disabled
           />
           <Typography gutterBottom className={classes.profileTitle}>
-            Title:
-          </Typography>
-          <TextField
-            className={classes.field}
-            fullWidth
-            placeholder="Title"
-            variant="outlined"
-            color="primary"
-            size="medium"
-            required
-            id="Title"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
-          <Typography gutterBottom className={classes.profileTitle}>
             Select Hospital:
           </Typography>
           <Autocomplete
