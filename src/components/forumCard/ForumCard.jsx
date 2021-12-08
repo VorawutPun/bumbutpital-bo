@@ -17,6 +17,7 @@ import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
 import { GET_ALL_USERS } from "../../Graphql/User/Queries";
+import { Alert } from "@material-ui/lab";
 
 const ForumCard = (props) => {
   const classes = useStyles();
@@ -24,9 +25,12 @@ const ForumCard = (props) => {
   const [answer, setAnswer] = useState("");
   const [answerForum] = useMutation(ANSWER_FORUM, {
     refetchQueries: [{ query: GET_ALL_FORUM }],
+    errorPolicy: "all",
   });
 
-  const { data: queryUser } = useQuery(GET_ALL_USERS);
+  const { data: queryUser, error } = useQuery(GET_ALL_USERS, {
+    errorPolicy: "all",
+  });
 
   const handleUrgentBackdrop = () => {
     setOpenUrgent(false);
@@ -38,6 +42,7 @@ const ForumCard = (props) => {
 
   return (
     <>
+      {error && <Alert severity="error"> {error.message} </Alert>}
       <Card variant="outlined" className={classes.root}>
         <div className={classes.detail}>
           <CardContent className={classes.content}>

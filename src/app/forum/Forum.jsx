@@ -14,8 +14,8 @@ const Forum = () => {
 
   return (
     <div className={classes.root}>
-      {error && <Alert severity="error"> {error.message} </Alert>}
       <Grid container direction="row" alignItems="center" spacing={3}>
+      {error && <Alert severity="error"> {error.message} </Alert>}
         <Grid item xs={10}>
           <Typography
             variant="h1"
