@@ -10,6 +10,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { STAFF_LOGIN } from "../../Graphql/User/Mutation";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles({
   root: {
@@ -35,7 +36,7 @@ const Login = ({ onClick }) => {
     errorPolicy: "all",
   });
 
-  if (loading) return <CircularProgress />;
+  // if (loading) return <CircularProgress />;
 
   return (
     <div className={classes.authCard}>
@@ -68,7 +69,7 @@ const Login = ({ onClick }) => {
             }}
           />
         </div>
-        {error && <p>{error.message}</p>}
+        {error && <Alert severity="error">{error.message}</Alert>}
         <Button
           variant="contained"
           color="primary"

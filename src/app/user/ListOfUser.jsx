@@ -14,14 +14,16 @@ import { DELETE_USER } from "../../Graphql/User/Mutation";
 import { GET_ALL_USERS, GET_CURRENT_USER } from "../../Graphql/User/Queries";
 import { useMutation, useQuery } from "@apollo/client";
 import DeleteDialog from "../../components/dialog/DeleteDialog";
+import { Alert } from "@material-ui/lab";
 
 const ListOfUsers = () => {
   const classes = useStyles();
   const history = useHistory();
   const { data, loading } = useQuery(GET_ALL_USERS);
   const { data: getUser } = useQuery(GET_CURRENT_USER);
-  const [deleteUser] = useMutation(DELETE_USER, {
+  const [deleteUser, { error }] = useMutation(DELETE_USER, {
     refetchQueries: [{ query: GET_ALL_USERS }],
+    errorPolicy: "all",
   });
 
   const [open, setOpen] = React.useState({
@@ -59,14 +61,23 @@ const ListOfUsers = () => {
     history.push("/createUser");
   };
 
-  if(!(getUser && getUser.getCurrentUser.map((staff) => staff.role).includes("System Administrator"))){
-    return (
-      <div className={classes.root}><h1>You can't access this page</h1></div>
+  if (
+    !(
+      getUser &&
+      getUser.getCurrentUser
+        .map((staff) => staff.role)
+        .includes("System Administrator")
     )
+  ) {
+    return (
+      <div className={classes.root}>
+        <h1>You can't access this page</h1>
+      </div>
+    );
   }
 
-  if(loading){
-    return <LinearProgress/>
+  if (loading) {
+    return <LinearProgress />;
   }
 
   return (
@@ -88,6 +99,7 @@ const ListOfUsers = () => {
           Add User
         </Button>
       </Typography>
+      {error && <Alert severity="error"> {error.message} </Alert>}
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -149,7 +161,6 @@ const ListOfUsers = () => {
     </div>
   );
 };
-
 
 const useStyles = makeStyles((theme) =>
   createStyles({

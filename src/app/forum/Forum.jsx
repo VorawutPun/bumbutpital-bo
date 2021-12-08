@@ -4,13 +4,17 @@ import { Grid, Typography } from "@material-ui/core";
 import ForumCard from "../../components/forumCard/ForumCard";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
+import { Alert } from "@material-ui/lab";
 
 const Forum = () => {
   const classes = useStyles();
-  const { data } = useQuery(GET_ALL_FORUM);
+  const { data, error } = useQuery(GET_ALL_FORUM, {
+    errorPolicy: "all",
+  });
 
   return (
     <div className={classes.root}>
+      {error && <Alert severity="error"> {error.message} </Alert>}
       <Grid container direction="row" alignItems="center" spacing={3}>
         <Grid item xs={10}>
           <Typography
