@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classes from "./AuthCard.module.css";
 import {
   Button,
-  CircularProgress,
+  LinearProgress,
   makeStyles,
   TextField,
 } from "@material-ui/core";
@@ -36,10 +36,9 @@ const Login = ({ onClick }) => {
     errorPolicy: "all",
   });
 
-  // if (loading) return <CircularProgress />;
-
   return (
     <div className={classes.authCard}>
+      {loading &&  <LinearProgress style={{marginBottom:"15px"}}/>}
       <h1 className={classes.authCardTitle}>Admin Login</h1>
       <div className={classes.authCardForm}>
         <div className={classes.authCardItem}>
