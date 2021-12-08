@@ -17,7 +17,7 @@ const TotalContentCard = () => {
         <span className={classes.overviewNumber}>
           {data && data.countContent}
         </span>
-        <span className={classes.overviewTitle}>content post</span>
+        <span className={classes.overviewTitle}>Content Post</span>
       </div>
     </div>
   </div>

@@ -15,7 +15,7 @@ const TotalVideoCard = () => {
         </span>
         <div className={classes.overviewRoot}>
           <span className={classes.overviewNumber}>{data && data.countVideo}</span>
-          <span className={classes.overviewTitle}>video</span>
+          <span className={classes.overviewTitle}>Video</span>
         </div>
       </div>
     </div>

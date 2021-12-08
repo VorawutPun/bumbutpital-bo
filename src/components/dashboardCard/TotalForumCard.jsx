@@ -17,7 +17,7 @@ const TotalForumCard = () => {
           <span className={classes.overviewNumber}>
             {data && data.countForum}
           </span>
-          <span className={classes.overviewTitle}>forum message</span>
+          <span className={classes.overviewTitle}>Forum Message</span>
         </div>
       </div>
     </div>
