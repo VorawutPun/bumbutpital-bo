@@ -1,6 +1,13 @@
 import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { Button, Card, CardContent, Chip, Typography } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  Typography,
+  Grid,
+} from "@material-ui/core";
 import { GET_USER } from "../../Graphql/User/Queries";
 import Chart from "../../components/userProfile/Chart";
 import { useQuery } from "@apollo/client";
@@ -26,65 +33,50 @@ const Profile = (props) => {
     },
   });
 
-  console.log(getUserForum && getUserForum.getForum);
-
   return (
     <div className={classes.root}>
+      <Typography gutterBottom className={classes.title}>
+        User Profile
+        <Button
+          variant="outlined"
+          onClick={() => {
+            history.push("/users");
+          }}
+          className={classes.titleButton}
+        >
+          Done
+        </Button>
+      </Typography>
       {data &&
         data.getUser.map((user) => (
-          <>
-            <Typography gutterBottom className={classes.title}>
-              User Profile
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  history.push("/users");
-                }}
-                className={classes.titleButton}
-              >
-                Done
-              </Button>
-            </Typography>
-            <div className={classes.overview}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
               <Card className={classes.card}>
                 <CardContent>
                   <Typography className={classes.name} gutterBottom>
                     {user.name} {user.surname}
-                    <Chip label={user.role} />
                   </Typography>
-                  <Typography variant="h5" component="h2">
-                    Email
-                  </Typography>
-                  <Typography variant="h6" component="h2" gutterBottom>
-                    {user.email}
-                  </Typography>
-                  <Typography variant="h5" component="h2">
-                    Phone Number
-                  </Typography>
-                  <Typography variant="h6" component="h2" gutterBottom>
-                    {user.phoneNumber}
-                  </Typography>
-                  {/* <Typography variant="h5" component="h2">
-                    Registeration Time
-                  </Typography>
-                  <Typography variant="h6" component="h2" gutterBottom>
-                    {new Date(user.createAt).toLocaleDateString()}
-                  </Typography> */}
+                  <Chip label={user.role} style={{marginBottom: "10px"}}/>
+                  <Typography variant="h5" style={{ fontWeight: 'bold' }}>Email</Typography>
+                  <Typography variant="h6" gutterBottom>{user.email}</Typography>
+                  <Typography variant="h5" style={{ fontWeight: 'bold' }}>Phone Number</Typography>
+                  <Typography variant="h6" gutterBottom>{user.phoneNumber}</Typography>
                 </CardContent>
               </Card>
-              <TotalForumCard />
+            </Grid>
+            <Grid item xs={6}>
               <Chart
                 appropiatePHQSeverityScore={user.appropiatePHQSeverityScore}
                 appropiatePHQSeverity={user.appropiatePHQSeverity}
               />
-              <div>
-                {getUserForum &&
-                  getUserForum.getForum.map((forum) => (
-                    <ForumCard forum={forum} key={forum} />
-                  ))}
-              </div>
+            </Grid>
+            <div className={classes.forum}>
+              {getUserForum &&
+                getUserForum.getForum.map((forum) => (
+                  <ForumCard forum={forum} key={forum} />
+                ))}
             </div>
-          </>
+          </Grid>
         ))}
     </div>
   );
@@ -108,13 +100,13 @@ const useStyles = makeStyles((theme) =>
     overview: {
       width: "100%",
       display: "flex",
-      justifyContent: "space-between",
+      // justifyContent: "space-between",
       padding: "24px 0px 0px 0px",
     },
     card: {
       width: "100%",
       maxWidth: 500,
-      maxHeight: 300,
+      minHeight: 300,
       backgroundColor: "#ecf2ff",
       borderRadius: "10px",
       marginRight: "24px",
@@ -127,6 +119,9 @@ const useStyles = makeStyles((theme) =>
       color: "white",
       height: 36,
       float: "right",
+    },
+    forum: {
+      marginTop: "60px",
     },
   })
 );
