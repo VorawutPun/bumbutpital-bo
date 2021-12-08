@@ -123,9 +123,18 @@ const ForumCard = (props) => {
               <Typography variant="subtitle1" color="textSecondary">
                 User:{" "}
                 {queryUser &&
+                queryUser.getAllUsers.find(
+                  (user) => user.id === props.forum.userID
+                )
+                  ? queryUser &&
+                    queryUser.getAllUsers.find(
+                      (user) => user.id === props.forum.userID
+                    ).name
+                  : "error"}
+                {/* {queryUser &&
                   queryUser.getAllUsers.find(
                     (user) => user.id === props.forum.userID
-                  ).name}{" "}
+                  ).name} */}{" "}
                 Asked on {new Date(props.forum.createAt).toLocaleDateString()}
               </Typography>
             </div>
