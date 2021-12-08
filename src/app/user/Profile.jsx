@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import TotalForumCard from "../../components/dashboardCard/TotalForumCard";
 import { GET_FORUM } from "../../Graphql/Forum/Queries";
 import ForumUserCard from "../../components/userProfile/ForumUserCard";
+import ForumCard from "../../components/forumCard/ForumCard";
 
 const Profile = (props) => {
   const id = props.match.params.id;
@@ -76,7 +77,12 @@ const Profile = (props) => {
                 appropiatePHQSeverityScore={user.appropiatePHQSeverityScore}
                 appropiatePHQSeverity={user.appropiatePHQSeverity}
               />
-              {getUserForum && getUserForum.getForum.map((forum) => <ForumUserCard userId={id} />)}
+              <div>
+                {getUserForum &&
+                  getUserForum.getForum.map((forum) => (
+                    <ForumCard forum={forum} key={forum} />
+                  ))}
+              </div>
             </div>
           </>
         ))}
