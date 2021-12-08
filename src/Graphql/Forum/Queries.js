@@ -14,6 +14,19 @@ export const GET_ALL_FORUM = gql`
   }
 `;
 
+export const GET_FORUM = gql`
+  query getForum($userID: ID!) {
+    getContent(userID: $userID){
+      staffID
+      userID
+      title
+      description
+      createAt
+      answer
+    }
+  }
+`
+
 export const COUNT_FORUM = gql`
   query {
     countForum

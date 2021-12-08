@@ -11,10 +11,10 @@ const ChartDashBoard = (props) => {
   return (
     <div className={classes.chart}>
       <h3 className={classes.chartTitle}>
-        Average PHQ-9 score of All User in the System is
+        Average PHQ-9 score of All User in the System is {props.totalScore.toFixed(2)}
       </h3>
       <h3 className={classes.chartTitle}>
-        {props.totalScore}
+
       </h3>
       <GaugeChart
         nrOfLevels={5}

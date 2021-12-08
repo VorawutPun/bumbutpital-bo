@@ -6,7 +6,83 @@ import Chart from "../../components/userProfile/Chart";
 import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import TotalForumCard from "../../components/dashboardCard/TotalForumCard";
+import { GET_FORUM } from "../../Graphql/Forum/Queries";
 // import ForumUserCard from "../../components/userProfile/ForumUserCard";
+
+const Profile = (props) => {
+  const id = props.match.params.id;
+  const classes = useStyles();
+  const history = useHistory();
+  const { data } = useQuery(GET_USER, {
+    variables: {
+      id,
+    },
+  });
+  
+  const { data: getUserForum } = useQuery(GET_FORUM, {
+    variables: {
+      id,
+    },
+  });
+
+  console.log(getUserForum && getUserForum.getForum)
+
+  return (
+    <div className={classes.root}>
+      {data &&
+        data.getUser.map((user) => (
+          <>
+            <Typography gutterBottom className={classes.title}>
+              User Profile
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  history.push("/users");
+                }}
+                className={classes.titleButton}
+              >
+                Done
+              </Button>
+            </Typography>
+            <div className={classes.overview}>
+              <Card className={classes.card}>
+                <CardContent>
+                  <Typography className={classes.name} gutterBottom>
+                    {user.name} {user.surname}
+                    <Chip label={user.role} />
+                  </Typography>
+                  <Typography variant="h5" component="h2">
+                    Email
+                  </Typography>
+                  <Typography variant="h6" component="h2" gutterBottom>
+                    {user.email}
+                  </Typography>
+                  <Typography variant="h5" component="h2">
+                    Phone Number
+                  </Typography>
+                  <Typography variant="h6" component="h2" gutterBottom>
+                    {user.phoneNumber}
+                  </Typography>
+                  {/* <Typography variant="h5" component="h2">
+                    Registeration Time
+                  </Typography>
+                  <Typography variant="h6" component="h2" gutterBottom>
+                    {new Date(user.createAt).toLocaleDateString()}
+                  </Typography> */}
+                </CardContent>
+              </Card>
+              <TotalForumCard />
+              <Chart
+                appropiatePHQSeverityScore={user.appropiatePHQSeverityScore}
+                appropiatePHQSeverity={user.appropiatePHQSeverity}
+              />
+              {/* <ForumUserCard userId={id}/> */}
+            </div>
+          </>
+        ))}
+    </div>
+  );
+};
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -48,72 +124,5 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
-const Profile = (props) => {
-  const id = props.match.params.id;
-  const classes = useStyles();
-  const history = useHistory();
-  const { data } = useQuery(GET_USER, {
-    variables: {
-      id,
-    },
-  });
-
-  return (
-    <div className={classes.root}>
-      {data &&
-        data.getUser.map((user) => (
-          <>
-            <Typography gutterBottom className={classes.title}>
-              User Profile
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  history.push("/users");
-                }}
-                className={classes.titleButton}
-              >
-                Done
-              </Button>
-            </Typography>
-            <div className={classes.overview}>
-              <Card className={classes.card}>
-                <CardContent>
-                  <Typography className={classes.name} gutterBottom>
-                    {user.name} {user.surname}
-                    <Chip label={user.role} />
-                  </Typography>
-                  <Typography variant="h5" component="h2">
-                    Email
-                  </Typography>
-                  <Typography variant="h6" component="h2" gutterBottom>
-                    {user.email}
-                  </Typography>
-                  <Typography variant="h5" component="h2">
-                    Phone Number
-                  </Typography>
-                  <Typography variant="h6" component="h2" gutterBottom>
-                    {user.phoneNumber}
-                  </Typography>
-                  <Typography variant="h5" component="h2">
-                    Registeration Time
-                  </Typography>
-                  <Typography variant="h6" component="h2" gutterBottom>
-                    {user.createdAt}{user.appropiatePHQSeverityScore}
-                  </Typography>
-                </CardContent>
-              </Card>
-              <TotalForumCard />
-              <Chart
-                appropiatePHQSeverityScore={user.appropiatePHQSeverityScore}
-                appropiatePHQSeverity={user.appropiatePHQSeverity}
-              />
-              {/* <ForumUserCard userId={id}/> */}
-            </div>
-          </>
-        ))}
-    </div>
-  );
-};
 
 export default Profile;
