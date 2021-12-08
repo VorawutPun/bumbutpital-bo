@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import TotalForumCard from "../../components/dashboardCard/TotalForumCard";
 import { GET_FORUM } from "../../Graphql/Forum/Queries";
-// import ForumUserCard from "../../components/userProfile/ForumUserCard";
+import ForumUserCard from "../../components/userProfile/ForumUserCard";
 
 const Profile = (props) => {
   const id = props.match.params.id;
@@ -18,14 +18,14 @@ const Profile = (props) => {
       id,
     },
   });
-  
+
   const { data: getUserForum } = useQuery(GET_FORUM, {
     variables: {
       id,
     },
   });
 
-  console.log(getUserForum && getUserForum.getForum)
+  console.log(getUserForum && getUserForum.getForum);
 
   return (
     <div className={classes.root}>
@@ -76,7 +76,7 @@ const Profile = (props) => {
                 appropiatePHQSeverityScore={user.appropiatePHQSeverityScore}
                 appropiatePHQSeverity={user.appropiatePHQSeverity}
               />
-              {/* <ForumUserCard userId={id}/> */}
+              {getUserForum && getUserForum.getForum.map((forum) => <ForumUserCard userId={id} />)}
             </div>
           </>
         ))}
