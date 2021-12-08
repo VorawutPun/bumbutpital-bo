@@ -17,7 +17,6 @@ const AddUser = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  // const [role, setRole] = useState("");
   const [errors, setErrors] = useState();
   const [phoneErrors, setPhoneErrors] = useState();
   const [emailErrors, setEmailErrors] = useState();
@@ -30,10 +29,6 @@ const AddUser = () => {
     });
     setPassword(pwd);
   };
-
-  // const handleChangeRole = (event) => {
-  //   setRole(event.target.value);
-  // };
 
   const { data } = useQuery(GET_ONLY_USER);
 
@@ -217,30 +212,6 @@ const AddUser = () => {
           error={Boolean(phoneErrors?.phoneNumber)}
           helperText={phoneErrors?.phoneNumber}
         />
-        {/* <Typography gutterBottom className={classes.profileTitle}>
-          User Type Role:
-        </Typography>
-        <FormControl component="fieldset">
-          <RadioGroup
-            name="role"
-            type="text"
-            row
-            aria-label="userType"
-            value={role}
-            onChange={handleChangeRole}
-          >
-            <FormControlLabel
-              value="System Administrator"
-              control={<Radio color="primary" />}
-              label="System Administrator"
-            />
-            <FormControlLabel
-              value="Ministry of Public Health Staff"
-              control={<Radio color="primary" />}
-              label="Ministry of Public Health Staff"
-            />
-          </RadioGroup>
-        </FormControl> */}
         <Typography gutterBottom className={classes.profileTitle}>
           Password:{" "}
           <Button

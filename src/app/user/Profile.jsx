@@ -105,7 +105,6 @@ const useStyles = makeStyles((theme) =>
     overview: {
       width: "100%",
       display: "flex",
-      // justifyContent: "space-between",
       padding: "24px 0px 0px 0px",
     },
     card: {

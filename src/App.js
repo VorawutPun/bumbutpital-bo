@@ -14,7 +14,6 @@ import { setContext } from "@apollo/client/link/context";
 import "./App.css";
 import Authen from "./app/auth/Authen";
 import Layout from "./app/Layout";
-import { useEffect, useState } from "react";
 import PrivateRoute from './components/PrivateRoute'
 
 function App() {

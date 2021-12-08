@@ -18,84 +18,6 @@ import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
 import { GET_ALL_USERS } from "../../Graphql/User/Queries";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      display: "flex",
-      padding: "24px",
-      justifyContent: "space-between",
-      marginRight: "48px",
-    },
-    question: {
-      fontSize: "24px",
-      fontWeight: 600,
-    },
-    detail: {
-      display: "flex",
-      flexDirection: "column",
-      minWidth: "1000px",
-    },
-    content: {
-      flex: "1 0 auto",
-      padding: "8px 8px 0px 8px",
-    },
-    questionDetail: {
-      fontSize: "16px",
-      fontWeight: 300,
-    },
-    adminAnswer: {
-      fontSize: "14px",
-      fontWeight: 300,
-      padding: "16px 16px 0px 16px",
-    },
-    user: {
-      display: "flex",
-      alignItems: "center",
-    },
-    action: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    },
-    messageNumber: {
-      backgroundColor: "#63EA89",
-      width: "60px",
-      height: "60px",
-    },
-    buttonAnswer: {
-      padding: "10px",
-      margin: "8px",
-      background: "#3CA75A",
-      color: "white",
-    },
-    buttonPinned: {
-      padding: "10px",
-      margin: "8px",
-      background: "#6367EA",
-      color: "white",
-    },
-    buttonUrgent: {
-      padding: "10px",
-      margin: "8px",
-      background: "#EA6363",
-      color: "white",
-    },
-    answer: {
-      fontSize: "14px",
-      fontWeight: 600,
-    },
-    backdrop: {
-      // zIndex: theme.zIndex.drawer + 1,
-      color: "#fff",
-    },
-    modal: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-  })
-);
-
 const ForumCard = (props) => {
   const classes = useStyles();
   const [openUrgent, setOpenUrgent] = useState(false);
@@ -130,11 +52,11 @@ const ForumCard = (props) => {
                     queryUser.getAllUsers.find(
                       (user) => user.id === props.forum.userID
                     ).name
-                  : "error"}
+                  : "error"}{" "}
                 {/* {queryUser &&
                   queryUser.getAllUsers.find(
                     (user) => user.id === props.forum.userID
-                  ).name} */}{" "}
+                  ).name} */}
                 Asked on {new Date(props.forum.createAt).toLocaleDateString()}
               </Typography>
             </div>
@@ -226,5 +148,83 @@ const ForumCard = (props) => {
     </>
   );
 };
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      display: "flex",
+      padding: "24px",
+      justifyContent: "space-between",
+      marginRight: "48px",
+    },
+    question: {
+      fontSize: "24px",
+      fontWeight: 600,
+    },
+    detail: {
+      display: "flex",
+      flexDirection: "column",
+      minWidth: "1000px",
+    },
+    content: {
+      flex: "1 0 auto",
+      padding: "8px 8px 0px 8px",
+    },
+    questionDetail: {
+      fontSize: "16px",
+      fontWeight: 300,
+    },
+    adminAnswer: {
+      fontSize: "14px",
+      fontWeight: 300,
+      padding: "16px 16px 0px 16px",
+    },
+    user: {
+      display: "flex",
+      alignItems: "center",
+    },
+    action: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    messageNumber: {
+      backgroundColor: "#63EA89",
+      width: "60px",
+      height: "60px",
+    },
+    buttonAnswer: {
+      padding: "10px",
+      margin: "8px",
+      background: "#3CA75A",
+      color: "white",
+    },
+    buttonPinned: {
+      padding: "10px",
+      margin: "8px",
+      background: "#6367EA",
+      color: "white",
+    },
+    buttonUrgent: {
+      padding: "10px",
+      margin: "8px",
+      background: "#EA6363",
+      color: "white",
+    },
+    answer: {
+      fontSize: "14px",
+      fontWeight: 600,
+    },
+    backdrop: {
+      // zIndex: theme.zIndex.drawer + 1,
+      color: "#fff",
+    },
+    modal: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+  })
+);
 
 export default ForumCard;
