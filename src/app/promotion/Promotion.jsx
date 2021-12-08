@@ -89,7 +89,7 @@ const ManagePromotion = () => {
               <TableCell align="left">Create At</TableCell>
               <TableCell align="left">Expired Date</TableCell>
               <TableCell align="left">Picture</TableCell>
-              <TableCell align="left">Action</TableCell>
+              <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

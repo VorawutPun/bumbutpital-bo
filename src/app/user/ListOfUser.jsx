@@ -8,7 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { Button } from "@material-ui/core";
+import { Button, LinearProgress } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import { DELETE_USER } from "../../Graphql/User/Mutation";
 import { GET_ALL_USERS, GET_CURRENT_USER } from "../../Graphql/User/Queries";
@@ -18,7 +18,7 @@ import DeleteDialog from "../../components/dialog/DeleteDialog";
 const ListOfUsers = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { data } = useQuery(GET_ALL_USERS);
+  const { data, loading } = useQuery(GET_ALL_USERS);
   const { data: getUser } = useQuery(GET_CURRENT_USER);
   const [deleteUser] = useMutation(DELETE_USER, {
     refetchQueries: [{ query: GET_ALL_USERS }],
@@ -65,6 +65,10 @@ const ListOfUsers = () => {
     )
   }
 
+  if(loading){
+    return <LinearProgress/>
+  }
+
   return (
     <div className={classes.root}>
       <Typography
@@ -94,7 +98,7 @@ const ListOfUsers = () => {
               <TableCell align="left">Surname</TableCell>
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">Role</TableCell>
-              <TableCell align="left">Action</TableCell>
+              <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

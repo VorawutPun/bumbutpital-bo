@@ -92,7 +92,7 @@ const ManageVideo = (props) => {
               <TableCell align="left">Picture</TableCell>
               <TableCell align="left">Created At</TableCell>
               <TableCell align="left">Appropiate PHQ-9 Severity</TableCell>
-              <TableCell align="left">Action</TableCell>
+              <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

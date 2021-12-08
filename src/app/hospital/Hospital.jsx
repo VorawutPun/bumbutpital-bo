@@ -84,7 +84,7 @@ const ManageHospital = () => {
             <TableRow>
               <TableCell align="left">Picture</TableCell>
               <TableCell align="left">Hospital Name</TableCell>
-              <TableCell align="left">Action</TableCell>
+              <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
