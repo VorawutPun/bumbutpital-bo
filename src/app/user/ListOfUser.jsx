@@ -99,7 +99,7 @@ const ListOfUsers = () => {
           Add User
         </Button>
       </Typography>
-      {error && <Alert severity="error"> {error.message} </Alert>}
+      {error && <Alert severity="error"> You must delete other important parts of this user first. </Alert>}
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
