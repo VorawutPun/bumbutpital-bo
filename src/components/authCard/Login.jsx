@@ -36,7 +36,6 @@ const Login = ({ onClick }) => {
   });
 
   if (loading) return <CircularProgress />;
-  // if (error) return `${error.message}`;
 
   return (
     <div className={classes.authCard}>
@@ -77,17 +76,20 @@ const Login = ({ onClick }) => {
           className={style.root}
           disabled={!username || !password}
           onClick={async () => {
-            const result = staffLogin({
-              variables: {
-                username: username,
-                password: password,
-              },
-            });
-            localStorage.setItem(
-              "token",
-              (await result).data.staffLogin.accessToken
-            );
-            history.push("/home");
+            try {
+              const result = staffLogin({
+                variables: {
+                  username: username,
+                  password: password,
+                },
+              });
+              const accessToken = (await result).data.staffLogin.accessToken;
+
+              if (accessToken) localStorage.setItem("token", accessToken);
+              history.push("/home");
+            } catch (err) {
+              console.log(err);
+            }
           }}
         >
           Login
