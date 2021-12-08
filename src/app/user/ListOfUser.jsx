@@ -13,58 +13,7 @@ import { Link, useHistory } from "react-router-dom";
 import { DELETE_USER } from "../../Graphql/User/Mutation";
 import { GET_ALL_USERS, GET_CURRENT_USER } from "../../Graphql/User/Queries";
 import { useMutation, useQuery } from "@apollo/client";
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      flex: "auto",
-      padding: "30px",
-      marginTop: "60px",
-    },
-    addTitle: {
-      fontSize: "32px",
-      fontWeight: 600,
-    },
-    paper: {
-      width: "100%",
-      marginBottom: theme.spacing(2),
-    },
-    table: {
-      minWidth: 750,
-    },
-    manageListDetail: {
-      padding: "5px 10px",
-      color: "#6367ea",
-      cursor: "pointer",
-      marginRight: "20px",
-      textDecoration: "none",
-      fontSize: "16px",
-    },
-    manageListDelete: {
-      padding: "5px 10px",
-      color: "#ea6363",
-      cursor: "pointer",
-      marginRight: "20px",
-      textDecoration: "none",
-      fontSize: "16px",
-    },
-    titleButton: {
-      background: "#6367EA",
-      borderRadius: 5,
-      border: 0,
-      color: "white",
-      height: 36,
-      float: "right",
-    },
-    navLogo: {
-      width: "50px",
-      height: "50px",
-    },
-    paperpong: {
-      textAlign: "center",
-    },
-  })
-);
+import DeleteDialog from "../../components/dialog/DeleteDialog";
 
 const ListOfUsers = () => {
   const classes = useStyles();
@@ -74,6 +23,37 @@ const ListOfUsers = () => {
   const [deleteUser] = useMutation(DELETE_USER, {
     refetchQueries: [{ query: GET_ALL_USERS }],
   });
+
+  const [open, setOpen] = React.useState({
+    show: false,
+    id: null,
+    title: "",
+  });
+
+  const handleDelete = (id, title) => {
+    setOpen({
+      show: true,
+      id,
+      title,
+    });
+  };
+
+  const handleDeleteTrue = () => {
+    if (open.show && open.id) {
+      setOpen({
+        show: false,
+        id: null,
+        title: "",
+      });
+    }
+  };
+
+  const handleDeleteFalse = () => {
+    setOpen({
+      show: false,
+      id: null,
+    });
+  };
 
   const submitHandler = () => {
     history.push("/createUser");
@@ -139,12 +119,23 @@ const ListOfUsers = () => {
                     </Button>
                     <Button
                       className={classes.manageListDelete}
-                      onClick={() => {
-                        deleteUser({ variables: { id: user.id } });
-                      }}
+                      onClick={() => handleDelete(user.id, user.username)}
                     >
                       Delete
                     </Button>
+                    {open.show && (
+                      <DeleteDialog
+                        open={open.show}
+                        handleDeleteTrue={() => {
+                          handleDeleteTrue();
+                          deleteUser({
+                            variables: { id: open.id },
+                          });
+                        }}
+                        handleDeleteFalse={handleDeleteFalse}
+                        title={open.title}
+                      />
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
@@ -154,5 +145,58 @@ const ListOfUsers = () => {
     </div>
   );
 };
+
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      flex: "auto",
+      padding: "30px",
+      marginTop: "60px",
+    },
+    addTitle: {
+      fontSize: "32px",
+      fontWeight: 600,
+    },
+    paper: {
+      width: "100%",
+      marginBottom: theme.spacing(2),
+    },
+    table: {
+      minWidth: 750,
+    },
+    manageListDetail: {
+      padding: "5px 10px",
+      color: "#6367ea",
+      cursor: "pointer",
+      marginRight: "20px",
+      textDecoration: "none",
+      fontSize: "16px",
+    },
+    manageListDelete: {
+      padding: "5px 10px",
+      color: "#ea6363",
+      cursor: "pointer",
+      marginRight: "20px",
+      textDecoration: "none",
+      fontSize: "16px",
+    },
+    titleButton: {
+      background: "#6367EA",
+      borderRadius: 5,
+      border: 0,
+      color: "white",
+      height: 36,
+      float: "right",
+    },
+    navLogo: {
+      width: "50px",
+      height: "50px",
+    },
+    paperpong: {
+      textAlign: "center",
+    },
+  })
+);
 
 export default ListOfUsers;

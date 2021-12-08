@@ -12,17 +12,48 @@ import Button from "@material-ui/core/Button";
 import { Avatar } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_ALL_HOSPITAL } from "../../Graphql/Hospital/Quries";
+import { GET_ALL_HOSPITAL, GET_HOSPITAL } from "../../Graphql/Hospital/Quries";
 import { DELETE_HOSPITAL } from "../../Graphql/Hospital/Mutation";
+import DeleteDialog from "../../components/dialog/DeleteDialog";
 
 const ManageHospital = () => {
   const history = useHistory();
   const classes = useStyles();
   const { data, refetch } = useQuery(GET_ALL_HOSPITAL);
   const [deleteHospital] = useMutation(DELETE_HOSPITAL, {
-    refetchQueries: [{ query: GET_ALL_HOSPITAL }],
-    pollInterval: 500,
+    refetchQueries: [GET_ALL_HOSPITAL, GET_HOSPITAL],
   });
+
+  const [open, setOpen] = React.useState({
+    show: false,
+    id: null,
+    title: "",
+  });
+
+  const handleDelete = (id, title) => {
+    setOpen({
+      show: true,
+      id,
+      title,
+    });
+  };
+
+  const handleDeleteTrue = () => {
+    if (open.show && open.id) {
+      setOpen({
+        show: false,
+        id: null,
+        title: "",
+      });
+    }
+  };
+
+  const handleDeleteFalse = () => {
+    setOpen({
+      show: false,
+      id: null,
+    });
+  };
 
   const submitHandler = () => {
     history.push("/hospital/add");
@@ -83,14 +114,23 @@ const ManageHospital = () => {
                     </Button>
                     <Button
                       className={classes.manageListDelete}
-                      onClick={() => {
-                        deleteHospital({
-                          variables: { hospitalID: hospital.hospitalID },
-                        });
-                      }}
+                      onClick={() => handleDelete(hospital.hospitalID, hospital.hospitalName)}
                     >
                       Delete
                     </Button>
+                    {open.show && (
+                      <DeleteDialog
+                        open={open.show}
+                        handleDeleteTrue={() => {
+                          handleDeleteTrue();
+                          deleteHospital({
+                            variables: { hospitalID: open.id },
+                          });
+                        }}
+                        handleDeleteFalse={handleDeleteFalse}
+                        title={open.title}
+                      />
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

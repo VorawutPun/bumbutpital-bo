@@ -1,10 +1,8 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-
 import { GET_ALL_CONTENT } from "../../Graphql/Content/Queries";
 import { useMutation, useQuery } from "@apollo/client";
 import { DELETE_CONTENT } from "../../Graphql/Content/Mutation";
-
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";

@@ -1,5 +1,4 @@
 import React from "react";
-// import classes from "./Management.module.css";
 import {
   Button,
   Typography,
@@ -19,6 +18,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { DELETE_VIDEO } from "../../Graphql/Video/Mutation";
 import { GET_ALL_VIDEO } from "../../Graphql/Video/Queries";
 import { useHistory, Link as RouterLink } from "react-router-dom";
+import DeleteDialog from "../../components/dialog/DeleteDialog";
 
 const ManageVideo = (props) => {
   const classes = useStyles();
@@ -27,6 +27,37 @@ const ManageVideo = (props) => {
   const [deleteVideo] = useMutation(DELETE_VIDEO, {
     refetchQueries: [{ query: GET_ALL_VIDEO }],
   });
+
+  const [open, setOpen] = React.useState({
+    show: false,
+    id: null,
+    title: "",
+  });
+
+  const handleDelete = (id, title) => {
+    setOpen({
+      show: true,
+      id,
+      title,
+    });
+  };
+
+  const handleDeleteTrue = () => {
+    if (open.show && open.id) {
+      setOpen({
+        show: false,
+        id: null,
+        title: "",
+      });
+    }
+  };
+
+  const handleDeleteFalse = () => {
+    setOpen({
+      show: false,
+      id: null,
+    });
+  };
 
   const submitHandler = () => {
     history.push("/createVideo");
@@ -102,12 +133,23 @@ const ManageVideo = (props) => {
                     </Button>
                     <Button
                       className={classes.manageListDelete}
-                      onClick={() => {
-                        deleteVideo({ variables: { videoID: video.videoID } });
-                      }}
+                      onClick={() => handleDelete(video.videoID, video.title)}
                     >
                       Delete
                     </Button>
+                    {open.show && (
+                      <DeleteDialog
+                        open={open.show}
+                        handleDeleteTrue={() => {
+                          handleDeleteTrue();
+                          deleteVideo({
+                            variables: { videoID: open.id },
+                          });
+                        }}
+                        handleDeleteFalse={handleDeleteFalse}
+                        title={open.title}
+                      />
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
