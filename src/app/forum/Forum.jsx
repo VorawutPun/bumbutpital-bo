@@ -5,6 +5,38 @@ import ForumCard from "../../components/forumCard/ForumCard";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
 
+const Forum = () => {
+  const classes = useStyles();
+  const { data } = useQuery(GET_ALL_FORUM);
+
+  return (
+    <div className={classes.root}>
+      <Grid container direction="row" alignItems="center" spacing={3}>
+        <Grid item xs={10}>
+          <Typography
+            variant="h1"
+            component="h1"
+            gutterBottom
+            className={classes.title}
+          >
+            Question & Answer
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+      ></Grid>
+      {data &&
+        data.getAllForum.map((forum) => (
+          <ForumCard forum={forum} key={forum} />
+        ))}
+    </div>
+  );
+};
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -53,38 +85,5 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
-const Forum = () => {
-  const classes = useStyles();
-  const { data } = useQuery(GET_ALL_FORUM);
-
-  return (
-    <div className={classes.root}>
-      <Grid container direction="row" alignItems="center" spacing={3}>
-        <Grid item xs={10}>
-          <Typography
-            variant="h1"
-            component="h1"
-            gutterBottom
-            className={classes.title}
-          >
-            Question & Answer
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justifyContent="flex-start"
-        alignItems="flex-start"
-      >
-      </Grid>
-      {data &&
-        data.getAllForum.map((forum) => (
-            <ForumCard forum={forum} key={forum}/>
-        ))}
-    </div>
-  );
-};
 
 export default Forum;

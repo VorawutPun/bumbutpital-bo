@@ -105,8 +105,8 @@ const EditHospital = (props) => {
   return (
     <div className={classes.root}>
       {data &&
-        data.getHospital.map((hospital) => (
-          <>
+        data.getHospital.map((hospital, hospitalId) => (
+          <div key={hospitalId}>
             <Typography gutterBottom className={classes.title}>
               Edit Hospital
             </Typography>
@@ -197,7 +197,7 @@ const EditHospital = (props) => {
                 </Grid>
               </Paper>
             </Card>
-          </>
+          </div>
         ))}
     </div>
   );

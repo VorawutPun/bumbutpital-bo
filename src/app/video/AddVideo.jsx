@@ -177,12 +177,12 @@ const AddVideo = () => {
                   value={appropiatePHQSeverity}
                   onChange={handleChangeSeverity}
                 >
-                  {depressionSeverity.map((severity) => (
+                  {depressionSeverity.map((item, id) => (
                     <FormControlLabel
-                      key={severity}
-                      value={severity.severity}
+                      key={id}
+                      value={item.severity}
                       control={<Radio color="primary" />}
-                      label={severity.severity}
+                      label={item.severity}
                     />
                   ))}
                 </RadioGroup>

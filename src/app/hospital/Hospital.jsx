@@ -20,7 +20,7 @@ import { GET_ALL_PROMOTION } from "../../Graphql/Promotion/Query";
 const ManageHospital = () => {
   const history = useHistory();
   const classes = useStyles();
-  const { data, error, refetch } = useQuery(GET_ALL_HOSPITAL);
+  const { data, refetch } = useQuery(GET_ALL_HOSPITAL);
   const [deleteHospital] = useMutation(DELETE_HOSPITAL, {
     refetchQueries: [GET_ALL_HOSPITAL, GET_HOSPITAL, GET_ALL_PROMOTION],
   });

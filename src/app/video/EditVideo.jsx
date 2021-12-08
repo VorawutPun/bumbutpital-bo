@@ -121,8 +121,8 @@ const EditVideo = (props) => {
   return (
     <div className={classes.root}>
       {data &&
-        data.getVideo.map((video) => (
-          <div key={video.videoID}>
+        data.getVideo.map((video, videoID) => (
+          <div key={videoID}>
             <Typography gutterBottom className={classes.title}>
               Edit Video
             </Typography>

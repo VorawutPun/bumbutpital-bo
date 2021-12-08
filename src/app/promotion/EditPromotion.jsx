@@ -129,8 +129,8 @@ const EditPromotion = (props) => {
   return (
     <div className={classes.root}>
       {data &&
-        data.getPromotion.map((promotion) => (
-          <div key={promotion.promotionId}>
+        data.getPromotion.map((promotion, promotionId) => (
+          <div key={promotionId}>
             <Typography gutterBottom className={classes.title}>
               Edit Promotion
             </Typography>

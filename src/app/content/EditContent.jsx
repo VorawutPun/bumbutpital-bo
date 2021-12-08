@@ -103,9 +103,9 @@ const EditContent = (props) => {
   };
 
   useEffect(() => {
-    refetch()
+    refetch();
     //eslint-disable-next-line
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -129,183 +129,180 @@ const EditContent = (props) => {
 
   return (
     <div className={classes.root}>
+      <Typography
+        variant="h1"
+        component="h1"
+        gutterBottom
+        className={classes.title}
+      >
+        Edit Content
+      </Typography>
       {data &&
-        data.getContent.map((content) => (
-          <div key={content.contetID}>
-            <Typography
-              variant="h1"
-              component="h1"
-              gutterBottom
-              className={classes.title}
-            >
-              Edit Content
-            </Typography>
-            <Grid
-              container
-              direction="row"
-              justifyContent="flex-start"
-              spacing={3}
-            >
-              <Grid item xs={9}>
-                <Typography
-                  variant="h2"
-                  component="h1"
-                  gutterBottom
-                  className={classes.textTitle}
-                >
-                  Title
-                </Typography>
-                <TextField
-                  className={classes.field}
-                  color="primary"
-                  defaultValue={content.title}
-                  fullWidth
-                  id="title"
-                  placeholder="Title"
-                  required
-                  variant="outlined"
-                  onChange={(e) => {
-                    setTitle(e.target.value);
-                  }}
+        data.getContent.map((content, contetID) => (
+          // <div key={content.contetID}>
+          <Grid
+            container
+            direction="row"
+            justifyContent="flex-start"
+            spacing={3}
+            key={contetID}
+          >
+            <Grid item xs={9} key={content.contetID}>
+              <Typography
+                variant="h2"
+                component="h1"
+                gutterBottom
+                className={classes.textTitle}
+              >
+                Title
+              </Typography>
+              <TextField
+                className={classes.field}
+                color="primary"
+                defaultValue={content.title}
+                fullWidth
+                id="title"
+                placeholder="Title"
+                required
+                variant="outlined"
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              />
+              <Typography
+                variant="h2"
+                component="h1"
+                gutterBottom
+                className={classes.textTitle}
+              >
+                Body
+              </Typography>
+              <TextField
+                className={classes.field}
+                color="primary"
+                defaultValue={content.description}
+                placeholder="Description"
+                variant="outlined"
+                fullWidth
+                required
+                id="body"
+                multiline
+                rows={20}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Card className={classes.cardRoot}>
+                <CardHeader
+                  title={
+                    <Typography className={classes.cardTitle}>
+                      Upload photo
+                    </Typography>
+                  }
+                  className={classes.header}
                 />
-                <Typography
-                  variant="h2"
-                  component="h1"
-                  gutterBottom
-                  className={classes.textTitle}
-                >
-                  Body
-                </Typography>
-                <TextField
-                  className={classes.field}
-                  color="primary"
-                  defaultValue={content.description}
-                  placeholder="Description"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  id="body"
-                  multiline
-                  rows={20}
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <Card className={classes.cardRoot}>
-                  <CardHeader
-                    title={
-                      <Typography className={classes.cardTitle}>
-                        Upload photo
-                      </Typography>
-                    }
-                    className={classes.header}
-                  />
-                  <CardContent className={classes.content}>
-                    <div>
-                      <Button variant="contained" component="label">
-                        Choose Photo
-                        <input
-                          hidden
-                          type="file"
-                          accept="image/png, image/jpeg"
-                          id="image"
-                          ref={imageInput}
-                          onChange={() => handleImageChange()}
-                        />
-                      </Button>
-                      <div className={classes.pictureUrl}>
-                        <img
-                          className={classes.imageStyle}
-                          src={getRenderImage()}
-                          alt="ContentPic"
-                        />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className={classes.cardRoot}>
-                  <CardHeader
-                    title={
-                      <Typography className={classes.cardTitle}>
-                        Depression Severity
-                      </Typography>
-                    }
-                    className={classes.header}
-                  />
-                  <CardContent>
-                    <FormControl component="fieldset">
-                      <RadioGroup
-                        aria-label="Depression Severity"
-                        name="DepressionSeverity"
-                        value={appropiatePHQSeverity}
-                        onChange={(e) => {
-                          setAppropiatePHQSeverity(e.target.value);
-                        }}
-                      >
-                        {depressionSeverity.map((item) => (
-                          <FormControlLabel
-                            key={item.severity}
-                            value={item.severity}
-                            control={<Radio color="primary" />}
-                            label={item.severity}
-                          />
-                        ))}
-                      </RadioGroup>
-                    </FormControl>
-                  </CardContent>
-                </Card>
-                <Card className={classes.cardRoot}>
-                  <CardHeader
-                    title={
-                      <Typography className={classes.cardTitle}>
-                        Publish
-                      </Typography>
-                    }
-                    className={classes.header}
-                  />
-                  <CardContent className={classes.content}>
-                    <Button
-                      size="medium"
-                      color="primary"
-                      onClick={handleToggle}
-                    >
-                      Preview Changes
-                    </Button>
-                    <Backdrop className={classes.backdrop} open={open}>
-                      <PreviewChange
-                        title={title}
-                        description={description}
-                        pictureUrl={getRenderImage()}
-                        onClick={handleClose}
+                <CardContent className={classes.content}>
+                  <div>
+                    <Button variant="contained" component="label">
+                      Choose Photo
+                      <input
+                        hidden
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        id="image"
+                        ref={imageInput}
+                        onChange={() => handleImageChange()}
                       />
-                    </Backdrop>
-                  </CardContent>
-                  <CardActions className={classes.action}>
-                    <Button
-                      size="small"
-                      color="secondary"
-                      onClick={() => {
-                        history.push("/contents");
+                    </Button>
+                    <div className={classes.pictureUrl}>
+                      <img
+                        className={classes.imageStyle}
+                        src={getRenderImage()}
+                        alt="ContentPic"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className={classes.cardRoot}>
+                <CardHeader
+                  title={
+                    <Typography className={classes.cardTitle}>
+                      Depression Severity
+                    </Typography>
+                  }
+                  className={classes.header}
+                />
+                <CardContent>
+                  <FormControl component="fieldset">
+                    <RadioGroup
+                      aria-label="Depression Severity"
+                      name="DepressionSeverity"
+                      value={appropiatePHQSeverity}
+                      onChange={(e) => {
+                        setAppropiatePHQSeverity(e.target.value);
                       }}
                     >
-                      cancel
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      color="primary"
-                      type="submit"
-                      onClick={submitHandler}
-                    >
-                      Edit
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
+                      {depressionSeverity.map((item, id) => (
+                        <FormControlLabel
+                          key={id}
+                          value={item.severity}
+                          control={<Radio color="primary" />}
+                          label={item.severity}
+                        />
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
+                </CardContent>
+              </Card>
+              <Card className={classes.cardRoot}>
+                <CardHeader
+                  title={
+                    <Typography className={classes.cardTitle}>
+                      Publish
+                    </Typography>
+                  }
+                  className={classes.header}
+                />
+                <CardContent className={classes.content}>
+                  <Button size="medium" color="primary" onClick={handleToggle}>
+                    Preview Changes
+                  </Button>
+                  <Backdrop className={classes.backdrop} open={open}>
+                    <PreviewChange
+                      title={title}
+                      description={description}
+                      pictureUrl={getRenderImage()}
+                      onClick={handleClose}
+                    />
+                  </Backdrop>
+                </CardContent>
+                <CardActions className={classes.action}>
+                  <Button
+                    size="small"
+                    color="secondary"
+                    onClick={() => {
+                      history.push("/contents");
+                    }}
+                  >
+                    cancel
+                  </Button>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="primary"
+                    type="submit"
+                    onClick={submitHandler}
+                  >
+                    Edit
+                  </Button>
+                </CardActions>
+              </Card>
             </Grid>
-          </div>
+          </Grid>
+          // </div>
         ))}
     </div>
   );

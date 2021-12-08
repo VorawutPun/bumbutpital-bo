@@ -20,7 +20,7 @@ import DeleteDialog from "../../components/dialog/DeleteDialog";
 const ManagePromotion = () => {
   const history = useHistory();
   const classes = useStyles();
-  const { data, error } = useQuery(GET_ALL_PROMOTION);
+  const { data } = useQuery(GET_ALL_PROMOTION);
   const { data: queryHospital, refetch } = useQuery(GET_ALL_HOSPITAL);
   const [deletePromotion] = useMutation(DELETE_PROMOTION, {
     refetchQueries: [{ query: GET_ALL_PROMOTION }],
