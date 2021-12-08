@@ -32,7 +32,6 @@ const EditHospital = (props) => {
 
   const [updateHospital] = useMutation(UPDATE_HOSPITAL, {
     refetchQueries: [GET_ALL_HOSPITAL, GET_HOSPITAL],
-    pollInterval: 500,
   });
 
   const { data, refetch } = useQuery(GET_HOSPITAL, {
