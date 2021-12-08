@@ -98,11 +98,11 @@ const ManagePromotion = () => {
                 <TableRow key={promotion.promotionId}>
                   <TableCell align="left">{promotion.title}</TableCell>
                   <TableCell align="left">
-                    {/* {queryHospital &&
+                    {queryHospital &&
                       queryHospital.getAllHospital.find(
                         (hospital) =>
                           hospital.hospitalID === promotion.hospitalId
-                      ).hospitalName} */}
+                      ).hospitalName}
                   </TableCell>
                   <TableCell align="left">
                     {new Date(promotion.createAt).toLocaleDateString()}
