@@ -48,24 +48,50 @@ const UrgentCard = (props) => {
         <Typography className={classes.title}>
           Username:{" "}
           {queryUser &&
-            queryUser.getAllUsers.find((user) => user.id === props.userID)
-              .username}
+                queryUser.getAllUsers.find(
+                  (user) => user.id === props.userID
+                )
+                  ? queryUser &&
+                    queryUser.getAllUsers.find(
+                      (user) => user.id === props.userID
+                    ).username
+                  : "error"}
         </Typography>
         <Typography className={classes.title}>
           Name:{" "}
           {queryUser &&
-            queryUser.getAllUsers.find((user) => user.id === props.userID).name}
+                queryUser.getAllUsers.find(
+                  (user) => user.id === props.userID
+                )
+                  ? queryUser &&
+                    queryUser.getAllUsers.find(
+                      (user) => user.id === props.userID
+                    ).name
+                  : "error"}
         </Typography>
         <Typography className={classes.title}>
           Phone Number:{" "}
           {queryUser &&
-            queryUser.getAllUsers.find((user) => user.id === props.userID)
-              .phoneNumber}
+                queryUser.getAllUsers.find(
+                  (user) => user.id === props.userID
+                )
+                  ? queryUser &&
+                    queryUser.getAllUsers.find(
+                      (user) => user.id === props.userID
+                    ).phoneNumber
+                  : "error"}
         </Typography>
         <Typography className={classes.title}>
           Email:{" "}
           {queryUser &&
-            queryUser.getAllUsers.find((user) => user.id === props.userID).email}
+                queryUser.getAllUsers.find(
+                  (user) => user.id === props.userID
+                )
+                  ? queryUser &&
+                    queryUser.getAllUsers.find(
+                      (user) => user.id === props.userID
+                    ).email
+                  : "error"}
         </Typography>
       </CardContent>
       {/* <CardActions className={classes.action}>
