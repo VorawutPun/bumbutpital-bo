@@ -113,12 +113,6 @@ const ManagePromotion = () => {
                             hospital.hospitalID === promotion.hospitalId
                         ).hospitalName
                       : "error"}
-
-                    {/* {queryHospital &&
-                      queryHospital.getAllHospital.find(
-                        (hospital) =>
-                          hospital.hospitalID === promotion.hospitalId
-                      ).hospitalName} */}
                   </TableCell>
                   <TableCell align="left">
                     {new Date(promotion.createAt).toLocaleDateString()}

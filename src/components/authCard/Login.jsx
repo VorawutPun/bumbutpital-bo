@@ -30,7 +30,6 @@ const Login = ({ onClick }) => {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [error, setError] = useState("")
 
   const [staffLogin, { error, loading }] = useMutation(STAFF_LOGIN, {
     errorPolicy: "all",
@@ -38,8 +37,8 @@ const Login = ({ onClick }) => {
 
   return (
     <div className={classes.authCard}>
-      {loading &&  <LinearProgress style={{marginBottom:"15px"}}/>}
       <h1 className={classes.authCardTitle}>Admin Login</h1>
+      {loading &&  <LinearProgress style={{marginBottom:"15px"}}/>}
       <div className={classes.authCardForm}>
         <div className={classes.authCardItem}>
           <label>Username</label>

@@ -11,66 +11,8 @@ import {
 import { Person } from "@material-ui/icons";
 import { GET_USER } from "../../Graphql/User/Queries";
 import Chart from "../../components/userProfile/Chart";
-// import ForumCard from "../../components/forumCard/ForumCard";
-// import OverviewInfo from "../../components/dashboardCard/OvervewInfo";
 import { useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      flex: "auto",
-      padding: "32px",
-      marginTop: "60px",
-    },
-    title: {
-      fontSize: "34px",
-      fontWeight: 600,
-    },
-    card: {
-      margin: "20px 48px",
-      justifyContent: "center",
-    },
-    addUserTitle: {
-      fontSize: "24px",
-      fontWeight: 500,
-      alignItems: "center",
-      margin: "0px 48px",
-      width: "600px",
-    },
-    paper: {
-      alignItems: "center",
-      margin: "20px 48px",
-      width: "600px",
-    },
-    profileTitle: {
-      margin: "8px 0px",
-      fontSize: "20px",
-      fontWeight: 600,
-    },
-    field: {
-      display: "block",
-      marginRight: "10px",
-      marginTop: "10px",
-      minWidth: "400px",
-    },
-    buttonGroup: {
-      marginTop: "24px",
-    },
-    button: {
-      marginLeft: "20px",
-    },
-    avatar: {
-      width: "160px",
-      height: "160px",
-      marginLeft: "210px",
-    },
-    avatarIcon: {
-      width: "120px",
-      height: "120px",
-    },
-  })
-);
 
 const EditUser = (props) => {
   const id = props.match.params.id;
@@ -211,5 +153,61 @@ const EditUser = (props) => {
     </div>
   );
 };
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      flex: "auto",
+      padding: "32px",
+      marginTop: "60px",
+    },
+    title: {
+      fontSize: "34px",
+      fontWeight: 600,
+    },
+    card: {
+      margin: "20px 48px",
+      justifyContent: "center",
+    },
+    addUserTitle: {
+      fontSize: "24px",
+      fontWeight: 500,
+      alignItems: "center",
+      margin: "0px 48px",
+      width: "600px",
+    },
+    paper: {
+      alignItems: "center",
+      margin: "20px 48px",
+      width: "600px",
+    },
+    profileTitle: {
+      margin: "8px 0px",
+      fontSize: "20px",
+      fontWeight: 600,
+    },
+    field: {
+      display: "block",
+      marginRight: "10px",
+      marginTop: "10px",
+      minWidth: "400px",
+    },
+    buttonGroup: {
+      marginTop: "24px",
+    },
+    button: {
+      marginLeft: "20px",
+    },
+    avatar: {
+      width: "160px",
+      height: "160px",
+      marginLeft: "210px",
+    },
+    avatarIcon: {
+      width: "120px",
+      height: "120px",
+    },
+  })
+);
 
 export default EditUser;

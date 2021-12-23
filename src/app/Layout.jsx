@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
 import Sidebar from "../components/sidebar/Sidebar";
 import AddContent from "./content/AddContent";
 import AddPromotion from "./promotion/AddPromotion";
@@ -13,7 +13,6 @@ import ManageVideo from "./video/Video";
 import ManageContent from "./content/Content";
 import ManageHospital from "./hospital/Hospital";
 import ManagePromotion from "./promotion/Promotion";
-// import EditUser from "./user/EditUser";
 import EditContent from "./content/EditContent";
 import EditPromotion from "./promotion/EditPromotion";
 import EditHospital from "./hospital/EditHospital";
@@ -22,8 +21,6 @@ import Profile from "./user/Profile";
 import PrivateRoute from '../components/PrivateRoute'
 
 const Layout = () => {
-  
-
   return (
     <>
       <Sidebar />
@@ -47,7 +44,6 @@ const Layout = () => {
         <PrivateRoute path="/hospital/:hospitalID" component={EditHospital} />
         <Redirect to="/home"/>
       </Switch>
-
     </>
   );
 };

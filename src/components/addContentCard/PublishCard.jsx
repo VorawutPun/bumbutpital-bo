@@ -16,42 +16,6 @@ import {
 } from "@material-ui/core";
 import PreviewChange from "./PreviewChange";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      border: "solid",
-      borderWidth: "1px",
-      borderColor: "#D1D1D1",
-      borderRadius: "8px",
-      marginBottom: "40px",
-    },
-    header: {
-      backgroundColor: "#F8F8F8",
-      padding: "16px",
-    },
-    title: {
-      fontSize: "16px",
-      fontWeight: 600,
-    },
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 100,
-    },
-    content: {
-      alignItems: "center",
-    },
-    action: {
-      backgroundColor: "#F8F8F8",
-      justifyContent: "space-between",
-      padding: "16px",
-    },
-    backdrop: {
-      zIndex: theme.zIndex.drawer + 1,
-      color: "#fff",
-    },
-  })
-);
-
 const PublishCard = ({ onClick }) => {
   const classes = useStyles();
   const [status, setStatus] = useState("");
@@ -197,5 +161,41 @@ const PublishCard = ({ onClick }) => {
     </Card>
   );
 };
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      border: "solid",
+      borderWidth: "1px",
+      borderColor: "#D1D1D1",
+      borderRadius: "8px",
+      marginBottom: "40px",
+    },
+    header: {
+      backgroundColor: "#F8F8F8",
+      padding: "16px",
+    },
+    title: {
+      fontSize: "16px",
+      fontWeight: 600,
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 100,
+    },
+    content: {
+      alignItems: "center",
+    },
+    action: {
+      backgroundColor: "#F8F8F8",
+      justifyContent: "space-between",
+      padding: "16px",
+    },
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: "#fff",
+    },
+  })
+);
 
 export default PublishCard;

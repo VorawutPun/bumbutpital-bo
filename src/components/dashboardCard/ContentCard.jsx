@@ -22,49 +22,44 @@ const ContentCard = (props) => {
   };
 
   return (
-      <Card className={classes.root}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              {props.title.charAt(0)}
-            </Avatar>
-          }
-          title={props.title}
-          subheader={props.createAt}
-        />
-        <CardMedia
-          className={classes.media}
-          image={props.pictureURL}
-          title={props.title}
-        />
+    <Card className={classes.root}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            {props.title.charAt(0)}
+          </Avatar>
+        }
+        title={props.title}
+        subheader={props.createAt}
+      />
+      <CardMedia
+        className={classes.media}
+        image={props.pictureURL}
+        title={props.title}
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p" noWrap>
+          {props.description}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-            noWrap
-          >
-            {props.description}
-          </Typography>
+          <Typography paragraph>{props.description}</Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>{props.description}</Typography>
-          </CardContent>
-        </Collapse>
-      </Card>
+      </Collapse>
+    </Card>
   );
 };
 
@@ -76,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "10px",
     marginRight: "20px",
     marginLeft: "20px",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   media: {
     height: 0,

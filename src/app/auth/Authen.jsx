@@ -9,26 +9,6 @@ import {
   Toolbar,
 } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: "#ecf2ff",
-    width: "100%",
-    height: "100%",
-    padding: "100px auto",
-  },
-  logoContainer: {
-    textAlign: "center",
-  },
-  login: {
-    justifyContent: "center",
-    margin: "150px 100px 200px 100px",
-  },
-  footer: {
-    backgroundColor: "white",
-  },
-}));
-
 const Authen = () => {
   const classes = useStyles();
 
@@ -53,6 +33,7 @@ const Authen = () => {
                 alt="BPT logo"
                 width="300"
                 height="300"
+                style={{marginBottom:"20px"}}
               />
               <h1>BUMBUTPITAL</h1>
             </div>
@@ -76,5 +57,25 @@ const Authen = () => {
     </div>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: "#ecf2ff",
+    width: "100%",
+    height: "100%",
+    padding: "100px auto",
+  },
+  logoContainer: {
+    textAlign: "center",
+  },
+  login: {
+    justifyContent: "center",
+    margin: "150px 100px 200px 100px",
+  },
+  footer: {
+    backgroundColor: "white",
+  },
+}));
 
 export default Authen;

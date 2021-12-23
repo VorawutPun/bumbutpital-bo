@@ -76,7 +76,6 @@ const AddHospital = () => {
     if (image.forRender.length > 0) {
       return image.forRender[0].file;
     }
-    /* return profileImg; */
   };
 
   return (

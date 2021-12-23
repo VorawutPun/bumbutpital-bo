@@ -12,29 +12,11 @@ import {
 } from "@material-ui/core";
 import { depressionSeverity } from "../../utils/util";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      border: "solid",
-      borderWidth: "1px",
-      borderColor: "#D1D1D1",
-      borderRadius: "8px",
-      marginBottom: "40px",
-    },
-    header: {
-      backgroundColor: "#F8F8F8",
-      padding: "16px",
-    },
-    title: {
-      fontSize: "16px",
-      fontWeight: 600,
-    },
-  })
-);
-
 const SelectDepressionCard = (props) => {
   const classes = useStyles();
-  const [appropiatePHQSeverity, setAppropiatePHQSeverity] = React.useState(props.appropiatePHQSeverity);
+  const [appropiatePHQSeverity, setAppropiatePHQSeverity] = React.useState(
+    props.appropiatePHQSeverity
+  );
 
   const handleChange = (event) => {
     setAppropiatePHQSeverity(event.target.value);
@@ -69,5 +51,25 @@ const SelectDepressionCard = (props) => {
     </Card>
   );
 };
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      border: "solid",
+      borderWidth: "1px",
+      borderColor: "#D1D1D1",
+      borderRadius: "8px",
+      marginBottom: "40px",
+    },
+    header: {
+      backgroundColor: "#F8F8F8",
+      padding: "16px",
+    },
+    title: {
+      fontSize: "16px",
+      fontWeight: 600,
+    },
+  })
+);
 
 export default SelectDepressionCard;
