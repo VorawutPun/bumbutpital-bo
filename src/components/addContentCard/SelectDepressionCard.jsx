@@ -10,6 +10,47 @@ import {
   RadioGroup,
   Typography,
 } from "@material-ui/core";
+import { depressionSeverity } from "../../utils/util";
+
+const SelectDepressionCard = (props) => {
+  const classes = useStyles();
+  const [appropiatePHQSeverity, setAppropiatePHQSeverity] = React.useState(
+    props.appropiatePHQSeverity
+  );
+
+  const handleChange = (event) => {
+    setAppropiatePHQSeverity(event.target.value);
+  };
+  return (
+    <Card className={classes.root}>
+      <CardHeader
+        title={
+          <Typography className={classes.title}>Depression Severity</Typography>
+        }
+        className={classes.header}
+      />
+      <CardContent>
+        <FormControl component="fieldset">
+          <RadioGroup
+            aria-label="depressionSeverity"
+            name="depressionSeverity"
+            value={appropiatePHQSeverity}
+            onChange={handleChange}
+          >
+            {depressionSeverity.map((item) => (
+              <FormControlLabel
+                key={item.severity}
+                value={item.severity}
+                control={<Radio color="primary" />}
+                label={item.severity}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+      </CardContent>
+    </Card>
+  );
+};
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -30,61 +71,5 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
-const SelectDepressionCard = () => {
-  const depressionSeverity = [
-    {
-      severity: "Minimal Depression",
-    },
-    {
-      severity: "Mild Depression",
-    },
-    {
-      severity: "Moderate Depression",
-    },
-    {
-      severity: "Moderately severe Depression",
-    },
-    {
-      severity: "Severe Depression",
-    },
-  ];
-
-  const classes = useStyles();
-
-  const [value, setValue] = React.useState("female");
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
-  return (
-    <Card className={classes.root}>
-      <CardHeader
-        title={
-          <Typography className={classes.title}>Depression Severity</Typography>
-        }
-        className={classes.header}
-      />
-      <CardContent>
-        <FormControl component="fieldset">
-          <RadioGroup
-            aria-label="gender"
-            name="gender1"
-            value={value}
-            onChange={handleChange}
-          >
-            {depressionSeverity.map((item) => (
-              <FormControlLabel
-                value={item.severity}
-                control={<Radio color="primary" />}
-                label={item.severity}
-              />
-            ))}
-          </RadioGroup>
-        </FormControl>
-      </CardContent>
-    </Card>
-  );
-};
 
 export default SelectDepressionCard;

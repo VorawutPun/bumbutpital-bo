@@ -1,12 +1,51 @@
 import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { Grid, Link, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import ForumCard from "../../components/forumCard/ForumCard";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
+import { Alert } from "@material-ui/lab";
+
+const Forum = () => {
+  const classes = useStyles();
+  const { data, error } = useQuery(GET_ALL_FORUM, {
+    errorPolicy: "all",
+  });
+
+  return (
+    <div className={classes.root}>
+      <Grid container direction="row" alignItems="center" spacing={3}>
+      {error && <Alert severity="error"> {error.message} </Alert>}
+        <Grid item xs={10}>
+          <Typography
+            variant="h1"
+            component="h1"
+            gutterBottom
+            className={classes.title}
+          >
+            Question & Answer
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+      ></Grid>
+      {data &&
+        data.getAllForum.map((forum) => (
+          <ForumCard forum={forum} key={forum} />
+        ))}
+    </div>
+  );
+};
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      flex: "auto",
+      flex: "4",
+      marginTop: "60px",
     },
     title: {
       fontSize: "32px",
@@ -50,66 +89,5 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
-const Forum = () => {
-  const classes = useStyles();
-  return (
-    <div className={classes.root}>
-      <Grid container direction="row" alignItems="center" spacing={3}>
-        <Grid item xs={10}>
-          <Typography
-            variant="h1"
-            component="h1"
-            gutterBottom
-            className={classes.title}
-          >
-            Forum
-          </Typography>
-        </Grid>
-
-        <div className={classes.rectangleQuestion} />
-        <div className={classes.question}>
-          Question
-          <Typography
-            variant="h1"
-            component="h1"
-            gutterBottom
-            className={classes.stat}
-          >
-            12
-          </Typography>
-        </div>
-
-        <div className={classes.rectangleUser} />
-        <div>
-          User
-          <Typography
-            variant="h1"
-            component="h1"
-            gutterBottom
-            className={classes.stat}
-          >
-            12
-          </Typography>
-        </div>
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justifyContent="flex-start"
-        alignItems="flex-start"
-      >
-        <Grid item>
-          <Link className={classes.selectionItem}>Lastest</Link>
-        </Grid>
-        <Grid item>
-          <Link className={classes.selectionItem}>Pinned</Link>
-        </Grid>
-      </Grid>
-      <ForumCard />
-      <ForumCard />
-    </div>
-  );
-};
 
 export default Forum;

@@ -8,6 +8,7 @@ export const USER_REGISTER = gql`
     $password: String!
     $email: String!
     $phoneNumber: String!
+    $role: String!
   ) {
     userRegister(
       name: $name
@@ -16,6 +17,7 @@ export const USER_REGISTER = gql`
       password: $password
       email: $email
       phoneNumber: $phoneNumber
+      role: $role
     ) {
       id
       name
@@ -24,6 +26,7 @@ export const USER_REGISTER = gql`
       password
       email
       phoneNumber
+      role
     }
   }
 `;
@@ -52,34 +55,6 @@ export const DELETE_USER = gql`
   }
 `;
 
-export const CREATE_CONTENT = gql`
-  mutation createContent(
-    $title: String!
-    $description: String!
-    $updateTime: String!
-    $pictureUrl: String!
-    $createAt: String!
-    $appropiatePHQSeverity: String!
-  ) {
-    createContent(
-      title: $title
-      description: $description
-      updateTime: $updateTime
-      pictureUrl: $pictureUrl
-      createAt: $createAt
-      appropiatePHQSeverity: $appropiatePHQSeverity
-    ) {
-      contentID
-      title
-      description
-      updateTime
-      pictureUrl
-      createAt
-      appropiatePHQSeverity
-    }
-  }
-`;
-
 export const USER_LOGIN = gql`
   mutation userLogin(
     $username: String!
@@ -94,3 +69,17 @@ export const USER_LOGIN = gql`
   }
 `;
 
+export const STAFF_LOGIN = gql`
+mutation staffLogin(
+  $username: String!
+  $password: String!
+) {
+  staffLogin(
+    username: $username
+    password: $password
+  ) {
+    accessToken
+    message
+  }
+}
+`;

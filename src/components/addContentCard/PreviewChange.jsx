@@ -4,12 +4,53 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
   Typography,
 } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { ArrowBack } from "@material-ui/icons";
+
+const PreviewChange = (props) => {
+  const classes = useStyles();
+  return (
+    <Card className={classes.root}>
+      <CardContent>
+        <Typography variant="h5">{props.title}</Typography>
+        {props.pictureUrl ? (
+          <CardMedia
+            component="img"
+            alt="No photo"
+            height="auto"
+            width="200px"
+            image={props.pictureUrl}
+            title="No photo"
+          />
+        ) : (
+          <CardMedia
+            component="img"
+            alt="No photo"
+            height="auto"
+            width="200px"
+            image={props.getRenderImage}
+            title="No photo"
+          />
+        )}
+
+        <Typography className={classes.title}>{props.description}</Typography>
+      </CardContent>
+      <CardActions className={classes.action}>
+        <Button
+          variant="contained"
+          size="small"
+          color="primary"
+          onClick={props.onClick}
+        >
+          Close
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
+
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -17,6 +58,7 @@ const useStyles = makeStyles((theme) =>
       borderRadius: "14px",
       width: "360px",
       height: "640px",
+      overflowY: "scroll",
     },
     header: {
       padding: "16px",
@@ -36,40 +78,5 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const PreviewChange = ({ onClick }) => {
-  const classes = useStyles();
-  return (
-    <Card className={classes.root}>
-      <CardHeader title={<ArrowBack />} className={classes.header} />
-      <CardContent>
-        <Typography variant="h5">What is?</Typography>
-        <CardMedia
-          component="img"
-          alt="Contemplative Reptile"
-          height="auto"
-          width="200px"
-          image="/assets/images/BPTLogo.png"
-          title="Contemplative Reptile"
-        />
-        <Typography className={classes.title}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim non
-          nulla odio in. Morbi dignissim interdum molestie nulla nulla. Facilisi
-          aliquet egestas nunc aliquet cursus. Egestas at viverra posuere ornare
-          venenatis.
-        </Typography>
-      </CardContent>
-      <CardActions className={classes.action}>
-        <Button
-          variant="contained"
-          size="small"
-          color="primary"
-          onClick={onClick}
-        >
-          Done
-        </Button>
-      </CardActions>
-    </Card>
-  );
-};
 
 export default PreviewChange;

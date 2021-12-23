@@ -9,7 +9,25 @@ query getAllVideo {
     pictureUrl
     createAt
     appropiatePHQSeverity
-    staffID
   }
 }
 `;
+
+export const GET_VIDEO = gql`
+query getVideo($videoID: ID!) {
+  getVideo(videoID: $videoID) {
+    title
+    videoUrl
+    pictureUrl
+    createAt
+    appropiatePHQSeverity
+  }
+}
+`;
+
+
+export const COUNT_VIDEO = gql`
+  query {
+    countVideo
+  }
+`

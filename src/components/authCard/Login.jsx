@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import classes from "./AuthCard.module.css";
-import { Button, Checkbox, Link, makeStyles } from "@material-ui/core";
+import {
+  Button,
+  LinearProgress,
+  makeStyles,
+  TextField,
+} from "@material-ui/core";
+// import { Alert, AlertTitle } from "@material-ui/lab";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { USER_LOGIN } from "../../Graphql/User/Mutation";
-import { AUTH_TOKEN } from "../../constants";
+import { STAFF_LOGIN } from "../../Graphql/User/Mutation";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles({
   root: {
@@ -15,34 +21,30 @@ const useStyles = makeStyles({
     height: 52,
     padding: "0 30px",
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    marginTop: "20px",
   },
 });
 
 const Login = ({ onClick }) => {
   const style = useStyles();
   const history = useHistory();
-  const [checked, setChecked] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const [userLogin, { error }] = useMutation(USER_LOGIN);
+  const [staffLogin, { error, loading }] = useMutation(STAFF_LOGIN, {
+    errorPolicy: "all",
+  });
 
-
-
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
-
-  if (error) {
-    return <h1> {error} </h1>;
-  }
   return (
     <div className={classes.authCard}>
       <h1 className={classes.authCardTitle}>Admin Login</h1>
+      {loading &&  <LinearProgress style={{marginBottom:"15px"}}/>}
       <div className={classes.authCardForm}>
         <div className={classes.authCardItem}>
-          <label>Username or Email</label>
-          <input
+          <label>Username</label>
+          <TextField
+            required
+            variant="outlined"
             type="text"
             placeholder="Username"
             className={classes.authCardInput}
@@ -51,9 +53,12 @@ const Login = ({ onClick }) => {
             }}
           />
         </div>
+
         <div className={classes.authCardItem}>
           <label>Password</label>
-          <input
+          <TextField
+            required
+            variant="outlined"
             type="password"
             placeholder="Password"
             className={classes.authCardInput}
@@ -62,35 +67,32 @@ const Login = ({ onClick }) => {
             }}
           />
         </div>
-        <div className={classes.authCheckbox}>
-          <Checkbox
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ "aria-label": "primary checkbox" }}
-          />
-          <span>Remember me</span>
-        </div>
+        {error && <Alert severity="error">{error.message}</Alert>}
         <Button
           variant="contained"
           color="primary"
           size="large"
           className={style.root}
-          onClick={ async () => {
-            const result = await userLogin({
-              variables: {
-                username: username,
-                password: password,
-              },
-            });
-            localStorage.setItem("token", result.data.userLogin.accessToken)
-            history.push("/home");
+          disabled={!username || !password}
+          onClick={async () => {
+            try {
+              const result = staffLogin({
+                variables: {
+                  username: username,
+                  password: password,
+                },
+              });
+              const accessToken = (await result).data.staffLogin.accessToken;
+
+              if (accessToken) localStorage.setItem("token", accessToken);
+              history.push("/home");
+            } catch (err) {
+              console.log(err);
+            }
           }}
         >
           Login
         </Button>
-        <Link onClick={onClick} className={classes.authLink}>
-          Sign Up
-        </Link>
       </div>
     </div>
   );

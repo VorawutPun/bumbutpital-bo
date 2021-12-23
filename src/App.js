@@ -1,32 +1,20 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
 } from "@apollo/client";
-
-import "./App.css";
-import Navbar from "./components/navbar/Navbar";
-import Sidebar from "./components/sidebar/Sidebar";
-
-import AddContent from "./app/content/AddContent";
-import AddPromotion from "./app/promotion/AddPromotion";
-import AddUser from "./app/user/AddUser";
-import Authen from "./app/auth/Authen";
-import EditUser from "./app/user/EditUser";
-import Forum from "./app/forum/Forum";
-import Home from "./app/home/Home";
-import Landing from "./app/landing/Landing";
-import ManageVideo from "./app/management/Video";
-// import ManageUser from "./app/management/User";
-import ManagePromotion from "./app/management/Promotion";
-import ManageCategory from "./app/management/Category";
-import ManageContent from "./app/management/Content";
-import ListOfUsers from "./app/management/ListOfUser";
-
 import { setContext } from "@apollo/client/link/context";
-import { AUTH_TOKEN } from "./constants";
+import "./App.css";
+import Authen from "./app/auth/Authen";
+import Layout from "./app/Layout";
+import PrivateRoute from './components/PrivateRoute'
 
 function App() {
   const httpLink = createHttpLink({
@@ -34,9 +22,7 @@ function App() {
   });
 
   const authLink = setContext((_, { headers }) => {
-    // get the authentication token from local storage if it exists
-    const token = localStorage.getItem('token');
-    // return the headers to the context so httpLink can read them
+    const token = localStorage.getItem("token");
     return {
       headers: {
         ...headers,
@@ -51,33 +37,21 @@ function App() {
   });
 
   return (
-    <ApolloProvider client={client}>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <div className="container">
-            <Switch>
-              <Route exact path="/" component={Landing} />
-              <Route exact path="/auth" component={Authen} />
-              <Router>
-                <Sidebar />
-                <Route exact path="/home" component={Home} />
-                <Route path="/forum" component={Forum} />
-                <Route path="/postCategories" component={ManageCategory} />
-                <Route path="/videos" component={ManageVideo} />
-                <Route path="/contents" component={ManageContent} />
-                <Route path="/createContent" component={AddContent} />
-                <Route path="/users" component={ListOfUsers} />
-                <Route path="/createUser" component={AddUser} />
-                <Route path="/user/:id" component={EditUser} />
-                <Route path="/promotions" component={ManagePromotion} />
-                <Route path="/promotion/add" component={AddPromotion} />
-              </Router>
-            </Switch>
+    <>
+      <ApolloProvider client={client}>
+        <Router>
+          <div className="App"> 
+            <div className="container">
+              <Switch>
+                <Route exact path="/login" component={Authen} />
+                <PrivateRoute path="/" component={Layout} />
+                <Redirect to="/login" />
+              </Switch>
+            </div>
           </div>
-        </div>
-      </Router>
-    </ApolloProvider>
+        </Router>
+      </ApolloProvider>
+    </>
   );
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  Avatar,
+  // Avatar,
   Button,
   Card,
   CardActions,
@@ -8,10 +8,151 @@ import {
   Grid,
   Modal,
   Typography,
+  TextField,
+  CardHeader,
 } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import AnswerCard from "./AnswerCard";
 import UrgentCard from "./UrgentCard";
+import { ANSWER_FORUM } from "../../Graphql/Forum/Mutation";
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_ALL_FORUM } from "../../Graphql/Forum/Queries";
+import { GET_ALL_USERS } from "../../Graphql/User/Queries";
+import { Alert } from "@material-ui/lab";
+
+const ForumCard = (props) => {
+  const classes = useStyles();
+  const [openUrgent, setOpenUrgent] = useState(false);
+  const [answer, setAnswer] = useState("");
+  const [answerForum] = useMutation(ANSWER_FORUM, {
+    refetchQueries: [{ query: GET_ALL_FORUM }],
+    errorPolicy: "all",
+  });
+
+  const { data: queryUser, error } = useQuery(GET_ALL_USERS, {
+    errorPolicy: "all",
+  });
+
+  const handleUrgentBackdrop = () => {
+    setOpenUrgent(false);
+  };
+
+  const handleUrgent = () => {
+    setOpenUrgent(!openUrgent);
+  };
+
+  return (
+    <>
+      {error && <Alert severity="error"> {error.message} </Alert>}
+      <Card variant="outlined" className={classes.root}>
+        <div className={classes.detail}>
+          <CardContent className={classes.content}>
+            <div className={classes.user}>
+              <Typography variant="subtitle1" color="textSecondary">
+                User:{" "}
+                {queryUser &&
+                queryUser.getAllUsers.find(
+                  (user) => user.id === props.forum.userID
+                )
+                  ? queryUser &&
+                    queryUser.getAllUsers.find(
+                      (user) => user.id === props.forum.userID
+                    ).name
+                  : "error"}{" "}
+                {/* {queryUser &&
+                  queryUser.getAllUsers.find(
+                    (user) => user.id === props.forum.userID
+                  ).name} */}
+                Asked on {new Date(props.forum.createAt).toLocaleDateString()}
+              </Typography>
+            </div>
+            <Typography className={classes.question} gutterBottom>
+              {props.forum.title}
+            </Typography>
+            <Typography
+              className={classes.questionDetail}
+              component="h5"
+              variant="h5"
+              gutterBottom
+            >
+              {props.forum.description}
+            </Typography>
+            <Typography
+              className={classes.adminAnswer}
+              component="h5"
+              variant="h5"
+            >
+              {props.forum.answer}
+            </Typography>
+          </CardContent>
+          {!props.forum.answer && (
+            <CardHeader
+              action={
+                <>
+                  <Button
+                    variant="contained"
+                    className={classes.buttonAnswer}
+                    onClick={(e) => {
+                      answerForum({
+                        variables: {
+                          forumID: props.forum.forumID,
+                          answer: answer,
+                        },
+                      });
+                    }}
+                  >
+                    Answer
+                  </Button>
+                </>
+              }
+              title={
+                <TextField
+                  color="primary"
+                  fullWidth
+                  placeholder="Answer"
+                  required
+                  variant="outlined"
+                  multiline
+                  maxRows={4}
+                  onChange={(e) => {
+                    setAnswer(e.target.value);
+                  }}
+                />
+              }
+            />
+          )}
+        </div>
+        <CardActions className={classes.action}>
+          <Grid
+            container
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="center"
+          >
+            <Button
+              variant="contained"
+              className={classes.buttonUrgent}
+              onClick={handleUrgent}
+            >
+              Urgent
+            </Button>
+            <Modal
+              open={openUrgent}
+              className={classes.modal}
+              onClose={handleUrgentBackdrop}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            >
+              <UrgentCard
+                onClick={handleUrgentBackdrop}
+                userID={props.forum.userID}
+              />
+            </Modal>
+          </Grid>
+        </CardActions>
+      </Card>
+    </>
+  );
+};
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -19,6 +160,7 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       padding: "24px",
       justifyContent: "space-between",
+      marginRight: "48px",
     },
     question: {
       fontSize: "24px",
@@ -27,20 +169,25 @@ const useStyles = makeStyles((theme) =>
     detail: {
       display: "flex",
       flexDirection: "column",
+      minWidth: "1000px",
     },
     content: {
       flex: "1 0 auto",
+      padding: "8px 8px 0px 8px",
     },
     questionDetail: {
       fontSize: "16px",
       fontWeight: 300,
     },
+    adminAnswer: {
+      fontSize: "14px",
+      fontWeight: 300,
+      padding: "16px 16px 0px 16px",
+    },
     user: {
       display: "flex",
       alignItems: "center",
-      paddingTop: "32px",
     },
-
     action: {
       display: "flex",
       flexDirection: "column",
@@ -74,7 +221,6 @@ const useStyles = makeStyles((theme) =>
       fontWeight: 600,
     },
     backdrop: {
-      // zIndex: theme.zIndex.drawer + 1,
       color: "#fff",
     },
     modal: {
@@ -84,117 +230,5 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
-const ForumCard = () => {
-  const classes = useStyles();
-  const [openAnswer, setOpenAnswer] = useState(false);
-  const [openUrgent, setOpenUrgent] = useState(false);
-
-  const handleAnswerBackdrop = () => {
-    setOpenAnswer(false);
-  };
-  const handleAnswer = () => {
-    setOpenAnswer(!openAnswer);
-  };
-
-  const handleUrgentBackdrop = () => {
-    setOpenUrgent(false);
-  };
-  const handleUrgent = () => {
-    setOpenUrgent(!openUrgent);
-  };
-
-  return (
-    <Card variant="outlined" className={classes.root}>
-      <div className={classes.detail}>
-        <CardContent className={classes.content}>
-          <Typography
-            className={classes.question}
-            gutterBottom
-          >
-            Q: I want you to help.
-          </Typography>
-          <Typography
-            className={classes.questionDetail}
-            component="h5"
-            variant="h5"
-            gutterBottom
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </Typography>
-          <div className={classes.user}>
-            <Typography variant="subtitle1" color="textSecondary">
-              User: Wisa Asked on 30 April 2021
-            </Typography>
-          </div>
-        </CardContent>
-      </div>
-      <CardActions className={classes.action}>
-        <Grid
-          container
-          direction="column"
-          justifyContent="flex-start"
-          alignItems="center"
-        >
-          <Avatar className={classes.messageNumber}>1</Avatar>
-          <Typography
-            variant="body1"
-            component="h5"
-            className={classes.answer}
-            gutterBottom
-          >
-            Answer
-          </Typography>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="flex-start"
-        >
-          <Button
-            variant="contained"
-            className={classes.buttonAnswer}
-            onClick={handleAnswer}
-          >
-            Answer
-          </Button>
-          <Modal
-            open={openAnswer}
-            className={classes.modal}
-            onClose={handleAnswerBackdrop}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-          >
-            <AnswerCard onClick={handleAnswerBackdrop} />
-          </Modal>
-          <Button variant="contained" className={classes.buttonPinned}>
-            Pin
-          </Button>
-
-          <Button
-            variant="contained"
-            className={classes.buttonUrgent}
-            onClick={handleUrgent}
-          >
-            Urgent
-          </Button>
-          <Modal
-            open={openUrgent}
-            className={classes.modal}
-            onClose={handleUrgentBackdrop}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-          >
-            <UrgentCard onClick={handleUrgentBackdrop} />
-          </Modal>
-        </Grid>
-      </CardActions>
-    </Card>
-  );
-};
 
 export default ForumCard;
